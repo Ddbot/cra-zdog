@@ -1,19 +1,20 @@
-import { AppBar } from '@material-ui/core';
+import { AppBar, Container, List, ListItem, ListItemText } from '@material-ui/core';
 import logo from './logo.svg';
-import './App.css';
+// import './App.css';
 
 function App() {
-  return (
-    <AppBar className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          <ol>
-            <ul>Install Material UI</ul>
-          </ol>
-        </p>
-      </header>
+  return (<Container max-width>
+    <AppBar className="App App-header">
+      Menu
     </AppBar>
+    <Container>
+      <List>
+        <ListItem><ListItemText>Install Material UI</ListItemText></ListItem>
+        <ListItem><ListItemText>Import AppBar and replace header from CRA</ListItemText></ListItem>
+        <ListItem><ListItemText>Import AppBar and replace header from CRA</ListItemText></ListItem>
+      </List>
+    </Container>
+  </Container>
   );
 }
 
