@@ -7,7 +7,9 @@ function App() {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-          Edit <code>src/App.js</code> and save to reload.
+          <ol>
+            <ul>Install Material UI</ul>
+          </ol>
         </p>
         <a
           className="App-link"
