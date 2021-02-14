@@ -17,6 +17,13 @@ import MenuIcon from '@material-ui/icons/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import styled from 'styled-components';
 
+const MenuBar = styled(Toolbar)`
+	button:nth-of-type(2) {
+		position: absolute;	
+		right: 0;
+	}
+`;
+
 const AppContainer = styled(Container)`
   height: 100vh;
   display: flex;
@@ -47,7 +54,7 @@ function App() {
 
 	return (<>
     	<AppBar position='static'>
-      		<Toolbar>
+      		<MenuBar>
 				<IconButton edge="start" color="inherit" aria-label="menu" onClick={ handleClick }>
           			<MenuIcon />
 				</IconButton>
@@ -62,15 +69,15 @@ function App() {
 					<MenuItem onClick={handleClose}>Logout</MenuItem>
 				</Menu>
 				<Typography variant="h6">Andry Online</Typography>
-				          <IconButton
+				<IconButton
                 aria-label="account of current user"
                 aria-controls="menu-appbar"
                 aria-haspopup="true"
                 // onClick={handleMenu}
                 color="inherit">
 					<AccountCircle />
-              </IconButton>
-  			</Toolbar>
+              	</IconButton>
+  			</MenuBar>
     	</AppBar>
         <InstallGrid component="ol">
 			<ListItem><ListItemText>Install Material UI</ListItemText></ListItem>
