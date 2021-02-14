@@ -14,6 +14,7 @@ import {
 	Typography,
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
+import AccountCircle from '@material-ui/icons/AccountCircle';
 import styled from 'styled-components';
 
 const AppContainer = styled(Container)`
@@ -51,17 +52,24 @@ function App() {
           			<MenuIcon />
 				</IconButton>
 				<Menu
-					id="simple-menu"
+					// id="simple-menu"
 					anchorEl={anchorEl}
-					keepMounted
+					// keepMounted
 					open={Boolean(anchorEl)}
-					onClose={handleClose}
-					>
+					onClose={handleClose}>
 					<MenuItem onClick={handleClose}>Profile</MenuItem>
 					<MenuItem onClick={handleClose}>My account</MenuItem>
 					<MenuItem onClick={handleClose}>Logout</MenuItem>
 				</Menu>
-    			<Typography variant="h6">Andry Online</Typography>
+				<Typography variant="h6">Andry Online</Typography>
+				          <IconButton
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                // onClick={handleMenu}
+                color="inherit">
+					<AccountCircle />
+              </IconButton>
   			</Toolbar>
     	</AppBar>
         <InstallGrid component="ol">
