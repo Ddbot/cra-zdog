@@ -26,7 +26,10 @@ import { orange, lightBlue, deepPurple } from '@material-ui/core/colors';
 
 import styled from 'styled-components';
 import { AnimatePresence, motion } from 'framer-motion';
-import rosetta from 'rosetta';
+import { i18n } from './translations/AppPageInterface';
+
+// set default language
+i18n.locale('en');
 
 // let theme = createMuiTheme({
 // 	palette: {
@@ -268,9 +271,9 @@ lightTheme = responsiveFontSizes(lightTheme);
   			</MenuBar>
     	</AppBar>
         <InstallGrid component="ol">
-			<ListItem><ListItemText>Install Material UI</ListItemText></ListItem>
-			<ListItem><ListItemText>Import AppBar and replace header from CRA</ListItemText></ListItem>
-			<ListItem><ListItemText>Import Syled Component</ListItemText></ListItem>
+			<ListItem><ListItemText>{ i18n.t('intro.welcome') }</ListItemText></ListItem>
+			<ListItem><ListItemText>{ i18n.t('intro.text') }</ListItemText></ListItem>
+			<ListItem><ListItemText>{ i18n.t('intro.blabla') }</ListItemText></ListItem>
         </InstallGrid>
   </ThemeProvider>
   );
