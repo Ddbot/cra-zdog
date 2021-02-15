@@ -87,6 +87,15 @@ const Div = styled(Typography)`
 	scale: 0.75;
 
 	transform: translateX(30%);
+
+	span.MuiSwitch-track,
+	span.MuiSwitch-thumb	 {
+		background: white !important;
+	}
+
+	span.MuiButtonBase-root.MuiIconButton-root {
+		background: darkgray;
+	}
 `;
 
 const ChangeLanguageIcon = styled(IconButton)`
