@@ -16,7 +16,7 @@ import {
 	Toolbar,
 	Typography,
 } from '@material-ui/core';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, createMuiTheme, responsiveFontSizes } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import Brightness2Icon from '@material-ui/icons/Brightness2';
@@ -116,8 +116,8 @@ const ChangeThemeSwitch = ({changeFn, checked}) => {
 							color="inherit"
 							style={{ paddingRight: 0 }}>
 								{checked === true ? <motion.div
-									initial={{opacity: 0, x: 10 }}
-									animate={{ opacity: 1, x: 0 }}
+									initial={{opacity: 0, x: 10, scale: 0 }}
+									animate={{ opacity: 1, x: 0, scale: 1 }}
 									exit={{ opacity: 0, x: 10 }}
 									style={{ display: 'flex', alignItems: 'center'}}>
 									<Brightness7Icon />
@@ -134,8 +134,8 @@ const ChangeThemeSwitch = ({changeFn, checked}) => {
 					</Grid>				
 					<Grid item>
 						{checked === false ? <motion.div
-							initial={{ opacity: 0, x: -10}}
-							animate={{ opacity: 1, x: 0 }}
+							initial={{ opacity: 0, x: -10, scale: 0}}
+							animate={{ opacity: 1, x: 0, scale: 1 }}
 							exit={{ opacity: 0, x: -10 }}
 							transition={{ ease: "easeOut", duration: .195 }}>
 							<IconButton
