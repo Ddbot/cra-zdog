@@ -16,14 +16,35 @@ import {
 	Toolbar,
 	Typography,
 } from '@material-ui/core';
-import { withStyles, createMuiTheme, responsiveFontSizes } from '@material-ui/core/styles';
+import { withStyles, createMuiTheme, responsiveFontSizes, ThemeProvider } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import Brightness2Icon from '@material-ui/icons/Brightness2';
 import Brightness7Icon from '@material-ui/icons/Brightness7';
 import TranslateIcon from '@material-ui/icons/Translate';
+import { orange, lightBlue, deepPurple } from '@material-ui/core/colors';
+
 import styled from 'styled-components';
 import { AnimatePresence, motion } from 'framer-motion';
+
+// let theme = createMuiTheme({
+// 	palette: {
+// 		primary: {
+// 			main: orange[500],
+// 			type: 'light'
+// 		},
+// 		secondary: {
+// 			main: lightBlue[500],
+// 			type: 'dark'
+// 		},
+// 		// error: '#BA3B25',
+// 		// warning: '#ee6622',
+// 		// info: '#2A4F54',
+// 		// success: '#40A140',
+// 	}
+// });
+  
+// theme = responsiveFontSizes(theme);
 
 const AntSwitch = withStyles((theme) => ({
   root: {
@@ -34,7 +55,7 @@ const AntSwitch = withStyles((theme) => ({
   },
   switchBase: {
     padding: 2,
-    color: theme.palette.grey[500],
+    color: theme.palette.primary[500],
     '&$checked': {
       transform: 'translateX(12px)',
       color: theme.palette.common.white,
@@ -171,8 +192,29 @@ function App() {
 	const [anchorEl, setAnchorEl] = useState(null);
 
 	const [state, setState] = useState({
-		checkedTheme: true,
+		checkedTheme: false,
 	});
+
+	let lightTheme = createMuiTheme({
+		palette: {
+			primary: {
+				main: orange[500],
+			},
+			type: 'light',
+		}		
+	});
+	
+	let darkTheme = createMuiTheme({
+		palette: {
+			primary: {
+				main: deepPurple[900],
+			},
+			type: 'dark',
+		}		
+});
+  
+darkTheme = responsiveFontSizes(darkTheme);
+lightTheme = responsiveFontSizes(lightTheme);
 
 	function handleClick(e) {
 		e.persist();
@@ -191,11 +233,12 @@ function App() {
 		});
 	};
 	
-	useEffect(() => { 
-		console.log('Changement de state: ', state)
-	})
+	// useEffect(() => {
+	// 	console.log('Changement de state: ', state);
+	// 	theme.palette.type = !!state.checkedTheme ? 'dark' : 'light'
+	// }, [state.checkedTheme]);
 
-	return (<>
+	return (<ThemeProvider theme={ state.checkedTheme ? darkTheme : lightTheme }>
     	<AppBar position='static'>
       		<MenuBar>
 				<IconButton edge="start" color="inherit" aria-label="menu" onClick={ handleClick }>
@@ -228,7 +271,7 @@ function App() {
 			<ListItem><ListItemText>Import AppBar and replace header from CRA</ListItemText></ListItem>
 			<ListItem><ListItemText>Import Syled Component</ListItemText></ListItem>
         </InstallGrid>
-  </>
+  </ThemeProvider>
   );
 }
 
