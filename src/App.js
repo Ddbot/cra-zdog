@@ -23,6 +23,7 @@ import Brightness2Icon from '@material-ui/icons/Brightness2';
 import Brightness7Icon from '@material-ui/icons/Brightness7';
 import TranslateIcon from '@material-ui/icons/Translate';
 import styled from 'styled-components';
+import { AnimatePresence, motion } from 'framer-motion';
 
 const AntSwitch = withStyles((theme) => ({
   root: {
@@ -58,12 +59,7 @@ const AntSwitch = withStyles((theme) => ({
   checked: {},
 }))(Switch);
 
-const MenuBar = styled(Toolbar)`
-	// button:nth-of-type(2) {
-	// 	position: absolute;	
-	// 	right: 0;
-	// }
-`;
+const MenuBar = styled(Toolbar)``;
 
 const AppContainer = styled(Container)`
   height: 100vh;
@@ -72,11 +68,11 @@ const AppContainer = styled(Container)`
 `;
 
 const InstallGrid = styled(List)`
-display: flex;
-  flex-flow: column nowrap;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
+	display: flex;
+	flex-flow: column nowrap;
+	align-items: center;
+	justify-content: center;
+	height: 100vh;
 `;
 
 const Div = styled(Typography)`
@@ -84,7 +80,7 @@ const Div = styled(Typography)`
 	flex-flow: row nowrap;
 	align-items: center;
 	justify-content: flex-end;
-	scale: 0.75;
+	// scale: 0.75;
 
 	transform: translateX(30%);
 
@@ -99,45 +95,75 @@ const Div = styled(Typography)`
 `;
 
 const ChangeLanguageIcon = styled(IconButton)`
-	scale: 0.75;
+	// scale: 0.75;
 	position: absolute;
 	right: 0;
 
 	font-size: 40px;
 `;
 
-const ChangeThemeSwitch = (props) => {
-	return <FormGroup>
-      <Div component="div">
-        <Grid component="label" container alignItems="center" spacing={1}>		
-			<Grid item>
-				<IconButton
-					aria-label="sun icon"
-					aria-controls="menu-appbar"
-					aria-haspopup="false"
-					// onClick={handleMenu}
-					color="inherit"
-					style={ props.checked ? {opacity: 1 } : { opacity: 0 }}>
-					<Brightness7Icon />
-				</IconButton>
-			</Grid>	
-			<Grid item>
-					<AntSwitch checked={props.checked} name="checked" onChange={ props.changeFn} />
+const ChangeThemeSwitch = ({changeFn, checked}) => {			
+	return <AnimatePresence>
+		<FormGroup>
+      		<Div component="div">
+        		<Grid component="div" container alignItems="center" spacing={1}>		
+					<Grid item>
+						<IconButton
+							aria-label="sun icon"
+							aria-controls="menu-appbar"
+							aria-haspopup="false"
+							// onClick={handleMenu}
+							color="inherit"
+							style={{ paddingRight: 0 }}>
+								{checked === true ? <motion.div
+									initial={{opacity: 0, x: 10 }}
+									animate={{ opacity: 1, x: 0 }}
+									exit={{ opacity: 0, x: 10 }}
+									style={{ display: 'flex', alignItems: 'center'}}>
+									<Brightness7Icon />
+								</motion.div> : <motion.div
+									initial={{opacity: 1, x: 0}}
+									animate={{ opacity: 0, x: 25 }}
+									exit={{ opacity: 1, x: 0 }}>
+									<Brightness7Icon />
+								</motion.div>}
+						</IconButton>						
+					</Grid>	
+					<Grid item>
+						<AntSwitch checked={checked} name="checked" onChange={changeFn} />
+					</Grid>				
+					<Grid item>
+						{checked === false ? <motion.div
+							initial={{ opacity: 0, x: -10}}
+							animate={{ opacity: 1, x: 0 }}
+							exit={{ opacity: 0, x: -10 }}
+							transition={{ ease: "easeOut", duration: .195 }}>
+							<IconButton
+								aria-label="moon icon"
+								aria-controls="menu-appbar"
+								aria-haspopup="false"
+								color="inherit"
+								style={{ paddingLeft: 0 }}>	
+								<Brightness2Icon />								
+							</IconButton>						
+						</motion.div> : <motion.div
+							initial={{ opacity: 1, x: 0 }}
+							animate={{ opacity: 0, x: -25  }}
+							exit={{ opacity: 1, x: 0 }}
+							transition={{ ease: "easeOut", duration: .195 }}>
+							<IconButton
+								aria-label="moon icon"
+								aria-controls="menu-appbar"
+								aria-haspopup="false"
+								color="inherit">	
+								<Brightness2Icon />								
+							</IconButton>						
+						</motion.div>}	
+					</Grid>
 			</Grid>
-			<Grid item>	
-				<IconButton
-					aria-label="moon icon"
-					aria-controls="menu-appbar"
-					aria-haspopup="false"
-					// onClick={handleMenu}
-					color="inherit"
-					style={ !props.checked ? {opacity: 1 } : { opacity: 0}}>					
-					<Brightness2Icon />
-				</IconButton>			
-			</Grid>
-        </Grid>
-      </Div>
-	</FormGroup>
+			</Div>
+		</FormGroup>
+	</AnimatePresence>						
 }
 
 
