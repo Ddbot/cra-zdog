@@ -34,31 +34,23 @@ i18n.locale('fr');
 const MenuBar = styled(Toolbar)``;
 
 const Illustration = styled(Illo)`	
-		place-self: center;
+		// place-self: center;
 
-		grid-column: ${ props => Number(props.position) % 2 !== 0 ? '2 / span 2' : '1 / span 2'};
-		grid-row: ${ props => Number(props.position) % 2 !== 0 ? '2 / span 2' : '1 / span 2'};
+		// display: flex;
+		// justify-content: center;
+		// align-items: center;
 
-		display: flex;
-		justify-content: center;
-		align-items: center;
+		// height: 66.67vh;
+		// width: 100%;
 
-		height: 100%;
-		width: 100%;
+		// transition: width linear .125s, height linear .125s;
 
-		transition: width linear .125s, height linear .125s;
-
-		z-index: 1;
-
-		// img {
-		// 	aspect-ratio: 2/3;
-		// 	height: 100%;
-		// }
+		// z-index: 1;
 `;
 
 const Text = styled(ListItemText)`
-			grid-column: ${ props => Number(props.position) % 2 === 0 ? '2 / span 2' : '1 / span 2'};
-			grid-row: ${ props => Number(props.position) % 2 === 0 ? '2 / span 2' : '1 / span 2'};
+			grid-column: 1 / span 3;
+			grid-row: 1 / span 3;
 
 			display: flex;
 			justify-content: center;
@@ -66,8 +58,6 @@ const Text = styled(ListItemText)`
 
 			height: calc(100vh*2/3);
 
-			padding-bottom: 20vh;
-			
 			z-index: 2;
 			
 			transition: all linear .125s;
@@ -202,10 +192,6 @@ function App() {
 			return { ...state, checkedTheme: !prev.checkedTheme }
 		});
 	};
-
-	useEffect(() => { 
-		console.table(Object.entries(i18n.t('intro')))
-	}, []);
 	
 	return (
 		<ThemeProvider theme={state.checkedTheme ? darkTheme : lightTheme}>
@@ -247,15 +233,10 @@ function App() {
         	<InstallGrid component="ol">
 				{Object.values(i18n.t('intro')).map((v,i) => {
 					return <Li key={i+1}>
-						<Text position={i+1}>{v}</Text>
-						<Illustration position={i+1} />
-							{/* <img src={img} alt="tabbied" /> */}
-						{/* </Illustration> */}
+						<Text>{v}</Text>
+						<Illo />
 					</Li>
-				}
-			// <Li><div className='illustration'>Illustration</div><Text>{ i18n.t('intro.text') }</Text></Li>
-			// <Li><Text>Autre texte</Text><div className='illustration'>Illustration</div></Li>
-				)}
+				})}
 			</InstallGrid>
 			<DownArrow />
 		</ThemeProvider>

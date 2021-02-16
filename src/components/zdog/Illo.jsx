@@ -6,7 +6,23 @@ import { Anchor, Illustration, Ellipse, Shape, RoundedRect, useRender } from 're
 // import './styles.css'
 import styled from 'styled-components';
 
-const Illu = styled(Illustration)``;
+const Illu = styled(Illustration)`
+    grid-column: 1 / span 3;
+    grid-row: 1 / span 3;
+
+    place-self: center;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: 66.67vh;
+    width: 100%;
+
+    transition: width linear .125s, height linear .125s;
+
+    z-index: 1;    
+`;
 
 /** --- Basic, re-usable shapes -------------------------- */
 const TAU = Math.PI * 2

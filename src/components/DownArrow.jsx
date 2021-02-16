@@ -2,7 +2,11 @@ import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import styled from 'styled-components';
 
 const Container = styled.div`
+    position: fixed;
+    top: 90vh;     
+
     width: 100%;
+
     display: flex;
     justify-content: center;
 `;
