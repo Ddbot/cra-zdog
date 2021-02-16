@@ -30,21 +30,20 @@ i18n.locale('fr');
 
 const MenuBar = styled(Toolbar)``;
 
-const Illustration = styled.div`		
+const Illustration = styled.div`	
 		place-self: center;
-		height: 100%;
-		width: 100%;
-
-		border: dashed 1px pink;
-		
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		
-		transition: width linear .125s, height linear .125s;
 
 		grid-column: ${ props => Number(props.position) % 2 !== 0 ? '2 / span 2' : '1 / span 2'};
 		grid-row: ${ props => Number(props.position) % 2 !== 0 ? '2 / span 2' : '1 / span 2'};
+
+		display: flex;
+		justify-content: center;
+		align-items: center;
+
+		height: 100%;
+		width: 100%;
+
+		transition: width linear .125s, height linear .125s;
 
 		z-index: 1;
 
@@ -55,15 +54,42 @@ const Illustration = styled.div`
 `;
 
 const Text = styled(ListItemText)`
+			grid-column: ${ props => Number(props.position) % 2 === 0 ? '2 / span 2' : '1 / span 2'};
+			grid-row: ${ props => Number(props.position) % 2 === 0 ? '2 / span 2' : '1 / span 2'};
+
 			display: flex;
 			justify-content: center;
 			align-items: center;
+
 			height: calc(100vh*2/3);
+
+			padding-bottom: 20vh;
+			
 			z-index: 2;
-			border: solid 1px black;
-			transition: width linear .125s, height linear .125s;
-			grid-column: ${ props => Number(props.position) % 2 === 0 ? '2 / span 2' : '1 / span 2'};
-			grid-row: ${ props => Number(props.position) % 2 === 0 ? '2 / span 2' : '1 / span 2'};
+			
+			transition: width linear .125s, height linear .125s;	
+			
+			span {
+				font-size: 1.618rem;
+				text-align: center;
+
+				align-self: ${ props => {
+					switch (Number(props.position)) {
+						case 1:
+							return 'center'
+							break;
+						case 2:
+							return 'flex-end'
+							break;
+						case 3:
+							return 'center'
+							break;
+						default:
+							break;
+						}
+				}
+			}
+		}
 `;
 
 const Li = styled(ListItem)`
