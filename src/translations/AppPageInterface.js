@@ -4,7 +4,8 @@ export const i18n = rosetta({
   en: {
     intro: {
         welcome: 'Hi, I\'m Andry!',
-        text: 'I am a Front End developper',
+      text: 'I am a Front End developper',
+        other: 'Something else'
     },
     // support(obj) {
     //   let hour = Math.floor(Math.random() * 3) + 9;
@@ -16,7 +17,8 @@ export const i18n = rosetta({
   fr: {
     intro: {
         welcome: 'Bonjour, je suis Andry',
-        text: 'Je suis un développeur Front End',
+      text: 'Je suis un développeur Front End',
+        other: 'Autre texte'
     },
     // support(obj) {
     //   let hour = Math.floor(Math.random() * 3) + 9;

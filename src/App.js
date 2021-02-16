@@ -153,6 +153,10 @@ function App() {
 			return { ...state, checkedTheme: !prev.checkedTheme }
 		});
 	};
+
+	useEffect(() => { 
+		console.table(Object.entries(i18n.t('intro')))
+	}, []);
 	
 	return (
 		<ThemeProvider theme={state.checkedTheme ? darkTheme : lightTheme}>
@@ -192,9 +196,17 @@ function App() {
   			</MenuBar>
     	</AppBar>
         	<InstallGrid component="ol">
-				<Li><Cell>{i18n.t('intro.welcome')}</Cell><div className='illustration'><img src={ img } alt="tabbied"/></div></Li>
-			<Li><div className='illustration'>Illustration</div><Cell>{ i18n.t('intro.text') }</Cell></Li>
-			<Li><Cell>Autre texte</Cell><div className='illustration'>Illustration</div></Li>
+				{Object.values(i18n.t('intro')).map((v) => {
+					return <Li>
+						<Cell>{v}</Cell>
+						<div className='illustration'>
+							<img src={img} alt="tabbied" />
+						</div>
+					</Li>
+				}
+			// <Li><div className='illustration'>Illustration</div><Cell>{ i18n.t('intro.text') }</Cell></Li>
+			// <Li><Cell>Autre texte</Cell><div className='illustration'>Illustration</div></Li>
+				)}
         </InstallGrid>
 		</ThemeProvider>
   );
