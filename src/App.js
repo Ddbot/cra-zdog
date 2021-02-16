@@ -67,7 +67,7 @@ const Text = styled(ListItemText)`
 			
 			z-index: 2;
 			
-			transition: width linear .125s, height linear .125s;	
+			transition: all linear .125s;
 			
 			span {
 				font-size: 1.618rem;
