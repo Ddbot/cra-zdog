@@ -31,26 +31,39 @@ i18n.locale('fr');
 const MenuBar = styled(Toolbar)``;
 
 const Illustration = styled.div`		
-		// height: 60vh;
-		width: 50vw;
-		border: solid 1px gray;
-				display: flex;
+		place-self: center;
+		height: 100%;
+		width: 100%;
+
+		border: dashed 1px pink;
+		
+		display: flex;
 		justify-content: center;
 		align-items: center;
+		
 		transition: width linear .125s, height linear .125s;
 
-		// &:nth-of-type(1){
-		// 	grid-column: 1 / span 2 !important;
-		// 	grid-row: 1 / span 2 !important;
-		// }
+		grid-column: ${ props => Number(props.position) % 2 !== 0 ? '2 / span 2' : '1 / span 2'};
+		grid-row: ${ props => Number(props.position) % 2 !== 0 ? '2 / span 2' : '1 / span 2'};
+
+		z-index: 1;
 
 		img {
-			width: clamp(50%, 200px, 50vw);
+			aspect-ratio: 2/3;
+			height: 100%;
 		}
 `;
 
-const Text = styled(Cell)`
-
+const Text = styled(ListItemText)`
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: calc(100vh*2/3);
+			z-index: 2;
+			border: solid 1px black;
+			transition: width linear .125s, height linear .125s;
+			grid-column: ${ props => Number(props.position) % 2 === 0 ? '2 / span 2' : '1 / span 2'};
+			grid-row: ${ props => Number(props.position) % 2 === 0 ? '2 / span 2' : '1 / span 2'};
 `;
 
 const Li = styled(ListItem)`
@@ -59,15 +72,8 @@ const Li = styled(ListItem)`
 	grid-template-columns: 1fr 1fr 1fr;
 	grid-template-rows: 1fr 1fr 1fr;
 	gap: 0px 0px;
-	
-	div:not(.illustration) {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		width: 50vw;
-		border: solid 1px black;
-		transition: width linear .125s, height linear .125s;
-	}
+
+	margin-bottom: 10vh;
 
 	@media screen and (min-width: 568px){
 		div.illustration {
@@ -174,8 +180,8 @@ function App() {
 	
 	return (
 		<ThemeProvider theme={state.checkedTheme ? darkTheme : lightTheme}>
-    		<AppBar position='static'>
-      		<MenuBar>
+    		<AppBar position='fixed' style={{ zIndex: 100, transition: 'all linear .125s' }}>
+      			<MenuBar>
 				<IconButton id="appMenu" edge="start" color="inherit" aria-label="menu" onClick={ handleClick }>
           			<MenuIcon />
 				</IconButton>
@@ -208,12 +214,12 @@ function App() {
 						<MenuItem onClick={handleClose} data-lang="fr">Francais</MenuItem>
 					</Menu>	
   			</MenuBar>
-    	</AppBar>
+    		</AppBar>
         	<InstallGrid component="ol">
 				{Object.values(i18n.t('intro')).map((v,i) => {
-					return <Li key={i}>
-						<Text position={i}>{v}</Text>
-						<Illustration position={i} className='illustration'>
+					return <Li key={i+1}>
+						<Text position={i+1}>{v}</Text>
+						<Illustration position={i+1} className='illustration'>
 							<img src={img} alt="tabbied" />
 						</Illustration>
 					</Li>
