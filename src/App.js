@@ -30,20 +30,35 @@ i18n.locale('fr');
 
 const MenuBar = styled(Toolbar)``;
 
-const Li = styled(ListItem)`
-	div.illustration {
-		height: 60vh;
+const Illustration = styled.div`		
+		// height: 60vh;
 		width: 50vw;
-		border: solid 1px red;
+		border: solid 1px gray;
 				display: flex;
 		justify-content: center;
 		align-items: center;
 		transition: width linear .125s, height linear .125s;
 
+		// &:nth-of-type(1){
+		// 	grid-column: 1 / span 2 !important;
+		// 	grid-row: 1 / span 2 !important;
+		// }
+
 		img {
 			width: clamp(50%, 200px, 50vw);
 		}
-	}
+`;
+
+const Text = styled(Cell)`
+
+`;
+
+const Li = styled(ListItem)`
+	height: 100vh;
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	grid-template-rows: 1fr 1fr 1fr;
+	gap: 0px 0px;
 	
 	div:not(.illustration) {
 		display: flex;
@@ -58,7 +73,7 @@ const Li = styled(ListItem)`
 		div.illustration {
 			height: 80vh;
 			width: 50vw;
-			border: solid 1px red;
+			border: solid 1px gray;
 			display: flex;
 			justify-content: center;
 			align-items: center;
@@ -77,7 +92,6 @@ const Li = styled(ListItem)`
 `;
 
 const InstallGrid = styled(List)`
-	display: grid;
 	flex-flow: column nowrap;
 	align-items: center;
 	justify-content: center;
@@ -196,16 +210,16 @@ function App() {
   			</MenuBar>
     	</AppBar>
         	<InstallGrid component="ol">
-				{Object.values(i18n.t('intro')).map((v) => {
-					return <Li>
-						<Cell>{v}</Cell>
-						<div className='illustration'>
+				{Object.values(i18n.t('intro')).map((v,i) => {
+					return <Li key={i}>
+						<Text position={i}>{v}</Text>
+						<Illustration position={i} className='illustration'>
 							<img src={img} alt="tabbied" />
-						</div>
+						</Illustration>
 					</Li>
 				}
-			// <Li><div className='illustration'>Illustration</div><Cell>{ i18n.t('intro.text') }</Cell></Li>
-			// <Li><Cell>Autre texte</Cell><div className='illustration'>Illustration</div></Li>
+			// <Li><div className='illustration'>Illustration</div><Text>{ i18n.t('intro.text') }</Text></Li>
+			// <Li><Text>Autre texte</Text><div className='illustration'>Illustration</div></Li>
 				)}
         </InstallGrid>
 		</ThemeProvider>
