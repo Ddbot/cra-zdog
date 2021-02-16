@@ -23,6 +23,8 @@ import { i18n } from './translations/AppPageInterface';
 import ChangeThemeSwitch from './components/ChangeThemeSwitch';
 import Cell from './components/Cell';
 
+import img from './assets/tabbied.png';
+
 // set default language
 i18n.locale('fr');
 
@@ -37,6 +39,10 @@ const Li = styled(ListItem)`
 		justify-content: center;
 		align-items: center;
 		transition: width linear .125s, height linear .125s;
+
+		img {
+			width: clamp(50%, 200px, 50vw);
+		}
 	}
 	div:not(.illustration) {
 		display: flex;
@@ -185,9 +191,9 @@ function App() {
   			</MenuBar>
     	</AppBar>
         	<InstallGrid component="ol">
-			<Li><ListItemText>{ i18n.t('intro.welcome') }</ListItemText><div className='illustration'>Illustration</div></Li>
-			<Li><div className='illustration'>Illustration</div><ListItemText>{ i18n.t('intro.text') }</ListItemText></Li>
-			<Li><ListItemText>Autre texte</ListItemText><div className='illustration'>Illustration</div></Li>
+				<Li><Cell>{i18n.t('intro.welcome')}</Cell><div className='illustration'><img src={ img } alt="tabbied"/></div></Li>
+			<Li><div className='illustration'>Illustration</div><Cell>{ i18n.t('intro.text') }</Cell></Li>
+			<Li><Cell>Autre texte</Cell><div className='illustration'>Illustration</div></Li>
         </InstallGrid>
 		</ThemeProvider>
   );
