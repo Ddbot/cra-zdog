@@ -44,6 +44,7 @@ const Li = styled(ListItem)`
 			width: clamp(50%, 200px, 50vw);
 		}
 	}
+	
 	div:not(.illustration) {
 		display: flex;
 		justify-content: center;
