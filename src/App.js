@@ -1,122 +1,80 @@
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import {
 	AppBar,
-	Button,
 	Container,
-	FormGroup,
-	FormControlLabel,
-	Grid,  
 	IconButton,
 	List,
 	ListItem,
 	ListItemText,
 	Menu,
 	MenuItem,
-	Switch,
 	Toolbar,
 	Typography,
 } from '@material-ui/core';
-import { withStyles, createMuiTheme, responsiveFontSizes, ThemeProvider } from '@material-ui/core/styles';
+import { createMuiTheme, responsiveFontSizes, ThemeProvider } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import Brightness2Icon from '@material-ui/icons/Brightness2';
-import Brightness7Icon from '@material-ui/icons/Brightness7';
+
 import TranslateIcon from '@material-ui/icons/Translate';
-import { orange, lightBlue, deepPurple } from '@material-ui/core/colors';
+import { orange, deepPurple } from '@material-ui/core/colors';
 
 import styled from 'styled-components';
-import { AnimatePresence, motion } from 'framer-motion';
 import { i18n } from './translations/AppPageInterface';
 
+import ChangeThemeSwitch from './components/ChangeThemeSwitch';
+import Cell from './components/Cell';
+
 // set default language
-i18n.locale('en');
-
-// let theme = createMuiTheme({
-// 	palette: {
-// 		primary: {
-// 			main: orange[500],
-// 			type: 'light'
-// 		},
-// 		secondary: {
-// 			main: lightBlue[500],
-// 			type: 'dark'
-// 		},
-// 		// error: '#BA3B25',
-// 		// warning: '#ee6622',
-// 		// info: '#2A4F54',
-// 		// success: '#40A140',
-// 	}
-// });
-  
-// theme = responsiveFontSizes(theme);
-
-const AntSwitch = withStyles((theme) => ({
-  root: {
-    width: 28,
-    height: 16,
-    padding: 0,
-    display: 'flex',
-  },
-  switchBase: {
-    padding: 2,
-    color: theme.palette.primary[500],
-    '&$checked': {
-      transform: 'translateX(12px)',
-      color: theme.palette.common.white,
-      '& + $track': {
-        opacity: 1,
-        backgroundColor: theme.palette.primary.main,
-        borderColor: theme.palette.primary.main,
-      },
-    },
-  },
-  thumb: {
-    width: 12,
-    height: 12,
-    boxShadow: 'none',
-  },
-  track: {
-    border: `1px solid ${theme.palette.grey[500]}`,
-    borderRadius: 16 / 2,
-    opacity: 1,
-    backgroundColor: theme.palette.common.white,
-  },
-  checked: {},
-}))(Switch);
+i18n.locale('fr');
 
 const MenuBar = styled(Toolbar)``;
 
-const AppContainer = styled(Container)`
-  height: 100vh;
-  display: flex;
-  flex-flow: row nowrap;
+const Li = styled(ListItem)`
+	div.illustration {
+		height: 60vh;
+		width: 50vw;
+		border: solid 1px red;
+				display: flex;
+		justify-content: center;
+		align-items: center;
+		transition: width linear .125s, height linear .125s;
+	}
+	div:not(.illustration) {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 50vw;
+		border: solid 1px black;
+		transition: width linear .125s, height linear .125s;
+	}
+
+	@media screen and (min-width: 568px){
+		div.illustration {
+			height: 80vh;
+			width: 50vw;
+			border: solid 1px red;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			transition: width linear .125s, height linear .125s;
+		}
+		div:not(.illustration) {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 80vh;
+			width: 50vw;
+			border: solid 1px black;
+			transition: width linear .125s, height linear .125s;
+		}
+	}
 `;
 
 const InstallGrid = styled(List)`
-	display: flex;
+	display: grid;
 	flex-flow: column nowrap;
 	align-items: center;
 	justify-content: center;
 	height: 100vh;
-`;
-
-const Div = styled(Typography)`
-	display: flex;
-	flex-flow: row nowrap;
-	align-items: center;
-	justify-content: flex-end;
-	// scale: 0.75;
-
-	transform: translateX(30%);
-
-	span.MuiSwitch-track,
-	span.MuiSwitch-thumb	 {
-		background: white !important;
-	}
-
-	span.MuiButtonBase-root.MuiIconButton-root {
-		background: darkgray;
-	}
 `;
 
 const ChangeLanguageIcon = styled(IconButton)`
@@ -127,73 +85,9 @@ const ChangeLanguageIcon = styled(IconButton)`
 	font-size: 40px;
 `;
 
-const ChangeThemeSwitch = ({changeFn, checked}) => {			
-	return <AnimatePresence>
-		<FormGroup>
-      		<Div component="div">
-        		<Grid component="div" container alignItems="center" spacing={1}>		
-					<Grid item>
-						<IconButton
-							aria-label="sun icon"
-							aria-controls="menu-appbar"
-							aria-haspopup="false"
-							// onClick={handleMenu}
-							color="inherit"
-							style={{ paddingRight: 0 }}>
-								{checked === true ? <motion.div
-									initial={{opacity: 0, x: 10, scale: 0 }}
-									animate={{ opacity: 1, x: 0, scale: 1 }}
-									exit={{ opacity: 0, x: 10 }}
-									style={{ display: 'flex', alignItems: 'center'}}>
-									<Brightness7Icon />
-								</motion.div> : <motion.div
-									initial={{opacity: 1, x: 0}}
-									animate={{ opacity: 0, x: 25 }}
-									exit={{ opacity: 1, x: 0 }}>
-									<Brightness7Icon />
-								</motion.div>}
-						</IconButton>						
-					</Grid>	
-					<Grid item>
-						<AntSwitch checked={checked} name="checked" onChange={changeFn} />
-					</Grid>				
-					<Grid item>
-						{checked === false ? <motion.div
-							initial={{ opacity: 0, x: -10, scale: 0}}
-							animate={{ opacity: 1, x: 0, scale: 1 }}
-							exit={{ opacity: 0, x: -10 }}
-							transition={{ ease: "easeOut", duration: .195 }}>
-							<IconButton
-								aria-label="moon icon"
-								aria-controls="menu-appbar"
-								aria-haspopup="false"
-								color="inherit"
-								style={{ paddingLeft: 0 }}>	
-								<Brightness2Icon />								
-							</IconButton>						
-						</motion.div> : <motion.div
-							initial={{ opacity: 1, x: 0 }}
-							animate={{ opacity: 0, x: -25  }}
-							exit={{ opacity: 1, x: 0 }}
-							transition={{ ease: "easeOut", duration: .195 }}>
-							<IconButton
-								aria-label="moon icon"
-								aria-controls="menu-appbar"
-								aria-haspopup="false"
-								color="inherit">	
-								<Brightness2Icon />								
-							</IconButton>						
-						</motion.div>}	
-					</Grid>
-			</Grid>
-			</Div>
-		</FormGroup>
-	</AnimatePresence>						
-}
-
-
 function App() {
 	const [anchorEl, setAnchorEl] = useState(null);
+	const [langAnchorEl, setLangAnchorEl] = useState(null);
 
 	const [state, setState] = useState({
 		checkedTheme: false,
@@ -215,19 +109,35 @@ function App() {
 			},
 			type: 'dark',
 		}		
-});
+	});
   
-darkTheme = responsiveFontSizes(darkTheme);
-lightTheme = responsiveFontSizes(lightTheme);
-
-	function handleClick(e) {
-		e.persist();
-		setAnchorEl(e.currentTarget);
-	}
+	darkTheme = responsiveFontSizes(darkTheme);
+	lightTheme = responsiveFontSizes(lightTheme);
 
 	function handleClose(e) {
 		e.persist();
+		const { currentTarget } = e;
+	
+		i18n.locale(currentTarget.dataset.lang);
 		setAnchorEl(null);
+		setLangAnchorEl(null);
+	}
+
+	function handleClick(e) {
+		e.persist();
+		const { currentTarget, target } = e;
+		console.log(currentTarget, target)
+
+		switch (currentTarget.id) { 
+			case 'appMenu':
+				setAnchorEl(currentTarget);
+				break;
+			case 'lang':
+				setLangAnchorEl(currentTarget)
+				break;
+			default:
+				break;
+		};
 	}
 
 	const handleChange = (event) => {
@@ -237,45 +147,49 @@ lightTheme = responsiveFontSizes(lightTheme);
 		});
 	};
 	
-	// useEffect(() => {
-	// 	console.log('Changement de state: ', state);
-	// 	theme.palette.type = !!state.checkedTheme ? 'dark' : 'light'
-	// }, [state.checkedTheme]);
-
-	return (<ThemeProvider theme={ state.checkedTheme ? darkTheme : lightTheme }>
-    	<AppBar position='static'>
+	return (
+		<ThemeProvider theme={state.checkedTheme ? darkTheme : lightTheme}>
+    		<AppBar position='static'>
       		<MenuBar>
-				<IconButton edge="start" color="inherit" aria-label="menu" onClick={ handleClick }>
+				<IconButton id="appMenu" edge="start" color="inherit" aria-label="menu" onClick={ handleClick }>
           			<MenuIcon />
 				</IconButton>
-				<Menu
-					// id="simple-menu"
+				{/* <Menu
 					anchorEl={anchorEl}
 					// keepMounted
 					open={Boolean(anchorEl)}
 					onClose={handleClose}>
 					<MenuItem onClick={handleClose}>Profile</MenuItem>
 					<MenuItem onClick={handleClose}>My account</MenuItem>
-					<MenuItem onClick={handleClose}>Logout</MenuItem>
-				</Menu>
+				</Menu> */}
 				<Typography variant="h6">Andry Online</Typography>
 				<ChangeThemeSwitch checked={state.checkedTheme} changeFn={handleChange}/>
-				<ChangeLanguageIcon
-					aria-label="change language button"
-					aria-controls="menu-appbar"
-					aria-haspopup="true"
-					// onClick={handleChange}
-					color="inherit">
-					<TranslateIcon />
-				</ChangeLanguageIcon>				
+					<ChangeLanguageIcon
+						id="lang"						
+						aria-label="change language button"
+						aria-controls="menu-appbar"
+						aria-haspopup="true"
+						onClick={handleClick}
+						color="inherit"
+						edge="start" color="inherit" aria-label="menu">
+						<TranslateIcon />
+					</ChangeLanguageIcon>	
+					<Menu
+						anchorEl={langAnchorEl}
+						keepMounted
+						open={Boolean(langAnchorEl)}
+						onClose={handleClose}>
+						<MenuItem onClick={handleClose} data-lang="en">English</MenuItem>
+						<MenuItem onClick={handleClose} data-lang="fr">Francais</MenuItem>
+					</Menu>	
   			</MenuBar>
     	</AppBar>
-        <InstallGrid component="ol">
-			<ListItem><ListItemText>{ i18n.t('intro.welcome') }</ListItemText></ListItem>
-			<ListItem><ListItemText>{ i18n.t('intro.text') }</ListItemText></ListItem>
-			<ListItem><ListItemText>{ i18n.t('intro.blabla') }</ListItemText></ListItem>
+        	<InstallGrid component="ol">
+			<Li><ListItemText>{ i18n.t('intro.welcome') }</ListItemText><div className='illustration'>Illustration</div></Li>
+			<Li><div className='illustration'>Illustration</div><ListItemText>{ i18n.t('intro.text') }</ListItemText></Li>
+			<Li><ListItemText>Autre texte</ListItemText><div className='illustration'>Illustration</div></Li>
         </InstallGrid>
-  </ThemeProvider>
+		</ThemeProvider>
   );
 }
 
