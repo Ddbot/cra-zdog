@@ -21,7 +21,10 @@ import styled from 'styled-components';
 import { i18n } from './translations/AppPageInterface';
 
 import ChangeThemeSwitch from './components/ChangeThemeSwitch';
-import Cell from './components/Cell';
+
+import Illo from './components/zdog/Illo';
+
+import DownArrow from './components/DownArrow';
 
 import img from './assets/tabbied.png';
 
@@ -30,7 +33,7 @@ i18n.locale('fr');
 
 const MenuBar = styled(Toolbar)``;
 
-const Illustration = styled.div`	
+const Illustration = styled(Illo)`	
 		place-self: center;
 
 		grid-column: ${ props => Number(props.position) % 2 !== 0 ? '2 / span 2' : '1 / span 2'};
@@ -47,10 +50,10 @@ const Illustration = styled.div`
 
 		z-index: 1;
 
-		img {
-			aspect-ratio: 2/3;
-			height: 100%;
-		}
+		// img {
+		// 	aspect-ratio: 2/3;
+		// 	height: 100%;
+		// }
 `;
 
 const Text = styled(ListItemText)`
@@ -245,15 +248,16 @@ function App() {
 				{Object.values(i18n.t('intro')).map((v,i) => {
 					return <Li key={i+1}>
 						<Text position={i+1}>{v}</Text>
-						<Illustration position={i+1} className='illustration'>
-							<img src={img} alt="tabbied" />
-						</Illustration>
+						<Illustration position={i+1} />
+							{/* <img src={img} alt="tabbied" /> */}
+						{/* </Illustration> */}
 					</Li>
 				}
 			// <Li><div className='illustration'>Illustration</div><Text>{ i18n.t('intro.text') }</Text></Li>
 			// <Li><Text>Autre texte</Text><div className='illustration'>Illustration</div></Li>
 				)}
-        </InstallGrid>
+			</InstallGrid>
+			<DownArrow />
 		</ThemeProvider>
   );
 }
