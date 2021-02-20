@@ -41,6 +41,7 @@ const Illustration = styled(Illo)`
 		// align-items: center;
 
 		// height: 66.67vh;
+		height: 100vh;
 		// width: 100%;
 
 		// transition: width linear .125s, height linear .125s;
@@ -56,7 +57,7 @@ const Text = styled(ListItemText)`
 			justify-content: center;
 			align-items: center;
 
-			height: calc(100vh*2/3);
+			// height: calc(100vh*2/3);
 
 			z-index: 2;
 			
@@ -66,21 +67,21 @@ const Text = styled(ListItemText)`
 				font-size: 1.618rem;
 				text-align: center;
 
-				align-self: ${ props => {
-					switch (Number(props.position)) {
-						case 1:
-							return 'center'
-							break;
-						case 2:
-							return 'flex-end'
-							break;
-						case 3:
-							return 'center'
-							break;
-						default:
-							break;
-						}
-				}
+				// align-self: ${ props => {
+				// 	switch (Number(props.position)) {
+				// 		case 1:
+				// 			return 'center'
+				// 			break;
+				// 		case 2:
+				// 			return 'flex-end'
+				// 			break;
+				// 		case 3:
+				// 			return 'center'
+				// 			break;
+				// 		default:
+				// 			break;
+				// 		}
+				// }
 			}
 		}
 `;
@@ -92,7 +93,7 @@ const Li = styled(ListItem)`
 	grid-template-rows: 1fr 1fr 1fr;
 	gap: 0px 0px;
 
-	margin-bottom: 10vh;
+	// margin-bottom: 10vh;
 
 	@media screen and (min-width: 568px){
 		div.illustration {
@@ -234,7 +235,7 @@ function App() {
 				{Object.values(i18n.t('intro')).map((v,i) => {
 					return <Li key={i+1}>
 						<Text>{v}</Text>
-						<Illo />
+						<Illustration />
 					</Li>
 				})}
 			</InstallGrid>

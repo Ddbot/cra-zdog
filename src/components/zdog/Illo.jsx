@@ -10,15 +10,6 @@ const Illu = styled(Illustration)`
     grid-column: 1 / span 3;
     grid-row: 1 / span 3;
 
-    place-self: center;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    height: 66.67vh;
-    width: 100%;
-
     transition: width linear .125s, height linear .125s;
 
     z-index: 1;    
@@ -76,7 +67,7 @@ function Guy() {
 }
 
 // ReactDOM.render(
-    const Illo = (props) => <Illu zoom={8} className='illustration'>
+const Illo = (props) => <Illu zoom={4} translate={{ x: 25, y: -33 }} className='illustration'>
     <Ellipse diameter={20} rotate={{ x: -TAU / 3 }} translate={{ y: 15, z: -100 }} stroke={4} color="#373740" fill />
     <Guy />
     </Illu>
