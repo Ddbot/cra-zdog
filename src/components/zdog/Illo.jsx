@@ -5,6 +5,7 @@ import { Anchor, Illustration, Ellipse, Shape, RoundedRect, useRender } from 're
 // import { a, useSpring } from 'react-spring/zdog'
 // import './styles.css'
 import styled from 'styled-components';
+import Acone from './Acone';
 
 const Illu = styled(Illustration)`
     grid-column: 1 / span 3;
@@ -68,8 +69,9 @@ function Guy() {
 
 // ReactDOM.render(
 const Illo = (props) => <Illu zoom={4} translate={{ x: 25, y: -33 }} className='illustration'>
-    <Ellipse diameter={20} rotate={{ x: -TAU / 3 }} translate={{ y: 15, z: -100 }} stroke={4} color="#373740" fill />
-    <Guy />
+    {/* <Ellipse diameter={20} rotate={{ x: -TAU / 3 }} translate={{ y: 15, z: -100 }} stroke={4} color="#373740" fill /> */}
+    {/* <Guy /> */}
+    <Acone rotate={{ y: 66 }} />
     </Illu>
   
 export default Illo;
