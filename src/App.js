@@ -33,22 +33,6 @@ i18n.locale('fr');
 
 const MenuBar = styled(Toolbar)``;
 
-const Illustration = styled(Illo)`	
-		// place-self: center;
-
-		// display: flex;
-		// justify-content: center;
-		// align-items: center;
-
-		// height: 66.67vh;
-		height: 100vh;
-		// width: 100%;
-
-		// transition: width linear .125s, height linear .125s;
-
-		// z-index: 1;
-`;
-
 const Text = styled(ListItemText)`
 			grid-column: 1 / span 3;
 			grid-row: 1 / span 3;
@@ -66,23 +50,6 @@ const Text = styled(ListItemText)`
 			span {
 				font-size: 1.618rem;
 				text-align: center;
-
-				// align-self: ${ props => {
-				// 	switch (Number(props.position)) {
-				// 		case 1:
-				// 			return 'center'
-				// 			break;
-				// 		case 2:
-				// 			return 'flex-end'
-				// 			break;
-				// 		case 3:
-				// 			return 'center'
-				// 			break;
-				// 		default:
-				// 			break;
-				// 		}
-				// }
-			}
 		}
 `;
 
@@ -132,6 +99,10 @@ const ChangeLanguageIcon = styled(IconButton)`
 	font-size: 40px;
 `;
 
+const Svg = styled.svg`
+
+`;
+
 function App() {
 	const [anchorEl, setAnchorEl] = useState(null);
 	const [langAnchorEl, setLangAnchorEl] = useState(null);
@@ -139,6 +110,9 @@ function App() {
 	const [state, setState] = useState({
 		checkedTheme: false,
 	});
+
+	const zdogRef = useRef(null);
+	const olRef = useRef(null);
 
 	let lightTheme = createMuiTheme({
 		palette: {
@@ -157,7 +131,7 @@ function App() {
 			type: 'dark',
 		}		
 	});
-  
+	
 	darkTheme = responsiveFontSizes(darkTheme);
 	lightTheme = responsiveFontSizes(lightTheme);
 
@@ -193,24 +167,24 @@ function App() {
 			return { ...state, checkedTheme: !prev.checkedTheme }
 		});
 	};
+
+	useEffect(() => {
+		// Array.from(olRef.current.querySelectorAll('svg>path')).map(path => {
+		// 	path.transform = 'translate(-100px,0)';
+		// });
+		// console.log(olRef.current.querySelector('svg').getAttribute('width'), olRef.current.querySelector('svg').width);
+		console.table([['Zdog Width', zdogRef.current]])
+	});
 	
 	return (
 		<ThemeProvider theme={state.checkedTheme ? darkTheme : lightTheme}>
-    		<AppBar position='fixed' style={{ zIndex: 100, transition: 'all linear .125s' }}>
-      			<MenuBar>
-				<IconButton id="appMenu" edge="start" color="inherit" aria-label="menu" onClick={ handleClick }>
-          			<MenuIcon />
-				</IconButton>
-				{/* <Menu
-					anchorEl={anchorEl}
-					// keepMounted
-					open={Boolean(anchorEl)}
-					onClose={handleClose}>
-					<MenuItem onClick={handleClose}>Profile</MenuItem>
-					<MenuItem onClick={handleClose}>My account</MenuItem>
-				</Menu> */}
-				<Typography variant="h6">Andry Online</Typography>
-				<ChangeThemeSwitch checked={state.checkedTheme} changeFn={handleChange}/>
+			<AppBar position='fixed' style={{ zIndex: 100, transition: 'all linear .125s' }}>
+				<MenuBar>
+					<IconButton id="appMenu" edge="start" color="inherit" aria-label="menu" onClick={ handleClick }>
+						<MenuIcon />
+					</IconButton>
+					<Typography variant="h6">Andry Online</Typography>
+					<ChangeThemeSwitch checked={state.checkedTheme} changeFn={handleChange}/>
 					<ChangeLanguageIcon
 						id="lang"						
 						aria-label="change language button"
@@ -229,19 +203,18 @@ function App() {
 						<MenuItem onClick={handleClose} data-lang="en">English</MenuItem>
 						<MenuItem onClick={handleClose} data-lang="fr">Francais</MenuItem>
 					</Menu>	
-  			</MenuBar>
-    		</AppBar>
-        	<InstallGrid component="ol">
+				</MenuBar>
+			</AppBar>
+			<Illo ref={zdogRef} />
+			<InstallGrid component="ol" ref={olRef}>
 				{Object.values(i18n.t('intro')).map((v,i) => {
 					return <Li key={i+1}>
 						<Text>{v}</Text>
-						<Illustration />
 					</Li>
 				})}
 			</InstallGrid>
 			<DownArrow />
-		</ThemeProvider>
-  );
+		</ThemeProvider>);
 }
 
 export default App;
