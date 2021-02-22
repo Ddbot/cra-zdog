@@ -30,67 +30,49 @@ const Illu = styled(Illustration)`
 /** --- Basic, re-usable shapes -------------------------- */
 const TAU = Math.PI * 2;
 
-const aconeDimensions = {
-  
-    diameter: 24,
-    length: 20.78,
-    rotate: { x: TAU*90/360 },
-    stroke: false,
-    color: '#636',
-    backface: '#C25',
+const Illo = (props) => {
+  const [coords, setCoords] = useState({
+    a : { 
+      diameter: 24,
+      length: 20.78,
+      rotate: { x: TAU*90/360 },
+      stroke: false,
+      color: '#636',
+      backface: '#C25',
+      // translate: {
+      //   x: -55,
+      //   y: 6,
+      // }, 
+  },
+  o: {
+    diameter: 16.97,
+    length: 16.97,
     // translate: {
-    //   x: -55,
-    //   y: 6,
-    // }, 
-};
-
-const oellipseDimensions = {
-  diameter: 9.889,
-  rotate: {
-    // x: -TAU/4
+    //   x: 10
+    // },
+    rotate: { z: -TAU * 120/360 },
+    // ^pour avoir un diamant de coté
+    // rotate: { x: TAU * 90/360, y: TAU * 45/360, z: -TAU * 120/360}
+    stroke: false,
+    color: '#EA0',
+    frontFace: '#c25',
+    backface: '#e62',  
   },
-  translate: { 
-    y: 9.889,
-    z: 20 
-  },
-  stroke: 4,
-  color: '#C25'
-};
-
-const lcylinderDimensions = {
-  diameter: 16.97,
-  length: 16.97,
-  // translate: {
-  //   x: 10
-  // },
-  rotate: { z: -TAU * 120/360 },
-  // ^pour avoir un diamant de coté
-  // rotate: { x: TAU * 90/360, y: TAU * 45/360, z: -TAU * 120/360}
-  stroke: false,
-  color: '#EA0',
-  frontFace: '#c25',
-  backface: '#e62',
-  
-};
-
-const boxDimensions = {
-  width: 20.78,
-  height: 20.78,
-  depth: 20.78,
-  stroke: false,
-  color: 'rgba(0,0,0,1)', // default face color
-  leftFace: 'rgba(0,0,0,0.1)',
-  rightFace: 'rgba(0,0,0,0.1)',
-  topFace: 'rgba(0,0,0,0.1)',
-  bottomFace: 'rgba(0,0,0,0.1)',
-  // translate: {
-  //   x: -58.6,
-  // },
-  rotate: { z: -TAU * 45/360 },
-  
-};
-
-const Illo = forwardRef((props, ref) => {
+  l: {
+    diameter: 16.97,
+    length: 16.97,
+    translate: {
+      x: 10
+    },
+    rotate: { z: -TAU * 120/360 },
+    // ^pour avoir un diamant de coté
+    // rotate: { x: TAU * 90/360, y: TAU * 45/360, z: -TAU * 120/360}
+    stroke: false,
+    color: 'green',
+    frontFace: '#c25',
+    backface: '#e62',  
+  }
+});
   
   function renderShape(el,index){
     let calculateCoords = index => {
@@ -132,13 +114,13 @@ const Illo = forwardRef((props, ref) => {
     }
   }
 
-  return <Illu zoom={4} ref={ref} style={{ transformOrigin: 'top left'}} className='illustration'>
-      <Acone { ...aconeDimensions } />
-      <OEllipse {...oellipseDimensions} />
-      <LCylinder {...lcylinderDimensions } /> 
+  return <Illu zoom={4} style={{ transformOrigin: 'top left'}} className='illustration'>
+      <Acone { ...coords['a'] } />
+      <LCylinder {...coords['o'] } /> 
+      <LCylinder {...coords['l']} /> 
 
       {/* {['b','t','c','b','c','s','b','t','t','c','t','c','b','b','s','b','t','b','c','b','b','c','b','t'].map((el,i) => <g>{renderShape(el,i)}</g>)} */}
       </Illu>
-})
+}
   
 export default Illo;
