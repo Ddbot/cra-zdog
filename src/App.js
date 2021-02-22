@@ -18,6 +18,12 @@ import TranslateIcon from '@material-ui/icons/Translate';
 import { orange, deepPurple } from '@material-ui/core/colors';
 
 import styled from 'styled-components';
+
+import { gsap, ScrollTrigger } from "gsap/all";
+
+// don't forget to register plugins
+gsap.registerPlugin(ScrollTrigger);
+
 import { i18n } from './translations/AppPageInterface';
 
 import ChangeThemeSwitch from './components/ChangeThemeSwitch';
@@ -30,6 +36,8 @@ import img from './assets/tabbied.png';
 
 // set default language
 i18n.locale('fr');
+
+const TAU = Math.PI * 2;
 
 const MenuBar = styled(Toolbar)``;
 
@@ -99,16 +107,59 @@ const ChangeLanguageIcon = styled(IconButton)`
 	font-size: 40px;
 `;
 
-const Svg = styled.svg`
-
-`;
-
 function App() {
 	const [anchorEl, setAnchorEl] = useState(null);
 	const [langAnchorEl, setLangAnchorEl] = useState(null);
 
 	const [state, setState] = useState({
 		checkedTheme: false,
+	});
+
+	const [coords, setCoords] = useState({
+		a : { 
+		  diameter: 24,
+		  length: 20.78,
+		  translate: {
+			x: 0,
+			y: 0,
+		  }, 
+		  rotate: { x: TAU*90/360, y: 0, z: 0 },
+		  scale: 1.4,
+		  stroke: false,
+		  color: '#636',
+		  backface: '#C25',      
+	  },
+	  o: {
+		diameter: 16.97,
+		length: 16.97,
+		translate: {
+		  x: 3.95,
+		  z: 10
+		},
+		rotate: { x: 0, y: 0, z: -TAU * 120/360 },
+		scale: 0.8,
+		// pour avoir un diamant de coté
+		// rotate: { x: TAU * 90/360, y: TAU * 45/360, z: -TAU * 120/360}
+		stroke: false,
+		color: '#EA0',
+		frontFace: '#c25',
+		backface: '#e62',  
+	  },
+	  l: {
+		diameter: 2,
+		length: 48,
+		translate: {
+		  x: 4,
+		  y: -8
+		},
+		rotate: {  x: TAU * 90/360, y: -TAU * 45/360 },
+		// ^pour avoir un diamant de coté
+		// rotate: { x: TAU * 90/360, y: TAU * 45/360, z: -TAU * 120/360}
+		stroke: true,
+		color: '#e62',
+		frontFace: '#c25',
+		backface: '#e62',  
+	  }
 	});
 
 	const zdogRef = useRef(null);
@@ -148,6 +199,7 @@ function App() {
 		e.persist();
 		const { currentTarget, target } = e;
 		console.log(currentTarget, target)
+		animateTest();
 
 		switch (currentTarget.id) { 
 			case 'appMenu':
@@ -168,13 +220,23 @@ function App() {
 		});
 	};
 
-	useEffect(() => {
-		// Array.from(olRef.current.querySelectorAll('svg>path')).map(path => {
-		// 	path.transform = 'translate(-100px,0)';
-		// });
-		// console.log(olRef.current.querySelector('svg').getAttribute('width'), olRef.current.querySelector('svg').width);
-		console.table([['Zdog Width', zdogRef.current]])
-	});
+	const animateTest = (e) => {
+		gsap.to('body', {
+			opacity: 1,
+			onUpdate: () =>{
+				setCoords(prev => {
+					return { ...prev, 
+						a: {
+							translate: {
+								y: prev.a.translate.y + 0.1
+							}
+						}
+					}
+				})
+			},
+			duration: 1
+		});
+	}
 	
 	return (
 		<ThemeProvider theme={state.checkedTheme ? darkTheme : lightTheme}>
@@ -205,7 +267,7 @@ function App() {
 					</Menu>	
 				</MenuBar>
 			</AppBar>
-			<Illo ref={zdogRef} />
+			<Illo ref={zdogRef} coords={coords} />
 			<InstallGrid component="ol" ref={olRef}>
 				{Object.values(i18n.t('intro')).map((v,i) => {
 					return <Li key={i+1}>
