@@ -8,10 +8,10 @@ let Acone = (props) => {
     const ref = useRef(undefined);
 
     useRender(t => {
-        let { x, y, z } = ref.current.rotate;
         ref.current.rotate.x += 0;
         ref.current.rotate.y += 0;
         ref.current.rotate.z -= 0;
+
     });
 
 

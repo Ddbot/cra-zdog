@@ -69,6 +69,10 @@ const Illo = forwardRef((props,ref) => {
     }
   }
 
+  useEffect(() => {
+    console.log('Ref in Illo = ', ref.current)
+  })
+
   return <Illu zoom={4} style={{ transformOrigin: 'top left'}} className='illustration'>
       <Acone { ...coords['a'] } />
       <OCylinder {...coords['o'] } /> 
