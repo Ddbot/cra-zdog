@@ -1,9 +1,6 @@
 import ReactDOM from 'react-dom'
-import React, { forwardRef, useRef, useState, useEffect } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import { Anchor, Illustration, Ellipse, Shape, RoundedRect, useRender, useZdog } from 'react-zdog'
-// New react-spring target, for native animation outside of React
-// import { a, useSpring } from 'react-spring/zdog'
-// import './styles.css'
 import styled from 'styled-components';
 import Acone from './Acone';
 import OEllipse from './OEllipse';
@@ -25,6 +22,8 @@ const Illu = styled(Illustration)`
   position: fixed !important;
     
   top: 9vh;
+
+  border: 2px dashed red;
 `;
 
 /** --- Basic, re-usable shapes -------------------------- */
@@ -76,8 +75,10 @@ const Illo = (props) => {
     frontFace: '#c25',
     backface: '#e62',  
   }
-});
-  
+  });
+
+  let ref = useRef(undefined);
+
   function renderShape(el,index){
     let calculateCoords = index => {
       return [index % cols, parseInt(index / cols)]
