@@ -27,7 +27,8 @@ const Illu = styled(Illustration)`
 
 /** --- Basic, re-usable shapes -------------------------- */
 const Illo = forwardRef((props,ref) => {
-  const [coords, setCoords ] = useState(props.coords)
+  const [coords, setCoords ] = useState(props.coords);
+  
   function renderShape(el,index){
     let calculateCoords = index => {
       return [index % cols, parseInt(index / cols)]

@@ -136,7 +136,7 @@ function App() {
 		  x: 3.95,
 		  z: 10
 		},
-		rotate: { z: -TAU * 120/360 },
+		rotate: { x: 0, y: 0, z: -TAU * 120/360 },
 		scale: 0.8,
 		// pour avoir un diamant de coté
 		// rotate: { x: TAU * 90/360, y: TAU * 45/360, z: -TAU * 120/360}

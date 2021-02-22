@@ -7,10 +7,6 @@ let Acone = (props) => {
     // const { illu, scene, size } = useZdog();
     const ref = useRef(undefined);
 
-    useEffect(() => {
-        console.log(props);
-    });
-
     useRender(t => {
         let { x, y, z } = ref.current.rotate;
         ref.current.rotate.x += 0;
