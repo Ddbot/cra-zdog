@@ -18,6 +18,12 @@ import TranslateIcon from '@material-ui/icons/Translate';
 import { orange, deepPurple } from '@material-ui/core/colors';
 
 import styled from 'styled-components';
+
+import { gsap, ScrollTrigger } from "gsap/all";
+
+// don't forget to register plugins
+gsap.registerPlugin(ScrollTrigger);
+
 import { i18n } from './translations/AppPageInterface';
 
 import ChangeThemeSwitch from './components/ChangeThemeSwitch';

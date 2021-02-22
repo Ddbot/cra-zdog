@@ -1,11 +1,7 @@
 import ReactDOM from 'react-dom'
 import React, { forwardRef, useRef, useState, useEffect } from 'react'
 import { Anchor, Illustration, Ellipse, Shape, RoundedRect, useRender, useZdog } from 'react-zdog'
-import styled from 'styled-components';
-import { gsap, ScrollTrigger } from "gsap/all";
-
-// don't forget to register plugins
-gsap.registerPlugin(ScrollTrigger); 
+import styled from 'styled-components'; 
 
 import Acone from './Acone';
 import OEllipse from './OEllipse';
