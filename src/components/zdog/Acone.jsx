@@ -5,13 +5,23 @@ import { Anchor, Cone, useRender, useZdog } from 'react-zdog'
 
 let Acone = (props) => {
     // const { illu, scene, size } = useZdog();
+    const ref = useRef(undefined);
 
-    // useEffect(() => {
-    //     console.log(illu, scene, size);
-    // }, []);
+    useEffect(() => {
+        console.log(props);
+    });
+
+    useRender(t => {
+        let { x, y, z } = ref.current.rotate;
+        ref.current.rotate.x += 0;
+        ref.current.rotate.y += 0;
+        ref.current.rotate.z -= 0;
+    });
+
 
     return <Cone
         {...props}
+        ref={ref}
     />
 };
 

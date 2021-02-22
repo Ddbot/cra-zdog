@@ -107,10 +107,6 @@ const ChangeLanguageIcon = styled(IconButton)`
 	font-size: 40px;
 `;
 
-const Svg = styled.svg`
-
-`;
-
 function App() {
 	const [anchorEl, setAnchorEl] = useState(null);
 	const [langAnchorEl, setLangAnchorEl] = useState(null);
@@ -127,7 +123,7 @@ function App() {
 			x: 0,
 			y: 0,
 		  }, 
-		  rotate: { x: TAU*90/360 },
+		  rotate: { x: TAU*90/360, y: 0, z: 0 },
 		  scale: 1.4,
 		  stroke: false,
 		  color: '#636',
@@ -203,6 +199,7 @@ function App() {
 		e.persist();
 		const { currentTarget, target } = e;
 		console.log(currentTarget, target)
+		animateTest();
 
 		switch (currentTarget.id) { 
 			case 'appMenu':
@@ -223,13 +220,23 @@ function App() {
 		});
 	};
 
-	useEffect(() => {
-		// Array.from(olRef.current.querySelectorAll('svg>path')).map(path => {
-		// 	path.transform = 'translate(-100px,0)';
-		// });
-		// console.log(olRef.current.querySelector('svg').getAttribute('width'), olRef.current.querySelector('svg').width);
-		console.table([['Zdog Width', zdogRef.current]])
-	});
+	const animateTest = (e) => {
+		gsap.to('body', {
+			opacity: 1,
+			onUpdate: () =>{
+				setCoords(prev => {
+					return { ...prev, 
+						a: {
+							translate: {
+								y: prev.a.translate.y + 0.1
+							}
+						}
+					}
+				})
+			},
+			duration: 1
+		});
+	}
 	
 	return (
 		<ThemeProvider theme={state.checkedTheme ? darkTheme : lightTheme}>

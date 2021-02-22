@@ -26,7 +26,8 @@ const Illu = styled(Illustration)`
 `;
 
 /** --- Basic, re-usable shapes -------------------------- */
-const Illo = (props) => {
+const Illo = forwardRef((props,ref) => {
+  const [coords, setCoords ] = useState(props.coords)
   function renderShape(el,index){
     let calculateCoords = index => {
       return [index % cols, parseInt(index / cols)]
@@ -68,12 +69,12 @@ const Illo = (props) => {
   }
 
   return <Illu zoom={4} style={{ transformOrigin: 'top left'}} className='illustration'>
-      <Acone { ...props.coords['a'] } />
-      <LCylinder {...props.coords['o'] } /> 
-      <LCylinder {...props.coords['l']} /> 
+      <Acone { ...coords['a'] } />
+      <LCylinder {...coords['o'] } /> 
+      <LCylinder {...coords['l']} /> 
 
       {/* {['b','t','c','b','c','s','b','t','t','c','t','c','b','b','s','b','t','b','c','b','b','c','b','t'].map((el,i) => <g>{renderShape(el,i)}</g>)} */}
       </Illu>
-}
+})
   
 export default Illo;
