@@ -2,13 +2,13 @@
 import React, { useRef } from 'react'
 import { Cylinder, useRender } from 'react-zdog'
 
-let LCylinder = (props) => {
+let OCylinder = (props) => {
     const ref = useRef(undefined);
 
     useRender(t => {
         ref.current.rotate.x += 0;
         ref.current.rotate.y += 0;
-        ref.current.rotate.z += 0;
+        ref.current.rotate.z -= 0;
     });
 
     return <Cylinder
@@ -16,4 +16,4 @@ let LCylinder = (props) => {
         ref={ref}
 />};
 
-export default LCylinder;
+export default OCylinder;
