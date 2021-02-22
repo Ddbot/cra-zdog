@@ -1,10 +1,12 @@
 import ReactDOM from 'react-dom'
 import React, { forwardRef, useRef, useState, useEffect } from 'react'
 import { Anchor, Illustration, Ellipse, Shape, RoundedRect, useRender, useZdog } from 'react-zdog'
-// New react-spring target, for native animation outside of React
-// import { a, useSpring } from 'react-spring/zdog'
-// import './styles.css'
 import styled from 'styled-components';
+import { gsap, ScrollTrigger } from "gsap/all";
+
+// don't forget to register plugins
+gsap.registerPlugin(ScrollTrigger); 
+
 import Acone from './Acone';
 import OEllipse from './OEllipse';
 import LCylinder from './LCylinder';
@@ -28,56 +30,7 @@ const Illu = styled(Illustration)`
 `;
 
 /** --- Basic, re-usable shapes -------------------------- */
-const TAU = Math.PI * 2;
-
 const Illo = (props) => {
-  const [coords, setCoords] = useState({
-    a : { 
-      diameter: 24,
-      length: 20.78,
-      translate: {
-        x: 0,
-        y: 0,
-      }, 
-      rotate: { x: TAU*90/360 },
-      scale: 1.4,
-      stroke: false,
-      color: '#636',
-      backface: '#C25',      
-  },
-  o: {
-    diameter: 16.97,
-    length: 16.97,
-    translate: {
-      x: 3.95,
-      z: 10
-    },
-    rotate: { z: -TAU * 120/360 },
-    scale: 0.8,
-    // pour avoir un diamant de coté
-    // rotate: { x: TAU * 90/360, y: TAU * 45/360, z: -TAU * 120/360}
-    stroke: false,
-    color: '#EA0',
-    frontFace: '#c25',
-    backface: '#e62',  
-  },
-  l: {
-    diameter: 2,
-    length: 48,
-    translate: {
-      x: 4,
-      y: -8
-    },
-    rotate: {  x: TAU * 90/360, y: -TAU * 45/360 },
-    // ^pour avoir un diamant de coté
-    // rotate: { x: TAU * 90/360, y: TAU * 45/360, z: -TAU * 120/360}
-    stroke: true,
-    color: '#e62',
-    frontFace: '#c25',
-    backface: '#e62',  
-  }
-});
-  
   function renderShape(el,index){
     let calculateCoords = index => {
       return [index % cols, parseInt(index / cols)]
@@ -119,9 +72,9 @@ const Illo = (props) => {
   }
 
   return <Illu zoom={4} style={{ transformOrigin: 'top left'}} className='illustration'>
-      <Acone { ...coords['a'] } />
-      <LCylinder {...coords['o'] } /> 
-      <LCylinder {...coords['l']} /> 
+      <Acone { ...props.coords['a'] } />
+      <LCylinder {...props.coords['o'] } /> 
+      <LCylinder {...props.coords['l']} /> 
 
       {/* {['b','t','c','b','c','s','b','t','t','c','t','c','b','b','s','b','t','b','c','b','b','c','b','t'].map((el,i) => <g>{renderShape(el,i)}</g>)} */}
       </Illu>
