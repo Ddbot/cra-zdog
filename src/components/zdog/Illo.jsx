@@ -35,23 +35,26 @@ const Illo = (props) => {
     a : { 
       diameter: 24,
       length: 20.78,
+      translate: {
+        x: 0,
+        y: 0,
+      }, 
       rotate: { x: TAU*90/360 },
+      scale: 1.4,
       stroke: false,
       color: '#636',
-      backface: '#C25',
-      // translate: {
-      //   x: -55,
-      //   y: 6,
-      // }, 
+      backface: '#C25',      
   },
   o: {
     diameter: 16.97,
     length: 16.97,
-    // translate: {
-    //   x: 10
-    // },
+    translate: {
+      x: 3.95,
+      z: 10
+    },
     rotate: { z: -TAU * 120/360 },
-    // ^pour avoir un diamant de coté
+    scale: 0.8,
+    // pour avoir un diamant de coté
     // rotate: { x: TAU * 90/360, y: TAU * 45/360, z: -TAU * 120/360}
     stroke: false,
     color: '#EA0',
@@ -59,16 +62,17 @@ const Illo = (props) => {
     backface: '#e62',  
   },
   l: {
-    diameter: 16.97,
-    length: 16.97,
+    diameter: 2,
+    length: 48,
     translate: {
-      x: 10
+      x: 4,
+      y: -8
     },
-    rotate: { z: -TAU * 120/360 },
+    rotate: {  x: TAU * 90/360, y: -TAU * 45/360 },
     // ^pour avoir un diamant de coté
     // rotate: { x: TAU * 90/360, y: TAU * 45/360, z: -TAU * 120/360}
-    stroke: false,
-    color: 'green',
+    stroke: true,
+    color: '#e62',
     frontFace: '#c25',
     backface: '#e62',  
   }
