@@ -263,19 +263,21 @@ function App() {
 		console.log('Li actuel: ', currentLi,  ', et il y a ', nbOfLis, ' lis')
 		if(currentLi < nbOfLis){
 			gsap.to(window, {
-				duration: 2, 
+				duration: 1.4, 
 				scrollTo: `#li${currentLi+1}`,
 				onComplete: () => {
 					setCurrentLi(prev => prev+1);
-				} 
+				},
+				ease: "elastic.out(1, 0.75)"			
 			})
 		} else {
 			gsap.to(window, {
-				duration: 2, 
+				duration: 1.4, 
 				scrollTo: '#li1',
 				onComplete: () => {
 					setCurrentLi(1);
-				} 
+				}, 
+				ease: "elastic.out(1, 0.75)"			
 			})
 		}
 	}
