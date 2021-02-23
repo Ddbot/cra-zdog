@@ -3,6 +3,7 @@ import React, { useRef, useState, useEffect } from 'react'
 import { Anchor, Illustration, Ellipse, Shape, RoundedRect, useRender, useZdog } from 'react-zdog'
 
 import styled from 'styled-components'; 
+import gsap from 'gsap';
 
 import Acone from './Acone';
 import OCylinder from './OCylinder';
@@ -17,7 +18,7 @@ const Illu = styled(Illustration)`
 
   transition: width linear .125s, height linear .125s;
 
-  z-index: 1;    
+  z-index: 3;    
 
   height: 91vh !important;
   width: 100vw !important;
@@ -29,7 +30,7 @@ const Illu = styled(Illustration)`
 `;
 
 /** --- Basic, re-usable shapes -------------------------- */
-const Illo = (props,ref) => {
+const Illo = (props) => {
   const [coords, setCoords ] = useState(props.coords);
 
   function renderShape(el,index){
@@ -72,15 +73,10 @@ const Illo = (props,ref) => {
     }
   }
 
-  useEffect(() => {
-    console.log('Ref in Illo = ', ref.current)
-  })
-
-  return <Illu zoom={4} style={{ transformOrigin: 'top left'}} className='illustration'>
-      <Acone { ...coords['a'] } />
-      <OCylinder {...coords['o'] } /> 
-      <LCylinder {...coords['l']} /> 
-
+  return <Illu {...coords['camera']} className='illustration'>
+        <Acone { ...coords['a'] } />
+        <OCylinder {...coords['o'] } /> 
+        <LCylinder {...coords['l']} /> 
       {/* {['b','t','c','b','c','s','b','t','t','c','t','c','b','b','s','b','t','b','c','b','b','c','b','t'].map((el,i) => <g>{renderShape(el,i)}</g>)} */}
       </Illu>
 };

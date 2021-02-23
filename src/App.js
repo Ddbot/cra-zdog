@@ -19,10 +19,10 @@ import { orange, deepPurple } from '@material-ui/core/colors';
 
 import styled from 'styled-components';
 
-import { gsap, ScrollTrigger } from "gsap/all";
+import { gsap, ScrollTrigger, ScrollToPlugin } from "gsap/all";
 
 // don't forget to register plugins
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger,ScrollToPlugin);
 
 import { i18n } from './translations/AppPageInterface';
 
@@ -97,6 +97,7 @@ const InstallGrid = styled(List)`
 	align-items: center;
 	justify-content: center;
 	height: 100vh;
+	z-index: 2;
 `;
 
 const ChangeLanguageIcon = styled(IconButton)`
@@ -110,6 +111,7 @@ const ChangeLanguageIcon = styled(IconButton)`
 function App() {
 	const [anchorEl, setAnchorEl] = useState(null);
 	const [langAnchorEl, setLangAnchorEl] = useState(null);
+	const [currentLi, setCurrentLi] = useState(1);
 
 	const [state, setState] = useState({
 		checkedTheme: false,
@@ -117,49 +119,67 @@ function App() {
 
 	const [coords, setCoords] = useState({
 		a : { 
-		  diameter: 24,
-		  length: 20.78,
-		  translate: {
-			x: 0,
-			y: 0,
-		  }, 
-		  rotate: { x: TAU*90/360, y: 0, z: 0 },
-		  scale: 1.4,
-		  stroke: false,
-		  color: '#636',
-		  backface: '#C25',      
-	  },
-	  o: {
-		diameter: 16.97,
-		length: 16.97,
-		translate: {
-		  x: 3.95,
-		  z: 10
+			diameter: 24,
+			length: 20.78,
+			translate: {
+				x: 0,
+				y: 0,
+			}, 
+			rotate: { 
+				x: TAU*90/360, 
+				y: 0, 
+				z: 0 
+			},
+			scale: 1.4,
+			stroke: false,
+			color: '#636',
+			backface: '#C25',      
 		},
-		rotate: { x: 0, y: 0, z: -TAU * 120/360 },
-		scale: 0.8,
-		// pour avoir un diamant de coté
-		// rotate: { x: TAU * 90/360, y: TAU * 45/360, z: -TAU * 120/360}
-		stroke: false,
-		color: '#EA0',
-		frontFace: '#c25',
-		backface: '#e62',  
-	  },
-	  l: {
-		diameter: 2,
-		length: 48,
-		translate: {
-		  x: 4,
-		  y: -8
+		o: {
+			diameter: 16.97,
+			length: 16.97,
+			translate: {
+			x: 3.95,
+			z: 10
+			},
+			rotate: { x: 0, y: 0, z: -TAU * 120/360 },
+			scale: 0.8,
+			// pour avoir un diamant de coté
+			// rotate: { x: TAU * 90/360, y: TAU * 45/360, z: -TAU * 120/360}
+			stroke: false,
+			color: '#EA0',
+			frontFace: '#c25',
+			backface: '#e62',  
 		},
-		rotate: {  x: TAU * 90/360, y: -TAU * 45/360 },
-		// ^pour avoir un diamant de coté
-		// rotate: { x: TAU * 90/360, y: TAU * 45/360, z: -TAU * 120/360}
-		stroke: true,
-		color: '#e62',
-		frontFace: '#c25',
-		backface: '#e62',  
-	  }
+		l: {
+			diameter: 2,
+			length: 48,
+			translate: {
+			x: 4,
+			y: -8
+			},
+			rotate: {  x: TAU * 90/360, y: -TAU * 45/360 },
+			// ^pour avoir un diamant de coté
+			// rotate: { x: TAU * 90/360, y: TAU * 45/360, z: -TAU * 120/360}
+			stroke: true,
+			color: '#e62',
+			frontFace: '#c25',
+			backface: '#e62',  
+		},
+		camera: {
+			zoom: 3,
+			// debut
+			translate: {
+				x: 20,
+				y: -40
+			}
+			//fin
+			// translate: {
+			// 	x: -20,
+			// 	y: 40
+			// }
+
+		}
 	});
 
 	const zdogRef = useRef(null);
@@ -237,7 +257,61 @@ function App() {
 			duration: 1
 		});
 	}
+
+	function scrollToFn(e) {
+		let nbOfLis = olRef.current.querySelectorAll('li').length;
+		console.log('Li actuel: ', currentLi,  ', et il y a ', nbOfLis, ' lis')
+		if(currentLi < nbOfLis){
+			gsap.to(window, {
+				duration: 1.4, 
+				scrollTo: `#li${currentLi+1}`,
+				onComplete: () => {
+					setCurrentLi(prev => prev+1);
+				},
+				ease: "elastic.out(1, 0.75)"			
+			})
+		} else {
+			gsap.to(window, {
+				duration: 1.4, 
+				scrollTo: '#li1',
+				onComplete: () => {
+					setCurrentLi(1);
+				}, 
+				ease: "elastic.out(1, 0.75)"			
+			})
+		}
+	}
 	
+	useEffect(() => {
+		let tl = gsap.timeline({
+			// yes, we can add it to an entire timeline!
+			scrollTrigger: {
+				trigger: ".container",
+				pin: true,   // pin the trigger element while active
+				start: "top top", // when the top of the trigger hits the top of the viewport
+				end: "+=500", // end after scrolling 500px beyond the start
+				scrub: 1, // smooth scrubbing, takes 1 second to "catch up" to the scrollbar
+				snap: {
+					snapTo: "labels", // snap to the closest label in the timeline
+					duration: {min: 0.2, max: 3}, // the snap animation should be at least 0.2 seconds, but no more than 3 seconds (determined by velocity)
+					delay: 0.2, // wait 0.2 seconds from the last scroll event before doing the snapping
+					ease: "power1.inOut" // the ease of the snap animation ("power3" by default)
+				}
+			}
+		});
+		
+		// add animations and labels to the timeline
+		tl.addLabel("start")
+			.from(".box p", {scale: 0.3, rotation:45, autoAlpha: 0})
+			.addLabel("color")
+			.from(".box", {backgroundColor: "#28a92b"})
+			.addLabel("spin")
+			.to(".box", {rotation: 360})
+			.addLabel("end");
+
+		tl.play();
+	}, []);
+
 	return (
 		<ThemeProvider theme={state.checkedTheme ? darkTheme : lightTheme}>
 			<AppBar position='fixed' style={{ zIndex: 100, transition: 'all linear .125s' }}>
@@ -267,15 +341,15 @@ function App() {
 					</Menu>	
 				</MenuBar>
 			</AppBar>
-			<Illo ref={zdogRef} coords={coords} />
+			<Illo id='illo' coords={coords} />
 			<InstallGrid component="ol" ref={olRef}>
 				{Object.values(i18n.t('intro')).map((v,i) => {
-					return <Li key={i+1}>
+					return <Li id={`li${i+1}`} key={i+1}>
 						<Text>{v}</Text>
 					</Li>
 				})}
 			</InstallGrid>
-			<DownArrow />
+			<DownArrow onClick={ scrollToFn } />
 		</ThemeProvider>);
 }
 
