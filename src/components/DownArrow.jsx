@@ -1,7 +1,7 @@
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import styled from 'styled-components';
 
-const Container = styled.div`
+const Container = styled.button`
     position: fixed;
     top: 90vh;     
 
@@ -9,6 +9,8 @@ const Container = styled.div`
 
     display: flex;
     justify-content: center;
+
+    z-index: 100;
 `;
 
 const Arrow = styled(ArrowDownwardIcon)`
@@ -19,7 +21,7 @@ const Arrow = styled(ArrowDownwardIcon)`
 `;
 
 const DownArrow = (props) => {
-    return <Container><Arrow /></Container>
+    return <Container onClick={props.onClick}><Arrow /></Container>
 };
 
 export default DownArrow;

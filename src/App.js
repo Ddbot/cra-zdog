@@ -19,10 +19,10 @@ import { orange, deepPurple } from '@material-ui/core/colors';
 
 import styled from 'styled-components';
 
-import { gsap, ScrollTrigger } from "gsap/all";
+import { gsap, ScrollTrigger, ScrollToPlugin } from "gsap/all";
 
 // don't forget to register plugins
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger,ScrollToPlugin);
 
 import { i18n } from './translations/AppPageInterface';
 
@@ -111,6 +111,7 @@ const ChangeLanguageIcon = styled(IconButton)`
 function App() {
 	const [anchorEl, setAnchorEl] = useState(null);
 	const [langAnchorEl, setLangAnchorEl] = useState(null);
+	const [currentLi, setCurrentLi] = useState(1);
 
 	const [state, setState] = useState({
 		checkedTheme: false,
@@ -324,7 +325,9 @@ function App() {
 					</Li>
 				})}
 			</InstallGrid>
-			<DownArrow />
+			<DownArrow onClick={ (e) => {
+				gsap.to(window, {duration: 2, scrollTo: 667 });
+			}} />
 		</ThemeProvider>);
 }
 
