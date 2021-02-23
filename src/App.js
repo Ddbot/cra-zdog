@@ -182,7 +182,7 @@ function App() {
 		}
 	});
 
-	const zdogRef = useRef(null);
+	const arrowRef = useRef(null);
 	const olRef = useRef(null);
 
 	let lightTheme = createMuiTheme({
@@ -260,12 +260,11 @@ function App() {
 
 	function scrollToFn(e) {
 		let nbOfLis = olRef.current.querySelectorAll('li').length;
-		console.log('Li actuel: ', currentLi,  ', et il y a ', nbOfLis, ' lis')
 		if(currentLi < nbOfLis){
 			gsap.to(window, {
 				duration: 1.4, 
 				scrollTo: `#li${currentLi+1}`,
-				onComplete: () => {
+				onStart: () => {
 					setCurrentLi(prev => prev+1);
 				},
 				ease: "elastic.out(1, 0.75)"			
@@ -274,10 +273,21 @@ function App() {
 			gsap.to(window, {
 				duration: 1.4, 
 				scrollTo: '#li1',
-				onComplete: () => {
+				onStart: () => {
 					setCurrentLi(1);
+					gsap.to(arrowRef.current, {
+						rotate: '0deg',
+						duration: 1.4,
+						ease: "power4.out()"			
+					});
 				}, 
-				ease: "elastic.out(1, 0.75)"			
+				onComplete: () => {
+					// gsap.to(arrowRef.current, {
+					// 	rotate: '0deg',
+					// 	duration: 1,
+					// 	ease: "power4.out()"			
+					// });
+				},
 			})
 		}
 	}
@@ -311,6 +321,17 @@ function App() {
 
 		tl.play();
 	}, []);
+
+	useEffect(() => {
+		let nbOfLis = olRef.current.querySelectorAll('li').length;
+		if (currentLi === nbOfLis) {
+				gsap.to(arrowRef.current, {
+					rotate: '180deg',
+					duration: 1,
+					ease: "elastic.out(1, 0.75)"			
+				});
+			}		
+	},[currentLi])
 
 	return (
 		<ThemeProvider theme={state.checkedTheme ? darkTheme : lightTheme}>
@@ -349,7 +370,7 @@ function App() {
 					</Li>
 				})}
 			</InstallGrid>
-			<DownArrow onClick={ scrollToFn } />
+			<DownArrow ref={arrowRef} onClick={ scrollToFn } />
 		</ThemeProvider>);
 }
 

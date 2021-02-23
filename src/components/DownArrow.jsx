@@ -1,5 +1,6 @@
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import styled from 'styled-components';
+import { forwardRef, useEffect } from 'react';
 
 const Container = styled.button`
     position: fixed;
@@ -11,6 +12,9 @@ const Container = styled.button`
     justify-content: center;
 
     z-index: 100;
+
+    background: transparent;
+    border: none;
 `;
 
 const Arrow = styled(ArrowDownwardIcon)`
@@ -20,8 +24,8 @@ const Arrow = styled(ArrowDownwardIcon)`
     border: 4px solid black;
 `;
 
-const DownArrow = (props) => {
-    return <Container onClick={props.onClick}><Arrow /></Container>
-};
+const DownArrow = forwardRef((props, ref) => {
+    return <Container ref={ref} onClick={props.onClick}><Arrow /></Container>
+});
 
 export default DownArrow;
