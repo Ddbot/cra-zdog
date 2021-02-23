@@ -1,5 +1,5 @@
 import ReactDOM from 'react-dom'
-import React, { useRef, useState, useEffect } from 'react'
+import React, { useRef, useState, useEffect, forwardRef } from 'react'
 import { Anchor, Illustration, Ellipse, Shape, RoundedRect, useRender, useZdog } from 'react-zdog'
 
 import styled from 'styled-components'; 
@@ -26,59 +26,61 @@ const Illu = styled(Illustration)`
     
   top: 9vh;
 
-  border: 2px dashed red;
+  border: 2px solid red;
 `;
 
 /** --- Basic, re-usable shapes -------------------------- */
 const Illo = (props) => {
   const [coords, setCoords ] = useState(props.coords);
 
-  function renderShape(el,index){
-    let calculateCoords = index => {
-      return [index % cols, parseInt(index / cols)]
-    };
+  // function renderShape(el,index){
+  //   let calculateCoords = index => {
+  //     return [index % cols, parseInt(index / cols)]
+  //   };
 
-    switch(el){
-      case 'b':
-        return <TransparentBox className="transparentBox" key={index} { ...boxDimensions}  
-        /* translate={{
-          x: 100 - boxDimensions.x * calculateCoords[0],
-          y:100 - boxDimensions.y * calculateCoords[1],
-        }} */
-        />
-      case 't':
-        return <Acone className="cone" key={index} { ...aconeDimensions(index) }  
-        /* translate={{
-          x: 100 - aconeDimensions(index).diameter * calculateCoords[0],
-          y: 100 - aconeDimensions(index).diameter * calculateCoords[1],
-        }} */
-        />
-      case 's':
-        return <LCylinder className="cylindre" key={index} { ...lcylinderDimensions } 
-        /* translate={{
-          x: 100 - lcylinderDimensions.x * calculateCoords[0],
-          y:100 - lcylinderDimensions.y * calculateCoords[1],
-        }} 
-        */
-        />
-      case 'c':
-        return <Acone className="cone" key={index} { ...aconeDimensions } 
-        /* translate={{
-          x: 100 - aconeDimensions(index).x * calculateCoords[0],
-          y: aconeDimensions(index).y * calculateCoords[1],
-        }} */
-        />
-      default:
-        break;
-    }
-  }
+  //   switch(el){
+  //     case 'b':
+  //       return <TransparentBox className="transparentBox" key={index} { ...boxDimensions}  
+  //       /* translate={{
+  //         x: 100 - boxDimensions.x * calculateCoords[0],
+  //         y:100 - boxDimensions.y * calculateCoords[1],
+  //       }} */
+  //       />
+  //     case 't':
+  //       return <Acone className="cone" key={index} { ...aconeDimensions(index) }  
+  //       /* translate={{
+  //         x: 100 - aconeDimensions(index).diameter * calculateCoords[0],
+  //         y: 100 - aconeDimensions(index).diameter * calculateCoords[1],
+  //       }} */
+  //       />
+  //     case 's':
+  //       return <LCylinder className="cylindre" key={index} { ...lcylinderDimensions } 
+  //       /* translate={{
+  //         x: 100 - lcylinderDimensions.x * calculateCoords[0],
+  //         y:100 - lcylinderDimensions.y * calculateCoords[1],
+  //       }} 
+  //       */
+  //       />
+  //     case 'c':
+  //       return <Acone className="cone" key={index} { ...aconeDimensions } 
+  //       /* translate={{
+  //         x: 100 - aconeDimensions(index).x * calculateCoords[0],
+  //         y: aconeDimensions(index).y * calculateCoords[1],
+  //       }} */
+  //       />
+  //     default:
+  //       break;
+  //   }
+  // }
 
-  return <Illu {...coords['camera']} className='illustration'>
-        <Acone { ...coords['a'] } />
-        <OCylinder {...coords['o'] } /> 
-        <LCylinder {...coords['l']} /> 
+  return <Illu 
+    {...coords['camera']} 
+    className='illustration'>
+      <Acone { ...coords['a'] } />
+      <OCylinder {...coords['o'] } /> 
+      <LCylinder {...coords['l']} /> 
       {/* {['b','t','c','b','c','s','b','t','t','c','t','c','b','b','s','b','t','b','c','b','b','c','b','t'].map((el,i) => <g>{renderShape(el,i)}</g>)} */}
-      </Illu>
+  </Illu>
 };
   
 export default Illo;

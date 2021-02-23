@@ -21,6 +21,10 @@ import styled from 'styled-components';
 
 import { gsap, ScrollTrigger, ScrollToPlugin } from "gsap/all";
 
+import Zdog from 'zdog';
+
+import './App.css';
+
 // don't forget to register plugins
 gsap.registerPlugin(ScrollTrigger,ScrollToPlugin);
 
@@ -261,11 +265,21 @@ function App() {
 	function scrollToFn(e) {
 		let nbOfLis = olRef.current.querySelectorAll('li').length;
 		if(currentLi < nbOfLis){
+			let targetCoords = {
+				x: -20,
+				y: 40
+			};
+
 			gsap.to(window, {
 				duration: 1.4, 
 				scrollTo: `#li${currentLi+1}`,
 				onStart: () => {
 					setCurrentLi(prev => prev+1);
+				},
+				// onUpdate: () => {
+				// },
+				onComplete: () => {
+					console.table([['ANIM', anim.vars],['COORDS', coords.camera]])
 				},
 				ease: "elastic.out(1, 0.75)"			
 			})
@@ -281,13 +295,6 @@ function App() {
 						ease: "power4.out()"			
 					});
 				}, 
-				onComplete: () => {
-					// gsap.to(arrowRef.current, {
-					// 	rotate: '0deg',
-					// 	duration: 1,
-					// 	ease: "power4.out()"			
-					// });
-				},
 			})
 		}
 	}
@@ -322,6 +329,7 @@ function App() {
 		tl.play();
 	}, []);
 
+	// Rotate Arrow button upwards if arrived at last slide
 	useEffect(() => {
 		let nbOfLis = olRef.current.querySelectorAll('li').length;
 		if (currentLi === nbOfLis) {
@@ -331,7 +339,7 @@ function App() {
 					ease: "elastic.out(1, 0.75)"			
 				});
 			}		
-	},[currentLi])
+	},[currentLi]);
 
 	return (
 		<ThemeProvider theme={state.checkedTheme ? darkTheme : lightTheme}>
