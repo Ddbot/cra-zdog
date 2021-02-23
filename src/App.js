@@ -326,7 +326,13 @@ function App() {
 				})}
 			</InstallGrid>
 			<DownArrow onClick={ (e) => {
-				gsap.to(window, {duration: 2, scrollTo: 667 });
+				gsap.to(window, {
+					duration: 2, 
+					scrollTo: `#li${currentLi+1}`,
+					onComplete: () => {
+						setCurrentLi(prev => prev+1);
+					} 
+				});
 			}} />
 		</ThemeProvider>);
 }
