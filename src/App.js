@@ -257,6 +257,28 @@ function App() {
 			duration: 1
 		});
 	}
+
+	function scrollToFn(e) {
+		let nbOfLis = olRef.current.querySelectorAll('li').length;
+		console.log('Li actuel: ', currentLi,  ', et il y a ', nbOfLis, ' lis')
+		if(currentLi < nbOfLis){
+			gsap.to(window, {
+				duration: 2, 
+				scrollTo: `#li${currentLi+1}`,
+				onComplete: () => {
+					setCurrentLi(prev => prev+1);
+				} 
+			})
+		} else {
+			gsap.to(window, {
+				duration: 2, 
+				scrollTo: '#li1',
+				onComplete: () => {
+					setCurrentLi(1);
+				} 
+			})
+		}
+	}
 	
 	useEffect(() => {
 		let tl = gsap.timeline({
@@ -325,15 +347,7 @@ function App() {
 					</Li>
 				})}
 			</InstallGrid>
-			<DownArrow onClick={ (e) => {
-				gsap.to(window, {
-					duration: 2, 
-					scrollTo: `#li${currentLi+1}`,
-					onComplete: () => {
-						setCurrentLi(prev => prev+1);
-					} 
-				});
-			}} />
+			<DownArrow onClick={ scrollToFn } />
 		</ThemeProvider>);
 }
 
