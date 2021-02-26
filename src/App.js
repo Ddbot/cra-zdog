@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import {
 	AppBar,
 	Container,
@@ -24,6 +24,8 @@ import { gsap, ScrollTrigger, ScrollToPlugin } from "gsap/all";
 import Zdog from 'zdog';
 
 import './App.css';
+
+import usePrevious from './hooks/usePrevious';
 
 // don't forget to register plugins
 gsap.registerPlugin(ScrollTrigger,ScrollToPlugin);
@@ -115,79 +117,16 @@ const ChangeLanguageIcon = styled(IconButton)`
 function App() {
 	const [anchorEl, setAnchorEl] = useState(null);
 	const [langAnchorEl, setLangAnchorEl] = useState(null);
-	const [currentLi, setCurrentLi] = useState(1);
+	const [currentLi, setCurrentLi] = useState(0);
 
 	const [state, setState] = useState({
 		checkedTheme: false,
 	});
 
-	const [coords, setCoords] = useState({
-		a : { 
-			diameter: 24,
-			length: 20.78,
-			translate: {
-				x: 0,
-				y: 0,
-			}, 
-			rotate: { 
-				x: TAU*90/360, 
-				y: 0, 
-				z: 0 
-			},
-			scale: 1.4,
-			stroke: false,
-			color: '#636',
-			backface: '#C25',      
-		},
-		o: {
-			diameter: 16.97,
-			length: 16.97,
-			translate: {
-			x: 3.95,
-			z: 10
-			},
-			rotate: { x: 0, y: 0, z: -TAU * 120/360 },
-			scale: 0.8,
-			// pour avoir un diamant de coté
-			// rotate: { x: TAU * 90/360, y: TAU * 45/360, z: -TAU * 120/360}
-			stroke: false,
-			color: '#EA0',
-			frontFace: '#c25',
-			backface: '#e62',  
-		},
-		l: {
-			diameter: 2,
-			length: 48,
-			translate: {
-			x: 4,
-			y: -8
-			},
-			rotate: {  x: TAU * 90/360, y: -TAU * 45/360 },
-			// ^pour avoir un diamant de coté
-			// rotate: { x: TAU * 90/360, y: TAU * 45/360, z: -TAU * 120/360}
-			stroke: true,
-			color: '#e62',
-			frontFace: '#c25',
-			backface: '#e62',  
-		},
-		camera: {
-			zoom: 3,
-			// debut
-			translate: {
-				x: 20,
-				y: -40
-			}
-			//fin
-			// translate: {
-			// 	x: -20,
-			// 	y: 40
-			// }
-
-		}
-	});
-
 	const arrowRef = useRef(null);
 	const olRef = useRef(null);
+
+	const previousLi = usePrevious(currentLi);
 
 	let lightTheme = createMuiTheme({
 		palette: {
@@ -223,7 +162,6 @@ function App() {
 		e.persist();
 		const { currentTarget, target } = e;
 		console.log(currentTarget, target)
-		animateTest();
 
 		switch (currentTarget.id) { 
 			case 'appMenu':
@@ -244,51 +182,44 @@ function App() {
 		});
 	};
 
-	const animateTest = (e) => {
-		gsap.to('body', {
-			opacity: 1,
-			onUpdate: () =>{
-				setCoords(prev => {
-					return { ...prev, 
-						a: {
-							translate: {
-								y: prev.a.translate.y + 0.1
-							}
-						}
-					}
-				})
-			},
-			duration: 1
-		});
-	}
-
 	function scrollToFn(e) {
 		let nbOfLis = olRef.current.querySelectorAll('li').length;
-		if(currentLi < nbOfLis){
-			let targetCoords = {
-				x: -20,
-				y: 40
-			};
-
-			gsap.to(window, {
+		if(currentLi+1 < nbOfLis){
+			let scrollToAnimation = gsap.to(window, {
 				duration: 1.4, 
 				scrollTo: `#li${currentLi+1}`,
 				onStart: () => {
 					setCurrentLi(prev => prev+1);
 				},
+				// animating the CAMERA
 				// onUpdate: () => {
+				// 	let res = ['a','o','l','camera'].map(el => {
+				// 		return {
+				// 			[el]: {
+				// 				...coords[el],
+				// 				translate: {
+				// 					x: Zdog.lerp(coords[el].translate.x, targetCoords.x, scrollToAnimation.progress()),
+				// 					y: Zdog.lerp(coords[el].translate.y, targetCoords.y, scrollToAnimation.progress()),								
+				// 				}
+				// 			}								
+				// 		} 
+				// 	});
+
+				// 	setCoords(prev => {
+				// 		return {...res};
+				// 	});
 				// },
 				onComplete: () => {
-					console.table([['ANIM', anim.vars],['COORDS', coords.camera]])
+					// ['a','o','l','camera'].map(el => { console.log('coords ', el, coords[el]) });
 				},
 				ease: "elastic.out(1, 0.75)"			
 			})
 		} else {
 			gsap.to(window, {
 				duration: 1.4, 
-				scrollTo: '#li1',
+				scrollTo: '#li0',
 				onStart: () => {
-					setCurrentLi(1);
+					setCurrentLi(0);
 					gsap.to(arrowRef.current, {
 						rotate: '0deg',
 						duration: 1.4,
@@ -332,7 +263,7 @@ function App() {
 	// Rotate Arrow button upwards if arrived at last slide
 	useEffect(() => {
 		let nbOfLis = olRef.current.querySelectorAll('li').length;
-		if (currentLi === nbOfLis) {
+		if (currentLi === nbOfLis-1) {
 				gsap.to(arrowRef.current, {
 					rotate: '180deg',
 					duration: 1,
@@ -370,10 +301,10 @@ function App() {
 					</Menu>	
 				</MenuBar>
 			</AppBar>
-			<Illo id='illo' coords={coords} />
+			<Illo id='illo' index={currentLi}/>
 			<InstallGrid component="ol" ref={olRef}>
 				{Object.values(i18n.t('intro')).map((v,i) => {
-					return <Li id={`li${i+1}`} key={i+1}>
+					return <Li id={`li${i}`} key={i}>
 						<Text>{v}</Text>
 					</Li>
 				})}

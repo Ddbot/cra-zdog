@@ -1,14 +1,16 @@
 import ReactDOM from 'react-dom'
-import React, { useRef, useState, useEffect, forwardRef } from 'react'
+import React, { useLayoutEffect, useRef, useState, useEffect, forwardRef } from 'react'
 import { Anchor, Illustration, Ellipse, Shape, RoundedRect, useRender, useZdog } from 'react-zdog'
 
 import styled from 'styled-components'; 
 import gsap from 'gsap';
+import Zdog, { TAU } from 'zdog';
 
 import Acone from './Acone';
 import OCylinder from './OCylinder';
 import LCylinder from './LCylinder';
-import TransparentBox from './TransparentBox';
+
+import usePrevious from '../../hooks/usePrevious';
 
 const Illu = styled(Illustration)`
   box-sizing: border-box;
@@ -25,60 +27,111 @@ const Illu = styled(Illustration)`
   position: fixed !important;
     
   top: 9vh;
-
-  border: 2px solid red;
 `;
+
+const initialCoords = [
+  {
+  a : { 
+    diameter: 24,
+    length: 20.78,
+    translate: {
+      x: 0,
+      y: 0,
+      z: 0
+    }, 
+    rotate: { 
+      x: TAU*90/360, 
+      y: 0, 
+      z: 0 
+    },
+    scale: 1.4,
+    stroke: false,
+    color: '#636',
+    backface: '#C25',      
+  },
+  o: {
+    diameter: 16.97,
+    length: 16.97,
+    translate: {
+    x: 3.95,
+    y: 0,
+    z: 10
+    },
+    rotate: { x: 0, y: 0, z: -TAU * 120/360 },
+    scale: 0.8,
+    // pour avoir un diamant de coté
+    // rotate: { x: TAU * 90/360, y: TAU * 45/360, z: -TAU * 120/360}
+    stroke: false,
+    color: '#EA0',
+    frontFace: '#c25',
+    backface: '#e62',  
+  },
+  l: {
+    diameter: 2,
+    length: 48,
+    translate: {
+    x: 4,
+    y: -8,
+    z: 0
+    },
+    rotate: {  x: TAU * 90/360, y: -TAU * 45/360 },
+    // ^pour avoir un diamant de coté
+    // rotate: { x: TAU * 90/360, y: TAU * 45/360, z: -TAU * 120/360}
+    stroke: true,
+    color: '#e62',
+    frontFace: '#c25',
+    backface: '#e62',  
+  },
+  camera: {
+    zoom: 3,
+    // debut
+    translate: {
+      x: 20,
+      y: -40
+    }
+    //fin
+    // translate: {
+    // 	x: -20,
+    // 	y: 40
+    // }
+
+  }
+},
+{
+  camera: {
+    translate: {
+      x: -20,
+      y: 40}
+  }
+},
+{
+  camera: {
+    translate: {
+      x: 20,
+      y: 40
+    },
+    zoom: 4
+  },
+}];
 
 /** --- Basic, re-usable shapes -------------------------- */
 const Illo = (props) => {
-  const [coords, setCoords ] = useState(props.coords);
+  const [coords, setCoords ] = useState(initialCoords);
+  // const [index, setIndex ] = useState(props.index);
 
-  // function renderShape(el,index){
-  //   let calculateCoords = index => {
-  //     return [index % cols, parseInt(index / cols)]
-  //   };
+  const current = props.index;
+	const previous = usePrevious(current);
 
-  //   switch(el){
-  //     case 'b':
-  //       return <TransparentBox className="transparentBox" key={index} { ...boxDimensions}  
-  //       /* translate={{
-  //         x: 100 - boxDimensions.x * calculateCoords[0],
-  //         y:100 - boxDimensions.y * calculateCoords[1],
-  //       }} */
-  //       />
-  //     case 't':
-  //       return <Acone className="cone" key={index} { ...aconeDimensions(index) }  
-  //       /* translate={{
-  //         x: 100 - aconeDimensions(index).diameter * calculateCoords[0],
-  //         y: 100 - aconeDimensions(index).diameter * calculateCoords[1],
-  //       }} */
-  //       />
-  //     case 's':
-  //       return <LCylinder className="cylindre" key={index} { ...lcylinderDimensions } 
-  //       /* translate={{
-  //         x: 100 - lcylinderDimensions.x * calculateCoords[0],
-  //         y:100 - lcylinderDimensions.y * calculateCoords[1],
-  //       }} 
-  //       */
-  //       />
-  //     case 'c':
-  //       return <Acone className="cone" key={index} { ...aconeDimensions } 
-  //       /* translate={{
-  //         x: 100 - aconeDimensions(index).x * calculateCoords[0],
-  //         y: aconeDimensions(index).y * calculateCoords[1],
-  //       }} */
-  //       />
-  //     default:
-  //       break;
-  //   }
-  // }
+
+  // useEffect(() => {
+  // },[]);
 
   return <Illu 
-    {...coords['camera']} 
+    {...coords[current]['camera']}
     className='illustration'>
-      <Acone { ...coords['a'] } />
-      <OCylinder {...coords['o'] } /> 
-      <LCylinder {...coords['l']} /> 
+      <Acone { ...coords[current]['a'] } />
+      <OCylinder {...coords[current]['o'] } /> 
+      <LCylinder {...coords[current]['l']} /> 
       {/* {['b','t','c','b','c','s','b','t','t','c','t','c','b','b','s','b','t','b','c','b','b','c','b','t'].map((el,i) => <g>{renderShape(el,i)}</g>)} */}
   </Illu>
 };

@@ -11,7 +11,6 @@ let Acone = (props) => {
         ref.current.rotate.x += 0;
         ref.current.rotate.y += 0;
         ref.current.rotate.z -= 0;
-
     });
 
 
