@@ -29,7 +29,7 @@ const Illu = styled(Illustration)`
   top: 9vh;
 `;
 
-const initialCoords =[{
+const coords =[{
     zoom: 3,
     // debut
     translate: {
@@ -51,66 +51,29 @@ const initialCoords =[{
 
 /** --- Basic, re-usable shapes -------------------------- */
 const Illo = (props) => {
-  const [coords, setCoords ] = useState(initialCoords[0]);
   const [index, setIndex ] = useState(props.index);
 
   const current = props.index;
 	const previous = usePrevious(index);
+  const ref = useRef(undefined);
 
 
   useLayoutEffect(() => {
     if(previous !== undefined && current !== previous){
       let anim = gsap.to(window, {
-        duration: 10,
+        duration: 1,
         autoAlpha: 1,
-        onUpdate: () => {
-          let newState = {};
-
-          if(!!previous && previous !== 2){
-            Object.keys(initialCoords[previous]).forEach((v) => {
-            if (Object.keys(initialCoords[previous][v]).length > 1){
-              Object.keys(initialCoords[previous][v]).forEach(key => {
-                if(key === ('translate' || 'rotate')){
-                  const { x=0, y=0, z=0 } = initialCoords[previous][v][key];
-                  // console.log('Rotate or translate transformation', x, y, z);
-                  newState[v][key] = {
-                    x: Zdog.lerp(x, initialCoords[current][v][key].x, anim.progress()),
-                    y: Zdog.lerp(y, initialCoords[current][v][key].y, anim.progress()),
-                    z: Zdog.lerp(z, initialCoords[current][v][key].z, anim.progress()),
-                  }
-                } else if(!['translate','rotate'].includes(key)){
-                  // console.log(key, initialCoords[previous][v][key], initialCoords[previous][v])
-                  if(!!previous && previous < 2) newState[v][key] = Zdog.lerp(initialCoords[previous][v][key], initialCoords[previous+1][v][key], anim.progress());
-                };
-              })
-            }
-          })};
-          setCoords(prev =>{
-            return {
-              ...prev, 
-              ...newState
-            }
-          });
-        }
       });
     } 
   },[index]);
 
-  useEffect(() => {
-    props.index !== undefined && current !== previous && setCoords((prev) => {
-      return {
-        ...prev, 
-        ...initialCoords[props.index]
-      }
-    });
-},[props.index]);
-
   return <Illu 
-    {...coords }
-    className='illustration'>
-      <Acone duration={2} index={props.index} />
-      <OCylinder duration={2} index={props.index} /> 
-      <LCylinder duration={2} index={props.index} /> 
+    {...coords[current] }
+    className='illustration'
+    ref={ref}>
+      <Acone duration={1.4} index={current} />
+      <OCylinder duration={1.4} index={current} /> 
+      <LCylinder duration={1.4} index={current} /> 
       {/* {['b','t','c','b','c','s','b','t','t','c','t','c','b','b','s','b','t','b','c','b','b','c','b','t'].map((el,i) => <g>{renderShape(el,i)}</g>)} */}
   </Illu>
 };

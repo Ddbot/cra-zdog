@@ -125,6 +125,7 @@ function App() {
 
 	const arrowRef = useRef(null);
 	const olRef = useRef(null);
+	const illuRef = useRef(null);
 
 	const previousLi = usePrevious(currentLi);
 
@@ -191,27 +192,6 @@ function App() {
 				onStart: () => {
 					setCurrentLi(prev => prev+1);
 				},
-				// animating the CAMERA
-				// onUpdate: () => {
-				// 	let res = ['a','o','l','camera'].map(el => {
-				// 		return {
-				// 			[el]: {
-				// 				...coords[el],
-				// 				translate: {
-				// 					x: Zdog.lerp(coords[el].translate.x, targetCoords.x, scrollToAnimation.progress()),
-				// 					y: Zdog.lerp(coords[el].translate.y, targetCoords.y, scrollToAnimation.progress()),								
-				// 				}
-				// 			}								
-				// 		} 
-				// 	});
-
-				// 	setCoords(prev => {
-				// 		return {...res};
-				// 	});
-				// },
-				onComplete: () => {
-					// ['a','o','l','camera'].map(el => { console.log('coords ', el, coords[el]) });
-				},
 				ease: "elastic.out(1, 0.75)"			
 			})
 		} else {
@@ -229,7 +209,8 @@ function App() {
 			})
 		}
 	}
-	
+
+	// TO DO timeline
 	useEffect(() => {
 		let tl = gsap.timeline({
 			// yes, we can add it to an entire timeline!
@@ -269,7 +250,8 @@ function App() {
 					duration: 1,
 					ease: "elastic.out(1, 0.75)"			
 				});
-			}		
+			}	
+		return () => {}	
 	},[currentLi]);
 
 	return (
@@ -301,7 +283,7 @@ function App() {
 					</Menu>	
 				</MenuBar>
 			</AppBar>
-			<Illo id='illo' index={currentLi}/>
+			<Illo id='illo' index={currentLi} ref={illuRef}/>
 			<InstallGrid component="ol" ref={olRef}>
 				{Object.values(i18n.t('intro')).map((v,i) => {
 					return <Li id={`li${i}`} key={i}>

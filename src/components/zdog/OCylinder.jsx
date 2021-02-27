@@ -3,8 +3,10 @@ import React, { forwardRef, useRef, useEffect, useState } from 'react'
 import { TAU } from 'zdog';
 import { Cylinder, useRender } from 'react-zdog'
 import usePrevious from '../../hooks/usePrevious';
+import gsap from 'gsap';
 
-const initialCoords = [{
+
+const coords = [{
     diameter: 16.97,
     length: 16.97,
     translate: {
@@ -23,43 +25,90 @@ const initialCoords = [{
 }, {
     translate: {
         x: -20,
-        y: 40
+        y: 40,
+        z: 0
+    },
+    rotate: {
+        x: 0,
+        y: 0,
+        z: 0
     }
 },
 {
     translate: {
         x: 20,
-        y: 40
+        y: 40,
+        z: 0
+    },
+    rotate: {
+        x: 0,
+        y: 0,
+        z: 0
     }
 }];
 
+const initialTransformation = {
+    rotate: { x: 0, y: 0, z: 0 }, translate: { x: 0, y: 0, z: 0 }
+};
+
 let OCylinder = (props) => {
-    const [coords, setCoords] = useState(initialCoords[0]);
     const [index, setIndex] = useState(props.index);
+    const [delta, setDelta ] = useState(initialTransformation);
+    const [isAnimating, setIsAnimating] = useState(false);
+
+    const { duration } = props;
 
     const ref = useRef(undefined);
 
     const current = props.index;
 	const previous = usePrevious(index);
 
-
+    // Changer state index quand props.index change
     useEffect(() => {
-        props.index !== undefined && current !== previous && setCoords((prev) => {
-            return {
-            ...prev, 
-            ...initialCoords[props.index]
-        }
-        });
-    },[props.index]);
-
-    useRender(t => {
-        ref.current.rotate.x += 0;
-        ref.current.rotate.y += 0;
-        ref.current.rotate.z -= 0;
-    });
+            setIndex(props.index);
+    }, [props.index])
+    
+    // lancer animation quand index change
+    useEffect(() => {
+            if(previous !== undefined){
+                gsap.to(ref.current, {
+                        duration,
+                        onStart: () => {
+                            setIsAnimating(true);
+                            setDelta(prev => {
+                                let res = initialTransformation;
+                                
+                                ['translate', 'rotate'].forEach((param) => {
+                                    Object.keys(coords[current][param]).forEach(key => {
+                                        res[param][key] = (coords[current][param][key] - coords[previous][param][key])/(duration*60);
+                                    });
+                                });
+                                
+                                return res;
+                            });                    
+                        },                    
+                        onComplete: () => {
+                            setIsAnimating(false);
+                        }
+                })      
+            };
+    }, [index]);
+    
+    useRender((t) => {
+                ['translate', 'rotate'].map(param => {
+                    Object.keys(coords[current][param])
+                        .forEach(key => {
+                            if(isAnimating) {
+                                ref.current[param][key] += delta[param][key];                    
+                            } else {
+                                ref.current[param][key] += 0;
+                            }
+                        });
+                });
+    },[current, isAnimating]);
 
     return <Cylinder
-        {...coords}
+        {...coords[current]}
         ref={ref}
 />};
 
