@@ -37,6 +37,8 @@ import ChangeThemeSwitch from './components/ChangeThemeSwitch';
 import Illo from './components/zdog/Illo';
 
 import DownArrow from './components/DownArrow';
+import DirectionalButtons from './components/DirectionalButtons';
+
 
 import img from './assets/tabbied.png';
 
@@ -122,6 +124,9 @@ function App() {
 	const [state, setState] = useState({
 		checkedTheme: false,
 	});
+
+	// state temporaire pour faire bouger Zdog
+	const [move, setMove] = useState('stop');
 
 	const arrowRef = useRef(null);
 	const olRef = useRef(null);
@@ -210,6 +215,10 @@ function App() {
 		}
 	}
 
+	const handleMove = (payload) => {
+		setMove(payload);
+	};
+
 	// TO DO timeline
 	useEffect(() => {
 		let tl = gsap.timeline({
@@ -283,7 +292,7 @@ function App() {
 					</Menu>	
 				</MenuBar>
 			</AppBar>
-			<Illo id='illo' index={currentLi} ref={illuRef}/>
+			<Illo id='illo' index={currentLi} ref={illuRef} move={move}/>
 			<InstallGrid component="ol" ref={olRef}>
 				{Object.values(i18n.t('intro')).map((v,i) => {
 					return <Li id={`li${i}`} key={i}>
@@ -291,7 +300,8 @@ function App() {
 					</Li>
 				})}
 			</InstallGrid>
-			<DownArrow ref={arrowRef} onClick={ scrollToFn } />
+			{/* <DownArrow ref={arrowRef} onClick={ scrollToFn } /> */}
+			<DirectionalButtons ref={arrowRef} move={handleMove}/>
 		</ThemeProvider>);
 }
 

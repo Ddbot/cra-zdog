@@ -51,29 +51,43 @@ const coords =[{
 
 /** --- Basic, re-usable shapes -------------------------- */
 const Illo = (props) => {
-  const [index, setIndex ] = useState(props.index);
+  const [ index, setIndex ] = useState(props.index);
+  const [ move, setMove ] = useState(props.move);
 
   const current = props.index;
 	const previous = usePrevious(index);
   const ref = useRef(undefined);
 
+  useEffect(() => {
+    setMove(props.move);
+  })
 
-  useLayoutEffect(() => {
-    if(previous !== undefined && current !== previous){
-      let anim = gsap.to(window, {
-        duration: 1,
-        autoAlpha: 1,
-      });
-    } 
-  },[index]);
+  // useRender((t) => {
+  //   if(move !== 'stop' ){
+  //     ref.current.translate.x += 0.1;
+  //     ref.current.translate.y += 0.1;
+  //     // ref.current.translate.x += 0.1;
+  //   } else {
+  //     ref.current.translate.x += 0;
+  //   }
+  // },[move])
+
+  // useLayoutEffect(() => {
+  //   if(previous !== undefined && current !== previous){
+  //     let anim = gsap.to(window, {
+  //       duration: 1,
+  //       autoAlpha: 1,
+  //     });
+  //   } 
+  // },[index]);
 
   return <Illu 
     {...coords[current] }
     className='illustration'
     ref={ref}>
-      <Acone duration={.4} index={current} />
-      <OCylinder duration={0.225} index={current} /> 
-      <LCylinder duration={0.125} index={current} /> 
+      <Acone duration={.4} index={current} move={move} />
+      <OCylinder duration={0.225} index={current} move={move} /> 
+      <LCylinder duration={0.125} index={current} move={move} /> 
       {/* {['b','t','c','b','c','s','b','t','t','c','t','c','b','b','s','b','t','b','c','b','b','c','b','t'].map((el,i) => <g>{renderShape(el,i)}</g>)} */}
   </Illu>
 };

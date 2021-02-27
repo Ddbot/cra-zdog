@@ -56,6 +56,7 @@ let Acone = (props) => {
     const [index, setIndex ] = useState(props.index);
     const [delta, setDelta ] = useState(initialTransformation);
     const [isAnimating, setIsAnimating] = useState(false);
+    const [move, setMove] = useState(props.move)
 
     const { duration } = props;
 
@@ -95,18 +96,43 @@ let Acone = (props) => {
         };
     }, [index]);
 
+    // Change move direction from props.move
+    useEffect(() => {
+        setMove(props.move);
+    },[props.move]);
+
     useRender((t) => {
-            ['translate', 'rotate'].map(param => {
-                Object.keys(coords[current][param])
-                    .forEach(key => {
-                        if(isAnimating) {
-                            ref.current[param][key] += delta[param][key];                    
-                        } else {
-                            ref.current[param][key] += 0;
-                        }
-                    });
-            });
-    },[current, isAnimating]);
+            // ['translate', 'rotate'].map(param => {
+            //     Object.keys(coords[current][param])
+            //         .forEach(key => {
+            //             if(isAnimating) {
+            //                 ref.current[param][key] += delta[param][key];                    
+            //             } else {
+            //                 ref.current[param][key] += 0;
+            //             }
+            //         });
+            // });
+            switch(move){
+                case 'left':
+                    ref.current.translate.x -= 0.1;
+                break;
+                case 'right':
+                    ref.current.translate.x += 0.1;
+                break;
+                case 'up':
+                    ref.current.translate.y -= 0.1;
+                break;
+                case 'down':
+                    ref.current.translate.y += 0.1;
+                break;
+                case 'stop':
+                default: 
+                    ref.current.translate.x += 0;
+                    ref.current.translate.y += 0;
+                    break;
+            }
+    // },[current, isAnimating]);
+},[move]);
 
     return <Cone
         {...coords[index]}
