@@ -56,7 +56,7 @@ const Illo = (props) => {
 
   const current = props.index;
 	const previous = usePrevious(index);
-  const ref = useRef(undefined);
+  // const ref = useRef(undefined);
 
   useEffect(() => {
     setMove(props.move);
@@ -83,8 +83,7 @@ const Illo = (props) => {
 
   return <Illu 
     {...coords[current] }
-    className='illustration'
-    ref={ref}>
+    className='illustration'>
       <Acone duration={.4} index={current} move={move} />
       <OCylinder duration={0.225} index={current} move={move} /> 
       <LCylinder duration={0.125} index={current} move={move} /> 

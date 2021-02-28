@@ -4,6 +4,7 @@ import  { TAU } from 'zdog';
 import { Cone, useRender } from 'react-zdog'
 import usePrevious from '../../hooks/usePrevious';
 import gsap from 'gsap';
+import { transform } from 'framer-motion';
 // import styled from 'styled-components';
 
 const coords = [{ 
@@ -58,6 +59,7 @@ let Acone = (props) => {
     const [isAnimating, setIsAnimating] = useState(false);
     const [move, setMove] = useState(props.move)
 
+    const { direction, axe, element, transformation } = move;
     const { duration } = props;
 
     const ref = useRef(undefined);
@@ -112,25 +114,55 @@ let Acone = (props) => {
             //             }
             //         });
             // });
-            switch(move){
+            // switch(move){
+            //     case 'left':
+            //         ref.current.translate.x -= 0.1;
+            //     break;
+            //     case 'right':
+            //         ref.current.translate.x += 0.1;
+            //     break;
+            //     case 'up':
+            //         ref.current.translate.y -= 0.1;
+            //     break;
+            //     case 'down':
+            //         ref.current.translate.y += 0.1;
+            //     break;
+            //     case 'stop':
+            //     default: 
+            //         ref.current.translate.x += 0;
+            //         ref.current.translate.y += 0;
+            //         break;
+            if(direction !== 'stop' && element === 'triangle'){
+            switch(direction){
                 case 'left':
-                    ref.current.translate.x -= 0.1;
+                    if(axe === 'x'){
+                        ref.current[transformation][axe] -= 0.1;
+                    }
                 break;
                 case 'right':
-                    ref.current.translate.x += 0.1;
+                    if(axe === 'x'){
+                        ref.current[transformation][axe] += 0.1;
+                    }           
                 break;
                 case 'up':
-                    ref.current.translate.y -= 0.1;
-                break;
+                    if(axe === 'y') {
+                        ref.current[transformation][axe] -= 0.1;
+                    } else if (axe === 'z' && transformation === 'translate') { 
+                        ref.current.scale += 0.1;
+                    };
+                    
                 case 'down':
-                    ref.current.translate.y += 0.1;
+                    if(axe === 'z' && transformation === 'translate'){ ref.current.scale -= 0.1;
+                    } else if (axe === 'y'){
+                        ref.current[transformation][axe] += 0.1;
+                    }                      
                 break;
-                case 'stop':
-                default: 
-                    ref.current.translate.x += 0;
-                    ref.current.translate.y += 0;
-                    break;
+                default:
+                    ref.current[transformation][axe] += 0;
+                    ref.current.scale += 0;
+                break;       
             }
+        }
     // },[current, isAnimating]);
 },[move]);
 
