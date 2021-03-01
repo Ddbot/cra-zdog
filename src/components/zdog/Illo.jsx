@@ -84,9 +84,9 @@ const Illo = (props) => {
   return <Illu 
     {...coords[current] }
     className='illustration'>
-      <Acone duration={.4} index={current} move={move} />
-      <OCylinder duration={0.225} index={current} move={move} /> 
-      <LCylinder duration={0.125} index={current} move={move} /> 
+      <Acone index={current} move={move} />
+      <OCylinder index={current} move={move} /> 
+      <LCylinder index={current} move={move} /> 
       {/* {['b','t','c','b','c','s','b','t','t','c','t','c','b','b','s','b','t','b','c','b','b','c','b','t'].map((el,i) => <g>{renderShape(el,i)}</g>)} */}
   </Illu>
 };

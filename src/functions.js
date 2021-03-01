@@ -1,3 +1,5 @@
+import gsap from 'gsap';
+
 const renderShape = (el,index) => {
     let calculateCoords = index => {
       return [index % cols, parseInt(index / cols)]
@@ -40,4 +42,7 @@ const renderShape = (el,index) => {
 
 const isEqual = (a, b) => JSON.stringify(a.sort()) === JSON.stringify(b.sort());
 
-export { renderShape, isEqual }
+const interp = (x,y) => {
+  return gsap.utils.interpolate(x,y);
+}
+export { renderShape, isEqual, interp }

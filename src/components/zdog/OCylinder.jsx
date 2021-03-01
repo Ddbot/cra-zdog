@@ -80,7 +80,7 @@ let OCylinder = (props) => {
                                 
                                 ['translate', 'rotate'].forEach((param) => {
                                     Object.keys(coords[current][param]).forEach(key => {
-                                        res[param][key] = (coords[current][param][key] - coords[previous][param][key])/(duration*60);
+                                        res[param][key] = duration*(coords[current][param][key] - coords[previous][param][key])/60;
                                     });
                                 });
                                 

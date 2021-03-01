@@ -191,7 +191,7 @@ function App() {
 	function scrollToFn(e) {
 		let nbOfLis = olRef.current.querySelectorAll('li').length;
 		if(currentLi+1 < nbOfLis){
-			let scrollToAnimation = gsap.to(window, {
+			gsap.to(window, {
 				duration: 1.4, 
 				scrollTo: `#li${currentLi+1}`,
 				onStart: () => {
@@ -208,7 +208,7 @@ function App() {
 					gsap.to(arrowRef.current, {
 						rotate: '0deg',
 						duration: 1.4,
-						ease: "power4.out()"			
+						ease: "power4.out"			
 					});
 				}, 
 			})
@@ -263,11 +263,6 @@ function App() {
 		return () => {}	
 	},[currentLi]);
 
-	// verigier les refs
-	useEffect(() => {
-		console.log('Ol: ', olRef.current, 'Illu: ', illuRef.current, ' Arroz: ', arrowRef.current )
-	})
-
 	return (
 		<ThemeProvider theme={state.checkedTheme ? darkTheme : lightTheme}>
 			<AppBar position='fixed' style={{ zIndex: 100, transition: 'all linear .125s' }}>
@@ -305,8 +300,8 @@ function App() {
 					</Li>
 				})}
 			</InstallGrid>
-			{/* <DownArrow ref={arrowRef} onClick={ scrollToFn } /> */}
-			<DirectionalButtons ref={arrowRef} move={handleMove}/>
+			<DownArrow ref={arrowRef} onClick={ scrollToFn } />
+			{/* <DirectionalButtons ref={arrowRef} move={handleMove}/> */}
 		</ThemeProvider>);
 }
 

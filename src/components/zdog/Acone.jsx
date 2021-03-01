@@ -4,8 +4,9 @@ import  { TAU } from 'zdog';
 import { Cone, useRender } from 'react-zdog'
 import usePrevious from '../../hooks/usePrevious';
 import gsap from 'gsap';
-import { transform } from 'framer-motion';
+import { animate, transform } from 'framer-motion';
 // import styled from 'styled-components';
+import { interp } from '../../functions';
 
 const coords = [{ 
     diameter: 24,
@@ -23,7 +24,8 @@ const coords = [{
     scale: 1.4,
     stroke: false,
     color: '#636',
-    backface: '#C25',      
+    backface: '#C25',
+    duration: 4  
 }, {
     rotate: { 
         x: TAU*90/360, 
@@ -34,7 +36,8 @@ const coords = [{
         x: -20,
         y: 40,
         z: 0
-    }
+    },
+    duration: 6
 },
 {
     rotate: { 
@@ -46,7 +49,8 @@ const coords = [{
         x: 20,
         y: 40,
         z: 0
-    }
+    },
+    duration: 1
 }];
 
 const initialTransformation = {
@@ -55,119 +59,107 @@ const initialTransformation = {
 
 let Acone = (props) => {
     const [index, setIndex ] = useState(props.index);
-    const [delta, setDelta ] = useState(initialTransformation);
+    const [coordinates, setCoordinates] = useState(coords[0]);
     const [isAnimating, setIsAnimating] = useState(false);
-    const [move, setMove] = useState(props.move)
+    // const [move, setMove] = useState(props.move);
+    const [ duration, setDuration ] = useState(0);
+    const [ progression, setProgression ] = useState(undefined);
 
-    const { direction, axe, element, transformation } = move;
-    const { duration } = props;
+    // const { direction, axe, element, transformation } = move;
 
     const ref = useRef(undefined);
 
     const current = props.index;
-	const previous = usePrevious(index);
+	const previous = usePrevious(props.index);
+
+    const lerp = (start, end, progression) => {
+        return interp(start, end)(progression)
+    }
 
     // Changer state index quand props.index change
     useEffect(() => {
         setIndex(props.index);
-    }, [props.index])
+    }, [props.index]);
 
-    // lancer animation quand index change
     useEffect(() => {
-        if(previous !== undefined){
-            gsap.to(ref.current, {
-                    duration,
-                    onStart: () => {
-                        setIsAnimating(true);
-                        setDelta(prev => {
-                            let res = initialTransformation;
-                            
-                            ['translate', 'rotate'].forEach((param) => {
-                                Object.keys(coords[current][param]).forEach(key => {
-                                    res[param][key] = (coords[current][param][key] - coords[previous][param][key])/(duration*60);
-                                });
-                            });
-                            
-                            return res;
-                        });                    
-                    },                    
-                    onComplete: () => {
-                        setIsAnimating(false);
-                    }
-            })      
-        };
-    }, [index]);
+        console.log(lerp(0,10,1/3))
+    },[])
 
-    // Change move direction from props.move
+    // On definit la duree de l'animation gsap dans la state duration
     useEffect(() => {
-        setMove(props.move);
-    },[props.move]);
+        setDuration(coords[current]['duration'])
+    },[current]);
+
+    // Animer quand le state index change
+    useEffect(() => {
+        setIsAnimating(true);
+    },[index]);
+
+
+
+    // function animateElement(t,deltaTime, frame){        
+    //     if(ref.current !== undefined){
+    //         setCoordinates(prev => {
+    //             return {
+    //                 ...prev,
+    //                 translate: {
+    //                     x: gsap.utils.interpolate(coords[previous].translate.x,  coords[current].translate.x, progression),
+    //                     y: gsap.utils.interpolate(coords[previous].translate.y,  coords[current].translate.y, progression),
+    //                     z: gsap.utils.interpolate(coords[previous].translate.z,  coords[current].translate.z, progression)
+    //                 },
+    //                 rotate: {
+    //                     x: gsap.utils.interpolate(coords[previous].rotate.x,  coords[current].rotate.x, progression),
+    //                     y: gsap.utils.interpolate(coords[previous].rotate.y,  coords[current].rotate.y, progression),
+    //                     z: gsap.utils.interpolate(coords[previous].rotate.z,  coords[current].rotate.z, progression)
+    //                 }
+    //         }} )  
+    //     }
+    // }
+
+    // activer le Listener sur le ticker si isAnimating
+    useEffect(() => {
+        if(isAnimating){
+            let anim = gsap.to(window, {
+                duration: duration,
+                onUpdate: () => {
+                    setProgression(anim.progress());
+                },
+                onComplete: () => {
+                    setIsAnimating(false);
+                    setCoordinates(coords[current]);
+                },
+            });
+        } 
+    },[isAnimating]);
 
     useRender((t) => {
-            // ['translate', 'rotate'].map(param => {
-            //     Object.keys(coords[current][param])
-            //         .forEach(key => {
-            //             if(isAnimating) {
-            //                 ref.current[param][key] += delta[param][key];                    
-            //             } else {
-            //                 ref.current[param][key] += 0;
-            //             }
-            //         });
+        if(ref.current !== undefined && !!isAnimating){
+            ref.current.translate.x = gsap.utils.interpolate(coords[previous].translate.x, coords[current].translate.x, progression);
+            ref.current.translate.y = gsap.utils.interpolate(coords[previous].translate.y, coords[current].translate.y, progression);
+            ref.current.translate.z = gsap.utils.interpolate(coords[previous].translate.z, coords[current].translate.z, progression);
+            ref.current.rotate.x = gsap.utils.interpolate(coords[previous].rotate.x,  coords[current].rotate.x, progression);
+            ref.current.rotate.y = gsap.utils.interpolate(coords[previous].rotate.y,  coords[current].rotate.y, progression);
+            ref.current.rotate.z = gsap.utils.interpolate(coords[previous].rotate.z,  coords[current].rotate.z, progression);
+            // setCoordinates(prev => {
+            //     return {
+            //         translate: {
+            //             x: gsap.utils.interpolate(coords[previous].translate.x, coords[current].translate.x, progression)/(duration*60),
+            //             y: gsap.utils.interpolate(coords[previous].translate.y,  coords[current].translate.y, progression)/(duration*60),
+            //             z: gsap.utils.interpolate(coords[previous].translate.z,  coords[current].translate.z, progression)/(duration*60),
+            //     }   }
             // });
-            // switch(move){
-            //     case 'left':
-            //         ref.current.translate.x -= 0.1;
-            //     break;
-            //     case 'right':
-            //         ref.current.translate.x += 0.1;
-            //     break;
-            //     case 'up':
-            //         ref.current.translate.y -= 0.1;
-            //     break;
-            //     case 'down':
-            //         ref.current.translate.y += 0.1;
-            //     break;
-            //     case 'stop':
-            //     default: 
-            //         ref.current.translate.x += 0;
-            //         ref.current.translate.y += 0;
-            //         break;
-            if(direction !== 'stop' && element === 'triangle'){
-            switch(direction){
-                case 'left':
-                    if(axe === 'x'){
-                        ref.current[transformation][axe] -= 0.1;
-                    }
-                break;
-                case 'right':
-                    if(axe === 'x'){
-                        ref.current[transformation][axe] += 0.1;
-                    }           
-                break;
-                case 'up':
-                    if(axe === 'y') {
-                        ref.current[transformation][axe] -= 0.1;
-                    } else if (axe === 'z' && transformation === 'translate') { 
-                        ref.current.scale += 0.1;
-                    };
-                    
-                case 'down':
-                    if(axe === 'z' && transformation === 'translate'){ ref.current.scale -= 0.1;
-                    } else if (axe === 'y'){
-                        ref.current[transformation][axe] += 0.1;
-                    }                      
-                break;
-                default:
-                    ref.current[transformation][axe] += 0;
-                    ref.current.scale += 0;
-                break;       
-            }
         }
-    // },[current, isAnimating]);
-},[move]);
+
+        // return () => ref.current
+    }, [isAnimating]);
+
+    // Change move direction from props.move
+    // useEffect(() => {
+    //     setMove(props.move);
+    // },[props.move]);
 
     return <Cone
-        {...coords[index]}
+        {...coordinates}
         ref={ref}
     />
 };
