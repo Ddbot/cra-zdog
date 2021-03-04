@@ -24,14 +24,18 @@ const Container = styled.button`
 `;
 
 const Down = styled(ArrowDownwardIcon)`
-    grid-template-row: 3 / span 1;
-    grid-template-column: 2 / span 1;
+    grid-template-rows: 3 / span 1;
+    grid-template-columns: 2 / span 1;
     width: 2rem;
     height: 2rem;
     border-radius: 50%;
     border: 4px solid black;
     filter: drop-shadow(-4px 4px 16px #d9d9d9, 4px -4px 16px #ffffff);
     background: #ffffff;
+    
+    &:hover {
+        cursor: default;
+    }
 `;
 
 const DownArrow = forwardRef((props, ref) => {

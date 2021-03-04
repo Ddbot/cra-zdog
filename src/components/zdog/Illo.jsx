@@ -33,7 +33,6 @@ const Illu = styled.div`
 
 const coordsAr =[{
     zoom: 3,
-    // debut
     translate: {
       x: 12.5,
       y: -12.5,
@@ -57,96 +56,38 @@ const coordsAr =[{
 /** --- Basic, re-usable shapes -------------------------- */
 const Illo = (props) => {
   const [ index, setIndex ] = useState(props.index);
-  const [ move, setMove ] = useState(props.move);
-  const [coords, setCoords] = useState(coordsAr[0]);
+  const [ tl, setTl ] = useState(gsap.timeline({ paused: true }));
 
   const current = props.index;
 	const previous = usePrevious(index);
   const ref = useRef(undefined);
 
   useEffect(() => {
-    setMove(props.move);
-  })
-
-  // useRender((t) => {
-  //   if(move !== 'stop' ){
-  //     ref.current.translate.x += 0.1;
-  //     ref.current.translate.y += 0.1;
-  //     // ref.current.translate.x += 0.1;
-  //   } else {
-  //     ref.current.translate.x += 0;
-  //   }
-  // },[move])
-
-  //   useRender((t) => {
-  //   if(current !== undefined && current !== previous ){
-  //     setCoords(prev => {
-  //       return {
-  //         ...prev,
-  //         translate: {
-  //           x: prev.translate.x += 0.1, 
-  //           y: prev.translate.y += 0.1,
-  //           z: prev.translate.z += 0.1
-  //         }
-  //       }
-  //     })
-  //   }
-  // },[current, previous])
-
-  // useLayoutEffect(() => {
-  //   if(previous !== undefined && current !== previous){
-  //     let anim = gsap.to(window, {
-  //       duration: 1,
-  //       autoAlpha: 1,
-  //     });
-  //   } 
-  // },[index]);
-
-    useEffect(() => {
     if (props.index !== index){
       setIndex(props.index)
     }
   },[props.index]);
 
-  // useEffect(() => {
-    // index !== 0 && setCoords(coordsAr[current]);
-  // },[index])
-
   useEffect(() => {
     if(previous !== undefined){ 
-      gsap.fromTo(ref.current.children[0], 
-        {
-          duration: 1,
-          xPercent: coordsAr[previous].translate.x,
-          yPercent: coordsAr[previous].translate.y,
-          zPercent: coordsAr[previous].translate.z,
-          onStart: () => {
-            console.log('OnStart, dans gsap animation de illu, ', previous, current);
-          }
-        }, 
-        {
-          xPercent: coordsAr[current].translate.x,
-          yPercent: coordsAr[current].translate.y,
-          zPercent: coordsAr[current].translate.z,
-          onComplete: () => {
-            console.log('onComplete, dans gsap animation de illu, ', previous, current);
-          }      
-        })
+      gsap.fromTo(ref.current.children[0],{
+        duration: 1,
+        xPercent: coordsAr[previous].translate.x,
+        yPercent: coordsAr[previous].translate.y,
+      }, 
+      {
+        xPercent: coordsAr[current].translate.x,
+        yPercent: coordsAr[current].translate.y,
+      });  
     }
-
-    return () => {}
   },[index, current, previous]);  
 
-//   useEffect(() => {
-// console.log(previous, current)
-//   });
-
   return <Illu ref={ ref }><Illustration 
-    {...coords }
+    { ...coordsAr[0] }
     className='illustration'>
-      <Acone index={current} move={move} />
-      <OCylinder index={current} move={move} /> 
-      <LCylinder index={current} move={move} /> 
+      <Acone index={current} />
+      <OCylinder index={current} /> 
+      <LCylinder index={current} /> 
       {/* {['b','t','c','b','c','s','b','t','t','c','t','c','b','b','s','b','t','b','c','b','b','c','b','t'].map((el,i) => <g>{renderShape(el,i)}</g>)} */}
   </Illustration></Illu>
 };
