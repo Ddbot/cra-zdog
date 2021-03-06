@@ -80,11 +80,12 @@ let Acone = (props) => {
 
     useEffect(() => {
         if(previous !== undefined){
-            gsap.to(ref.current, {
+            gsap.to(ref.current.rotate, {
                 duration: 1,
-                onUpdate: () => {
-                    ref.current && streamCoords(ref.current, 1, 60)
-                },
+                // onUpdate: () => {
+                //     ref.current && streamCoords(ref.current, 1, 30)
+                // },
+                ...coords[current].rotate
             });
         };
     }, [current, previous]);

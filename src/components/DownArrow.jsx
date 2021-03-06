@@ -24,8 +24,8 @@ const Container = styled.button`
 `;
 
 const Down = styled(ArrowDownwardIcon)`
-    grid-template-rows: 3 / span 1;
-    grid-template-columns: 2 / span 1;
+    grid-row: 3 / span 1;
+    grid-column: 2 / span 1;
     width: 2rem;
     height: 2rem;
     border-radius: 50%;
