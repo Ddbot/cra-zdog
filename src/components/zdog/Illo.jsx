@@ -1,10 +1,8 @@
-import ReactDOM from 'react-dom'
-import React, { useLayoutEffect, useRef, useState, useEffect, forwardRef } from 'react'
-import { Anchor, Illustration, Ellipse, Shape, RoundedRect, useRender, useZdog } from 'react-zdog'
+import React, { useRef, useState, useEffect } from 'react'
+import { Illustration } from 'react-zdog'
 
 import styled from 'styled-components'; 
 import gsap from 'gsap';
-import Zdog, { TAU } from 'zdog';
 
 import Acone from './Acone';
 import OCylinder from './OCylinder';
@@ -54,7 +52,6 @@ const coordsAr =[{
 /** --- Basic, re-usable shapes -------------------------- */
 const Illo = (props) => {
   const [ index, setIndex ] = useState(props.index);
-  const [ tl, setTl ] = useState(gsap.timeline({ paused: true }));
 
   const current = props.index;
 	const previous = usePrevious(index);

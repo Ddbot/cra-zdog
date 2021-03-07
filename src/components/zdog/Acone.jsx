@@ -84,7 +84,7 @@ let Acone = (props) => {
             let rotateAnimation = gsap.to([
                 ref.current.rotate, 
             ], {
-                duration: 10,
+                duration: 1,
                 // onUpdate: () => {
                 //     ref.current && streamCoords(ref.current, 1, 30)
                 // },
@@ -98,23 +98,35 @@ let Acone = (props) => {
             let translateAnimation = gsap.to([
                 ref.current.translate, 
             ], {
-                duration: 10,
+                duration: 1,
                 // onUpdate: () => {
                 //     ref.current && streamCoords(ref.current, 1, 30)
                 // },
                 ...coords[current].translate,
-                ease: "elastic.out(1, 0.3)",
+                ease: "elastic.out(1, 0.8)",
                 // onStart: () => {
                 //     Object.entries(ref.current).forEach(([key, value]) => console.table([['Key',key],['Value',value]]))
                 // }
-            });            
-            tl.add(translateAnimation);
-            tl.add(rotateAnimation, '<');
-            tl.play();
+            });     
+            
+            // let backFaceColorAnimation = gsap.to(ref.current, {
+            //     duration: 1,
+            //     backface: '#ff9800',
+            // });
+
+            setTl(prev => {
+                prev && prev
+                .add(translateAnimation)
+                .add(rotateAnimation, '<');
+            })
 
             return () => tl;
         };
     }, [current, previous]);
+
+    useEffect(() => {
+        tl && tl.play();
+    }, [tl])
 
     return <Cone
         {...coordinates}
