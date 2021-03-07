@@ -4,6 +4,7 @@ import  { TAU } from 'zdog';
 import { Cone } from 'react-zdog'
 import usePrevious from '../../hooks/usePrevious';
 import gsap, { CSSPlugin } from 'gsap';
+import { acone } from './coordinates';
 
 gsap.registerPlugin(CSSPlugin);
 
@@ -15,50 +16,52 @@ let Acone = (props) => {
     const current = props.index;
 	const previous = usePrevious(props.index);
 
-    const coords = useMemo(() => ([{ 
-        diameter: 24,
-        length: 20.78,
-        translate: {
-            x: 4,
-            y: -20,
-            z: 0
-        }, 
-        rotate: { 
-            x: TAU*90/360, 
-            y: 0, 
-            z: 0 
-        },
-        scale: 1.4,
-        stroke: false,
-        color: '#636',
-        backface: '#C25',
-        duration: 4  
-    }, {
-        rotate: { 
-            // x: TAU*90/360, 
-            x: TAU*180/360,
-            y: 0, 
-            z: 0 
-        },
-        translate: {
-            x: -10,
-            y: 40,
-            z: 0
-        },
-        duration: 6
-    },
-    {
-        rotate: { 
-            x: TAU*90/360, 
-            y: 0, 
-            z: 0 
-        },
-        translate: {
-            x: 0,
-            y: 40,
-            z: 0
-        },
-    }]));
+    // const coords = useMemo(() => ([{ 
+    //     diameter: 24,
+    //     length: 20.78,
+    //     translate: {
+    //         x: 4,
+    //         y: -20,
+    //         z: 0
+    //     }, 
+    //     rotate: { 
+    //         x: TAU*90/360, 
+    //         y: 0, 
+    //         z: 0 
+    //     },
+    //     scale: 1.4,
+    //     stroke: false,
+    //     color: '#636',
+    //     backface: '#C25',
+    //     duration: 4  
+    // }, {
+    //     rotate: { 
+    //         // x: TAU*90/360, 
+    //         x: TAU*180/360,
+    //         y: 0, 
+    //         z: 0 
+    //     },
+    //     translate: {
+    //         x: -10,
+    //         y: 40,
+    //         z: 0
+    //     },
+    //     duration: 6
+    // },
+    // {
+    //     rotate: { 
+    //         x: TAU*90/360, 
+    //         y: 0, 
+    //         z: 0 
+    //     },
+    //     translate: {
+    //         x: 0,
+    //         y: 40,
+    //         z: 0
+    //     },
+    // }]));
+
+    const coords = useMemo(() => acone);
 
     const [coordinates, setCoordinates] = useState(coords[0]);
 

@@ -4,6 +4,7 @@ import { TAU } from 'zdog';
 import { Cylinder } from 'react-zdog'
 import usePrevious from '../../hooks/usePrevious';
 import gsap,{ CSSPlugin } from 'gsap';
+import { ocylinder } from './coordinates';
 
 gsap.registerPlugin(CSSPlugin);
 
@@ -15,54 +16,7 @@ let OCylinder = (props) => {
     const current = props.index;
 	const previous = usePrevious(props.index);
 
-    const coords = useMemo(() => ([{
-        diameter: 16.97,
-        length: 16.97,
-        translate: {
-            x: 3.95,
-            y: 0,
-            z: 10
-        },
-        rotate: { 
-            x: 0, 
-            y: 0, 
-            z: -TAU * 120/360 
-        },
-        scale: 0.8,
-        // pour avoir un diamant de coté
-        // rotate: { 
-        //     x: TAU * 90/360, 
-        //     y: TAU * 45/360, 
-        //     z: -TAU * 120/360
-        // },
-        stroke: false,
-        color: '#EA0',
-        frontFace: '#c25',
-        backface: '#e62',  
-    }, {
-        translate: {
-            x: -20,
-            y: 40,
-            z: 0
-        },
-        rotate: {
-            x: 0,
-            y: 0,
-            z: 0
-        }
-    },
-    {
-        translate: {
-            x: 20,
-            y: 40,
-            z: 0
-        },
-        rotate: {
-            x: 0,
-            y: 0,
-            z: 0
-        }
-    }]));
+    const coords = useMemo(() => ocylinder);
 
     const [coordinates, setCoordinates] = useState(coords[0]);
 

@@ -4,6 +4,7 @@ import { TAU } from 'zdog';
 import { Cylinder, useRender } from 'react-zdog'
 import usePrevious from '../../hooks/usePrevious';
 import gsap from 'gsap';
+import { lcylinder } from './coordinates';
 
 let LCylinder = (props) => {
     const [index, setIndex] = useState(props.index);
@@ -13,56 +14,7 @@ let LCylinder = (props) => {
     const current = props.index;
 	const previous = usePrevious(index);
 
-    const coords = useMemo(() => ([
-        {
-            diameter: 2,
-            length: 48,
-            translate: {
-                x: 4,
-                y: -8,
-                z: 0
-            },
-            // translate: {
-            //     x: 0,
-            //     y: 0,
-            //     z: 0
-            // },
-            // rotate: {  x: TAU * 90/360, y: -TAU * 45/360 },
-            // pour avoir un diamant de coté
-            rotate: { 
-                x: TAU * 90/360, 
-                y: TAU * 45/360, 
-                z: -TAU * 120/360
-            },
-            stroke: true,
-            color: '#e62',
-            frontFace: '#c25',
-            backface: '#e62',  
-        }, 
-        {
-            translate: {
-                x: -20,
-                y: 0,
-                z: 0
-            },
-            rotate: {
-                x: 0,
-                y: 0,
-                z: 0
-            }
-        }, 
-        {
-            translate: {
-                x: 20,
-                y: 0,
-                z: 0
-            },
-            rotate: {
-                x: 0,
-                y: 0,
-                z: 0
-            }
-        }]));
+    const coords = useMemo(() => lcylinder);
 
     const [coordinates, setCoordinates] = useState(coords[0]);
 
