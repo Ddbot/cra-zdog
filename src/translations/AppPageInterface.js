@@ -4,7 +4,8 @@ export const i18n = rosetta({
   en: {
     intro: {
         welcome: 'Hi, I\'m Andry!',
-      text: 'I am a Front End developper',
+        text: 'I am a Front End developper',
+        contact: "Let's get in touch",
         other: 'Something else'
     },
     // support(obj) {
@@ -17,7 +18,8 @@ export const i18n = rosetta({
   fr: {
     intro: {
         welcome: 'Bonjour, je suis Andry',
-      text: 'Je suis un développeur Front End',
+        text: 'Je suis un développeur Front End',
+        contact: 'Contactez-moi',
         other: 'Autre texte'
     },
     // support(obj) {
