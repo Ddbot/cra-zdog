@@ -3,6 +3,9 @@ import styled from 'styled-components';
 import { i18n } from '../translations/CTA_dictionary';
 import { Avatar, Button, Chip, Container, Grid, Typography } from '@material-ui/core';
 import gsap from 'gsap';
+import CSSIcon from '../assets/icons/CSSIcon';
+import HTMLIcon from '../assets/icons/HTMLIcon';
+import JSIcon from '../assets/icons/JSIcon';
 
 const Div = styled.div`
     grid-column: 1 / span 3;
@@ -23,7 +26,11 @@ const CTA = (props, children) => {
     // set default language
     i18n.locale('fr');
 
-    const handleClick = () => {}
+    const handleClick = (e) => {
+        e.persist();
+        const { target, currentTarget } = e;
+        console.log(currentTarget, target)
+    }
 
     const renderContent = () => {
         switch(props.index){
@@ -34,9 +41,12 @@ const CTA = (props, children) => {
                         direction="row"
                         justify="space-around"
                         alignItems="center">
-                        <Chip avatar={<Avatar alt="HTML logo" src="../html_logo.svg" />} label="HTML" onClick={handleClick} />
-                        <Chip avatar={<Avatar alt="CSS logo" src="../css_logo.svg" />} label="CSS" onClick={handleClick} />
-                        <Chip avatar={<Avatar alt="JS logo" src="../js_logo.svg" />} label="Javascript" onClick={handleClick} />
+                        <Chip icon={<HTMLIcon />}
+                        label="HTML" onClick={handleClick} />
+                        <Chip icon={<CSSIcon />}
+                        label="CSS" onClick={handleClick} />
+                        <Chip icon={<JSIcon />}
+                        label="Javascript" onClick={handleClick} />
                     </Grid>
                     {/* {i18n.t('text.technos')} */}
                     </Container>
