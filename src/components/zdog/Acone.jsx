@@ -1,6 +1,5 @@
 // import ReactDOM from 'react-dom'
 import React, { useMemo, useRef, useState, useEffect } from 'react'
-import  { TAU } from 'zdog';
 import { Cone } from 'react-zdog'
 import usePrevious from '../../hooks/usePrevious';
 import gsap, { CSSPlugin } from 'gsap';
@@ -16,64 +15,9 @@ let Acone = (props) => {
     const current = props.index;
 	const previous = usePrevious(props.index);
 
-    // const coords = useMemo(() => ([{ 
-    //     diameter: 24,
-    //     length: 20.78,
-    //     translate: {
-    //         x: 4,
-    //         y: -20,
-    //         z: 0
-    //     }, 
-    //     rotate: { 
-    //         x: TAU*90/360, 
-    //         y: 0, 
-    //         z: 0 
-    //     },
-    //     scale: 1.4,
-    //     stroke: false,
-    //     color: '#636',
-    //     backface: '#C25',
-    //     duration: 4  
-    // }, {
-    //     rotate: { 
-    //         // x: TAU*90/360, 
-    //         x: TAU*180/360,
-    //         y: 0, 
-    //         z: 0 
-    //     },
-    //     translate: {
-    //         x: -10,
-    //         y: 40,
-    //         z: 0
-    //     },
-    //     duration: 6
-    // },
-    // {
-    //     rotate: { 
-    //         x: TAU*90/360, 
-    //         y: 0, 
-    //         z: 0 
-    //     },
-    //     translate: {
-    //         x: 0,
-    //         y: 40,
-    //         z: 0
-    //     },
-    // }]));
-
     const coords = useMemo(() => acone);
 
     const [coordinates, setCoordinates] = useState(coords[0]);
-
-    const streamCoords = (el, dur=1, fps=60) => {
-        for (let transformation of Object.keys(coords[current])) {
-            if(['rotate','translate'].includes(transformation)){
-                for (let coord of Object.keys(el[transformation])) {
-                    return el[transformation][coord] = (el[transformation][coord] - coords[previous][transformation][coord]) >= 0 ? el[transformation][coord] + (el[transformation][coord] - coords[previous][transformation][coord])/fps*dur : el[transformation][coord] - (el[transformation][coord] - coords[previous][transformation][coord])/fps*dur;
-                }    
-            }
-        }
-    }
 
     // Changer state index quand props.index change
     useEffect(() => {
