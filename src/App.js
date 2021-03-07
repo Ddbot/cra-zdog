@@ -1,7 +1,6 @@
 import { useContext, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import {
 	AppBar,
-	Container,
 	IconButton,
 	List,
 	ListItem,
@@ -21,7 +20,9 @@ import styled from 'styled-components';
 
 import { gsap, ScrollTrigger, ScrollToPlugin } from "gsap/all";
 
-import Zdog from 'zdog';
+import SvgBG from './components/SvgBG';
+
+// import Zdog from 'zdog';
 
 import './App.css';
 
@@ -109,7 +110,6 @@ const InstallGrid = styled(List)`
 `;
 
 const ChangeLanguageIcon = styled(IconButton)`
-	// scale: 0.75;
 	position: absolute;
 	right: 0;
 
@@ -296,7 +296,8 @@ function App() {
 					</Menu>	
 				</MenuBar>
 			</AppBar>
-			<Illo id='illo' index={currentLi} move={move} ref={illuRef}/>
+			<SvgBG index={ currentLi }/>
+			<Illo id='illo' index={currentLi} move={move} />
 			<InstallGrid component="ol" ref={olRef}>
 				{Object.values(i18n.t('intro')).map((v,i) => {
 					return <Li id={`li${i}`} key={i}>

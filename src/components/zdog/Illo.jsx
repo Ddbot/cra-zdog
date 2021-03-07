@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react'
+import React, { useMemo, useRef, useState, useEffect } from 'react'
 import { Illustration } from 'react-zdog'
 
 import styled from 'styled-components'; 
@@ -7,6 +7,8 @@ import gsap from 'gsap';
 import Acone from './Acone';
 import OCylinder from './OCylinder';
 import LCylinder from './LCylinder';
+
+import { coordsar } from './coordinates';
 
 import usePrevious from '../../hooks/usePrevious';
 
@@ -27,28 +29,6 @@ const Illu = styled.div`
   top: 9vh;
 `;
 
-const coordsAr =[{
-    zoom: 3,
-    translate: {
-      x: 12.5,
-      y: -12.5,
-      z: 0
-    }
-  }, {
-    translate: {
-      x: -25,
-      y: 25,
-      z: 0
-  }
-  },
-  {
-    translate: {
-      x: 12.5,
-      y: 33,
-      z: 0
-  }
-  }];
-
 /** --- Basic, re-usable shapes -------------------------- */
 const Illo = (props) => {
   const [ index, setIndex ] = useState(props.index);
@@ -56,6 +36,8 @@ const Illo = (props) => {
   const current = props.index;
 	const previous = usePrevious(index);
   const ref = useRef(undefined);
+
+const coordsAr = useMemo( () => coordsar );
 
   useEffect(() => {
     if (props.index !== index){

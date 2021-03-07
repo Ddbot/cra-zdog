@@ -95,7 +95,7 @@ const lcylinder = [
         }
     }];
 
-    const ocylinder = [{
+const ocylinder = [{
         diameter: 16.97,
         length: 16.97,
         translate: {
@@ -142,6 +142,28 @@ const lcylinder = [
             y: 0,
             z: 0
         }
-    }]
+}];
 
-export { acone, lcylinder, ocylinder };
+const coordsar = [{
+    zoom: 3,
+    translate: {
+        x: 12.5,
+        y: -12.5,
+        z: 0
+    }
+    }, {
+    translate: {
+        x: -25,
+        y: 25,
+        z: 0
+    }
+    },
+    {
+    translate: {
+        x: 12.5,
+        y: 33,
+        z: 0
+    }
+}]
+
+export { acone, coordsar, lcylinder, ocylinder };
