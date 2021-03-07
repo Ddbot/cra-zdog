@@ -61,7 +61,7 @@ const Text = styled(ListItemText)`
 
 			// height: calc(100vh*2/3);
 
-			z-index: 2;
+			// z-index: 2;
 			
 			transition: all linear .125s;
 			
@@ -107,7 +107,7 @@ const InstallGrid = styled(List)`
 	align-items: center;
 	justify-content: center;
 	height: 100vh;
-	z-index: 2;
+	// z-index: 2;
 `;
 
 const ChangeLanguageIcon = styled(IconButton)`

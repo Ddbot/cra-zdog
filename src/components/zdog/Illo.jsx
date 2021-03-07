@@ -20,7 +20,7 @@ const Illu = styled.div`
 
   transition: width linear .125s, height linear .125s;
 
-  z-index: 3;    
+  // z-index: 3;    
 
   height: 91vh !important;
   width: 100vw !important;

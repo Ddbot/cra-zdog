@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { i18n } from '../translations/CTA_dictionary';
+import { Button, Container } from '@material-ui/core';
 
 const Div = styled.div`
     grid-column: 1 / span 3;
@@ -15,9 +16,9 @@ const CTA = (props, children) => {
     const renderContent = () => {
         switch(props.index){
             case 1:
-                return <h2>{i18n.t('text.technos')}</h2>
+                return <Container>{i18n.t('text.technos')}</Container>
             case 2:
-                return <h2>{i18n.t('text.cta')}</h2>
+                return <Container><Button variant="contained" color="primary"><a href="https://material-ui.com/components/buttons/">{i18n.t('text.cta')}</a></Button></Container>
             default:
                 break;
         }
