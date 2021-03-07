@@ -3,8 +3,9 @@ import React, { forwardRef, useRef, useEffect, useState } from 'react'
 import { TAU } from 'zdog';
 import { Cylinder, useRender } from 'react-zdog'
 import usePrevious from '../../hooks/usePrevious';
-import gsap from 'gsap';
+import gsap,{ CSSPlugin } from 'gsap';
 
+gsap.registerPlugin(CSSPlugin);
 
 const coords = [{
     diameter: 16.97,
@@ -94,18 +95,18 @@ let OCylinder = (props) => {
             };
     }, [index]);
     
-    useRender((t) => {
-                ['translate', 'rotate'].map(param => {
-                    Object.keys(coords[current][param])
-                        .forEach(key => {
-                            if(isAnimating) {
-                                ref.current[param][key] += delta[param][key];                    
-                            } else {
-                                ref.current[param][key] += 0;
-                            }
-                        });
-                });
-    },[current, isAnimating]);
+    // useRender((t) => {
+    //             ['translate', 'rotate'].map(param => {
+    //                 Object.keys(coords[current][param])
+    //                     .forEach(key => {
+    //                         if(isAnimating) {
+    //                             ref.current[param][key] += delta[param][key];                    
+    //                         } else {
+    //                             ref.current[param][key] += 0;
+    //                         }
+    //                     });
+    //             });
+    // },[current, isAnimating]);
 
     return <Cylinder
         {...coords[current]}
