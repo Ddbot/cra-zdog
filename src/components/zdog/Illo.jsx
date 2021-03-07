@@ -27,8 +27,6 @@ const Illu = styled.div`
   position: fixed !important;
     
   top: 9vh;
-
-  svg { border: 1px dashed red; }
 `;
 
 const coordsAr =[{
