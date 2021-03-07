@@ -3,6 +3,8 @@ import React, { useMemo, useRef, useState, useEffect } from 'react'
 import { Cone } from 'react-zdog'
 import usePrevious from '../../hooks/usePrevious';
 import gsap, { CSSPlugin } from 'gsap';
+import { useTheme } from '@material-ui/core/styles';
+
 import { acone } from './coordinates';
 
 gsap.registerPlugin(CSSPlugin);
@@ -11,6 +13,7 @@ let Acone = (props) => {
     const [index, setIndex ] = useState(props.index);
     const [tl, setTl ] = useState(gsap.timeline({ paused: true }));
     const ref = useRef(undefined);
+    const theme = useTheme();
 
     const current = props.index;
 	const previous = usePrevious(props.index);
@@ -56,15 +59,17 @@ let Acone = (props) => {
                 // }
             });     
             
-            // let backFaceColorAnimation = gsap.to(ref.current, {
-            //     duration: 1,
-            //     backface: '#ff9800',
-            // });
+            let backFaceColorAnimation = gsap.to(ref.current, {
+                duration: 1,
+                color: theme.palette.type === 'light' ?  '#636' : 'red',         
+                backface: theme.palette.type === 'light' ?  '#C25' : '#ff9800',                
+            });
 
             setTl(prev => {
                 prev && prev
                 .add(translateAnimation)
-                .add(rotateAnimation, '<');
+                .add(rotateAnimation, '<')
+                .add(backFaceColorAnimation, '<')
             })
 
             return () => tl;

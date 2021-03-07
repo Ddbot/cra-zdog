@@ -21,6 +21,7 @@ import styled from 'styled-components';
 import { gsap, ScrollTrigger, ScrollToPlugin } from "gsap/all";
 
 import SvgBG from './components/SvgBG';
+import CTA from './components/CTA';
 
 // import Zdog from 'zdog';
 
@@ -302,6 +303,9 @@ function App() {
 				{Object.values(i18n.t('intro')).map((v,i) => {
 					return <Li id={`li${i}`} key={i}>
 						<Text>{v}</Text>
+						{/* { i === 1 && <CTA><h2>ici la liste des technos utilisées</h2></CTA>}
+						{ i === 2 && <CTA><h2>contactez-moi</h2></CTA>} */}
+						<CTA index={currentLi} />
 					</Li>
 				})}
 			</InstallGrid>

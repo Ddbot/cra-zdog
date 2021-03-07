@@ -1,4 +1,6 @@
 import { TAU } from 'zdog';
+import { useTheme } from '@material-ui/core/styles';
+
 const acone = [{ 
     diameter: 24,
     length: 20.78,
@@ -14,8 +16,8 @@ const acone = [{
     },
     scale: 1.4,
     stroke: false,
-    color: '#636',
-    backface: '#C25',
+    // color: '#636',
+    // backface: theme.palette.type === 'light' ?  '#C25' : '#ff9800',
     duration: 4  
 }, {
     rotate: { 
