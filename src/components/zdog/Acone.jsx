@@ -129,7 +129,7 @@ let Acone = (props) => {
     }, [tl])
 
     return <Cone
-        {...coordinates}
+        {...coordinates }
         ref={ref}
     />
 };
