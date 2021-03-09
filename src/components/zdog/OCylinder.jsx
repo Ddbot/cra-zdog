@@ -22,12 +22,17 @@ let OCylinder = (props) => {
 
     const [coordinates, setCoordinates] = useState(coords[0]);
 
+    const colorCoords = Array(23).fill([]);
+
     // Changer state index quand props.index change
     useEffect(() => {
         if(props.index !== index){
             setIndex(props.index);
         }
-    }, [props.index])
+    }, [props.index]);
+
+    // index = 1, id = 9
+    let cssIconColor = 'rgb(38, 77, 228)';
 
     function getColors(id){
         let res;
