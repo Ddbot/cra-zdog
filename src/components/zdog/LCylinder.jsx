@@ -42,29 +42,63 @@ let LCylinder = (props) => {
 
     rotationsCoords[14] = [
         { x: TAU * 90/360, y: TAU * 45/360, z: -TAU * 120/360 },
-        { x: 0, y:0, z: 0 },
+        { x: TAU * 90/360, y:0, z: 0 },
         { x: 0, y:0, z: 0 }
-    ]
+    ];
+
+    const colorCoords = Array(23).fill([]).map(el => { return { x: 0, y: 0, z: 0 } });
+    colorCoords[5] = [
+        {
+            color: "#e62",
+            frontFace: '#636',
+            backface: '#EEAA00',
+            stroke: 1
+        },
+        {             
+            color: "#e62",
+            frontFace: '#636',
+            backface: '#EEAA00',
+            stroke: 0 
+        },
+        {
+            color: "#e62",
+            frontFace: '#636',
+            backface: '#EEAA00',
+            stroke: 10 
+        }
+    ];
+
+    colorCoords[14] = [
+        {
+            color: '#c25',
+            frontFace: '#e62',
+            backface: 'white'
+        },
+        {
+            color: 'rgb(247, 223, 30)',
+            frontFace: 'rgb(247, 223, 30)',
+            backface: 'rgb(247, 223, 30)'
+        },
+        {
+            color: '#c25',
+            frontFace: '#e62',
+            backface: 'white'
+        }
+    ];
+
 
     // const coords = useMemo(() => lcylinder);
     const rotations = useMemo(() => rotationsCoords);
+    const colors = useMemo(() => colorCoords);
 
     function getColors(id){
         let res;
         switch(id){
             case 5:
-                res = {
-                    color: "#e62",
-                    frontFace: '#636',
-                    backface: '#EEAA00',
-                }
+                res = colorCoords[id][current]
                 break;
             case 14:
-                res = {
-                    color: '#c25',
-                    frontFace: '#e62',
-                    backface: 'white'
-                }
+                res = colorCoords[id][current]
                 break;              
             default:
                 break;
@@ -117,6 +151,15 @@ let LCylinder = (props) => {
                 ease: "power4.out",
             });
 
+            let colorAnimation = gsap.fromTo(ref.current, {
+                duration: 1,
+                ...colors[props.id][previous],
+            },{
+                ...colors[props.id][current],
+                ease: "power4.out",
+            });
+
+
     //         let translateAnimation = gsap.to([
     //             ref.current.translate, 
     //         ], {
@@ -128,7 +171,8 @@ let LCylinder = (props) => {
             setTl(prev => {
                 prev && prev
     //             .add(translateAnimation)
-                .add(rotateAnimation, '<');
+                .add(rotateAnimation, '<')
+                .add(colorAnimation, '<');
             })
 
             return () => tl;
@@ -145,7 +189,7 @@ let LCylinder = (props) => {
 
     return <Cylinder
         {...props}
-        {...getColors(props.id)}
+        // {...colorCoords[props.id][current]}
         {...getScale(props.id)}
         ref={ref}
 />};

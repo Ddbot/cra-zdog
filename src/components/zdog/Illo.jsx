@@ -69,13 +69,13 @@ coordsar
       // }, {
       //   zoom: zoomIndices[current]
       // });
-      // gsap.fromTo(ref.current.children[0],{
-      //   duration: 1,
-      //   scale: zoomIndices[previous]
-      // }, 
-      // {
-      //   scale: zoomIndices[current]
-      // });        
+      gsap.fromTo(ref.current.children[0],{
+        duration: 1,
+        scale: zoomIndices[previous]
+      }, 
+      {
+        scale: zoomIndices[current]
+      });        
     }
   },[index, current, previous]);  
 
