@@ -69,13 +69,13 @@ coordsar
       // }, {
       //   zoom: zoomIndices[current]
       // });
-      gsap.fromTo(ref.current.children[0],{
-        duration: 1,
-        scale: zoomIndices[previous]
-      }, 
-      {
-        scale: zoomIndices[current]
-      });        
+      // gsap.fromTo(ref.current.children[0],{
+      //   duration: 1,
+      //   scale: zoomIndices[previous]
+      // }, 
+      // {
+      //   scale: zoomIndices[current]
+      // });        
     }
   },[index, current, previous]);  
 
@@ -83,13 +83,14 @@ coordsar
     { ...coordsAr[0] }
     className='illustration'
     centered={false}
-    zoom={4}>
+    zoom={4}
+    index={props.index}>
       {['transparent-box','acone','ocylinder','transparent-box',
         'ocylinder','lcylinder','transparent-box','acone',
         'acone','ocylinder','acone','ocylinder',
         'transparent-box','transparent-box','lcylinder','transparent-box',
         'acone','transparent-box','ocylinder','transparent-box',
-        'transparent-box','ocylinder','transparent-box','acone'].map((el,i) => renderShape(el,i))}
+        'transparent-box','ocylinder','transparent-box','acone'].map((el,i) => renderShape(el,i, props.index))}
   </Illustration></Illu>
 };
   

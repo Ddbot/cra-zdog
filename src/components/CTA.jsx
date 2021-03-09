@@ -96,8 +96,6 @@ const CTA = (props, children) => {
                     delay: 1.4,
                     ease: "elastic.out(1, 0.75)"
                 });            
-
-        console.log(chips)
     }, [ref.current]);
 
     return <Div ref={ref}>{renderContent()}</Div>

@@ -16,21 +16,23 @@ let calculateCoords = (index) => {
   }
 };
 
-const renderShape = (el,index) => {
+const renderShape = (el,i, index) => {
 
     switch(el){
       case 'transparent-box':
-        return <TransparentBox key={index} id={index}
+        return <TransparentBox key={i} id={i}
+        index={index}
         translate={
-          calculateCoords(index)
+          calculateCoords(i)
         }
         color='transparent'
         />
       case 'acone':
-        return <Acone key={index} id={index}
+        return <Acone key={i} id={i}
+        index={index}
           translate={{
-            x: calculateCoords(index).x,
-            y: calculateCoords(index).y + cellHeight/4
+            x: calculateCoords(i).x,
+            y: calculateCoords(i).y + cellHeight/4
           }}
 
           rotate={{ 
@@ -41,10 +43,11 @@ const renderShape = (el,index) => {
           scale={8}
         />
       case 'lcylinder':
-        return <LCylinder key={index} id={index}
+        return <LCylinder key={i} id={i}
+        index={index}
         translate={{
-          x: calculateCoords(index).x,
-          y: calculateCoords(index).y
+          x: calculateCoords(i).x,
+          y: calculateCoords(i).y
         }}
         rotate={{ 
             x: TAU * 90/360, 
@@ -56,10 +59,11 @@ const renderShape = (el,index) => {
 
         />
       case 'ocylinder':
-        return <OCylinder key={index} id={index}
+        return <OCylinder key={i} id={i}
+        index={index}
         translate={{
-          x: calculateCoords(index).x,
-          y: calculateCoords(index).y
+          x: calculateCoords(i).x,
+          y: calculateCoords(i).y
         }}
         rotate={{ 
             x: 0, 
