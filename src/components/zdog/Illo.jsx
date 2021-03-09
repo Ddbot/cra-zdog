@@ -4,16 +4,17 @@ import { Illustration } from 'react-zdog'
 import styled from 'styled-components'; 
 import gsap from 'gsap';
 
-import Acone from './Acone';
-import OCylinder from './OCylinder';
-import LCylinder from './LCylinder';
+// import Acone from './Acone';
+// import OCylinder from './OCylinder';
+// import LCylinder from './LCylinder';
+// import TransparentBox from './TransparentBox';
 
 import { coordsar } from './coordinates';
 
 import usePrevious from '../../hooks/usePrevious';
+import { renderShape } from '../../functions';
 
-const cols = 4, rows = 6;
-
+const zoomIndices = [1.2,2,4];
 
 const Illu = styled.div`
   box-sizing: border-box;
@@ -40,7 +41,10 @@ const Illo = (props) => {
 	const previous = usePrevious(index);
   const ref = useRef(undefined);
 
-const coordsAr = useMemo( () => coordsar );
+const coordsAr = 
+useMemo( () => 
+coordsar 
+);
 
   useEffect(() => {
     if (props.index !== index){
@@ -50,27 +54,42 @@ const coordsAr = useMemo( () => coordsar );
 
   useEffect(() => {
     if(previous !== undefined){ 
+      // gsap.fromTo(ref.current.children[0],{
+      //   duration: 1,
+      //   xPercent: coordsAr[previous].translate.x,
+      //   yPercent: coordsAr[previous].translate.y,
+      // }, 
+      // {
+      //   xPercent: coordsAr[current].translate.x,
+      //   yPercent: coordsAr[current].translate.y,
+      // });  
+      // gsap.fromTo(ref.current.children[0],{
+      //   duration: 2,
+      //   zoom: zoomIndices[previous]
+      // }, {
+      //   zoom: zoomIndices[current]
+      // });
       gsap.fromTo(ref.current.children[0],{
         duration: 1,
-        xPercent: coordsAr[previous].translate.x,
-        yPercent: coordsAr[previous].translate.y,
+        scale: zoomIndices[previous]
       }, 
       {
-        xPercent: coordsAr[current].translate.x,
-        yPercent: coordsAr[current].translate.y,
-      });  
+        scale: zoomIndices[current]
+      });        
     }
   },[index, current, previous]);  
 
   return <Illu ref={ ref }><Illustration 
     { ...coordsAr[0] }
+    className='illustration'
     centered={false}
-    className='illustration'>
-    <OCylinder index={current} /> 
-      <Acone index={current} />
-      {/* <OCylinder index={current} />  */}
-      <LCylinder index={current} /> 
-      {/* {['b','t','c','b','c','s','b','t','t','c','t','c','b','b','s','b','t','b','c','b','b','c','b','t'].map((el,i) => <g>{renderShape(el,i)}</g>)} */}
+    zoom={4}>
+      {['transparent-box','acone','ocylinder','transparent-box',
+        'ocylinder','lcylinder','transparent-box','acone',
+        'acone','ocylinder','acone','ocylinder',
+        'transparent-box','transparent-box','lcylinder','transparent-box',
+        'acone','transparent-box','ocylinder','transparent-box',
+        'transparent-box','ocylinder','transparent-box','acone'].map((el,i) => renderShape(el,i))}
   </Illustration></Illu>
 };
   

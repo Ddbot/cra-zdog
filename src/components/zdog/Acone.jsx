@@ -1,5 +1,5 @@
 // import ReactDOM from 'react-dom'
-import React, { useMemo, useRef, useState, useEffect } from 'react'
+import { useMemo, useRef, useState, useEffect } from 'react'
 import { Cone } from 'react-zdog'
 import usePrevious from '../../hooks/usePrevious';
 import gsap, { CSSPlugin } from 'gsap';
@@ -24,6 +24,64 @@ let Acone = (props) => {
     const [coordinates, setCoordinates] = useState(coords[0]);
 
     const { illu, scene, size } = useZdog();
+
+    function getColors(id){
+        let res;
+        switch(id){
+            case 1:
+            case 7: 
+            case 16:
+                res = {
+                    color: '#EEAA00',
+                    backface: '#C25',
+                }
+                break;
+            case 10:
+                res = {
+                    color: '#e62',
+                    backface: '#C25'
+                }
+                break;
+            case 8:
+            case 23:
+                res = {
+                    color: '#C25',
+                    backface: '#e62'
+                }
+                break;
+            default:
+                break;
+        }
+
+        return res;
+    }
+
+    function getScale(id){
+        let res;
+        switch(id){
+            case 1:
+            case 10:
+            case 23: 
+            case 16:
+                res = {
+                    scale: 9
+                }
+                break;
+            case 10:
+                res = {
+                    scale: 1
+                }
+                break;
+            default:
+                res = {
+                    scale: 6
+                }
+                break;
+        }
+
+        return res;
+    }    
+
     // Changer state index quand props.index change
     useEffect(() => {
         if(props.index !== index){
@@ -71,12 +129,17 @@ let Acone = (props) => {
     }, [tl])
 
     useEffect(() => {
-        console.log('Size: ', size, ' Scene: ', scene, ' IUllu: ', illu);
         illu.centered = false;
     })
 
+    useEffect(() => {
+        console.log('Props de Acone: ', props, getScale(props.id));
+    });
+
     return <Cone
-        {...coordinates }
+        {...props}
+        {...getColors(props.id)}
+        {...getScale(props.id)}
         ref={ref}
     />
 };

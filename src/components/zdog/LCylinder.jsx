@@ -17,6 +17,48 @@ let LCylinder = (props) => {
 
     const [coordinates, setCoordinates] = useState(coords[0]);
 
+    function getColors(id){
+        let res;
+        switch(id){
+            case 5:
+                res = {
+                    color: "#e62",
+                    frontFace: '#636',
+                    backface: '#EEAA00',
+                }
+                break;
+            case 14:
+                res = {
+                    color: '#c25',
+                    frontFace: '#e62',
+                    backface: 'white'
+                }
+                break;              
+            default:
+                break;
+        }
+
+        return res;
+    }
+
+    function getScale(id){
+        let res;
+        switch(id){
+            case 14:
+                res = {
+                    scale: 6
+                }
+                break;
+            default:
+                res = {
+                    scale: 7
+                }
+                break;
+        }
+
+        return res;
+    }           
+
     // Changer state index quand props.index change
     useEffect(() => {
         if(props.index !== index){
@@ -57,7 +99,9 @@ let LCylinder = (props) => {
     }, [tl])    
 
     return <Cylinder
-        {...coordinates}
+        {...props}
+        {...getColors(props.id)}
+        {...getScale(props.id)}
         ref={ref}
 />};
 

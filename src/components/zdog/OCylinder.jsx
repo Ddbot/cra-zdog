@@ -28,6 +28,73 @@ let OCylinder = (props) => {
             setIndex(props.index);
         }
     }, [props.index])
+
+    function getColors(id){
+        let res;
+        switch(id){
+            case 2:
+                res = {
+                    frontFace: '#636',
+                    backface: '#EEAA00',
+                }
+                break;
+            case 4:
+                res = {
+                    frontFace: '#e62',
+                    backface: 'white'
+                }
+                break;
+            case 9:
+            case 11:
+            case 21:
+                res = {
+                    frontFace: '#C25',
+                    backface: '#636'
+                }
+                break;
+
+                case 18:
+                    res = {
+                        frontFace: '#e62',
+                        backface: 'white'
+                    }
+                    break;                
+            default:
+                break;
+        }
+
+        return res;
+    }
+
+    function getScale(id){
+        let res;
+        switch(id){
+            case 2:
+            case 9: 
+            case 18:
+                res = {
+                    scale: 9
+                }
+                break;
+            case 4:
+                res = {
+                    scale: 6
+                }
+                break;                
+            case 11:
+                res = {
+                    scale: 4
+                }
+                break;
+            default:
+                res = {
+                    scale: 2
+                }
+                break;
+        }
+
+        return res;
+    }       
     
     // lancer animation quand index change
     useEffect(() => {
@@ -73,11 +140,17 @@ let OCylinder = (props) => {
 
     useEffect(() => {
         tl && tl.play();
-    }, [tl])
+    }, [tl]);
+
+    useEffect(() => {
+        console.log('Colors in OCylinder: ', getColors(props.id))    
+    });
 
 
     return <Cylinder
-        {...coordinates }
+        {...props}
+        {...getColors(props.id)}
+        {...getScale(props.id)}
         ref={ref}
 />};
 

@@ -1,39 +1,73 @@
+import Acone from './components/zdog/Acone';
+import OCylinder from './components/zdog/OCylinder';
+import LCylinder from './components/zdog/LCylinder';
+import TransparentBox from './components/zdog/TransparentBox';
+
 import gsap from 'gsap';
+import { TAU } from 'zdog';
+
+const cols = 4, rows = 6;
+const cellWidth = 100 / cols, cellHeight = 100 / rows;
+
+let calculateCoords = (index) => {
+  return {
+    x: (index % cols) * cellWidth,
+    y: parseInt(index / cols) * cellHeight
+  }
+};
 
 const renderShape = (el,index) => {
-    let calculateCoords = index => {
-      return [index % cols, parseInt(index / cols)]
-    };
 
     switch(el){
-      case 'b':
-        return <TransparentBox className="transparentBox" key={index} { ...boxDimensions}  
-        /* translate={{
-          x: 100 - boxDimensions.x * calculateCoords[0],
-          y:100 - boxDimensions.y * calculateCoords[1],
-        }} */
+      case 'transparent-box':
+        return <TransparentBox key={index} id={index}
+        translate={
+          calculateCoords(index)
+        }
+        color='transparent'
         />
-      case 't':
-        return <Acone className="cone" key={index} { ...aconeDimensions(index) }  
-        /* translate={{
-          x: 100 - aconeDimensions(index).diameter * calculateCoords[0],
-          y: 100 - aconeDimensions(index).diameter * calculateCoords[1],
-        }} */
+      case 'acone':
+        return <Acone key={index} id={index}
+          translate={{
+            x: calculateCoords(index).x,
+            y: calculateCoords(index).y + cellHeight/4
+          }}
+
+          rotate={{ 
+            x: TAU*90/360, 
+            y: 0, 
+            z: 0 
+          }}
+          scale={8}
         />
-      case 's':
-        return <LCylinder className="cylindre" key={index} { ...lcylinderDimensions } 
-        /* translate={{
-          x: 100 - lcylinderDimensions.x * calculateCoords[0],
-          y:100 - lcylinderDimensions.y * calculateCoords[1],
-        }} 
-        */
+      case 'lcylinder':
+        return <LCylinder key={index} id={index}
+        translate={{
+          x: calculateCoords(index).x,
+          y: calculateCoords(index).y
+        }}
+        rotate={{ 
+            x: TAU * 90/360, 
+            y: TAU * 45/360, 
+            z: -TAU * 120/360
+        }}
+
+        scale={8}
+
         />
-      case 'c':
-        return <Acone className="cone" key={index} { ...aconeDimensions } 
-        /* translate={{
-          x: 100 - aconeDimensions(index).x * calculateCoords[0],
-          y: aconeDimensions(index).y * calculateCoords[1],
-        }} */
+      case 'ocylinder':
+        return <OCylinder key={index} id={index}
+        translate={{
+          x: calculateCoords(index).x,
+          y: calculateCoords(index).y
+        }}
+        rotate={{ 
+            x: 0, 
+            y: 0, 
+            z: -TAU * 120/360 
+        }}
+
+        scale={8}
         />
       default:
         break;
@@ -45,4 +79,5 @@ const isEqual = (a, b) => JSON.stringify(a.sort()) === JSON.stringify(b.sort());
 const interp = (x,y) => {
   return gsap.utils.interpolate(x,y);
 }
+
 export { renderShape, isEqual, interp }

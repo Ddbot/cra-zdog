@@ -13,11 +13,10 @@ const acone = [{
         y: 0, 
         z: 0 
     },
-    scale: 1.4,
+    scale: 1,
     stroke: false,
     color: 'rgba(102, 51, 102, 0.5)',
     backface: 'rgba(204, 34, 85, 0.5)',
-    duration: 4  
 }, {
     rotate: { 
         // x: TAU*90/360, 
@@ -111,7 +110,7 @@ const ocylinder = [{
             y: 0, 
             z: -TAU * 120/360 
         },
-        scale: 0.8,
+        scale: 1,
         // pour avoir un diamant de coté
         // rotate: { 
         //     x: TAU * 90/360, 
@@ -152,18 +151,15 @@ const ocylinder = [{
 }];
 
 const coordsar = [{
-    zoom: 1,
     translate: {
-        // x: 12.5,
-        x: 0,
-        // y: -12.5, 
-        y: 0,
+        x: 14,
+        y: 33,
         z: 0
     }
     }, {
     translate: {
-        x: -25,
-        y: 25,
+        x: -40,
+        y: 40,
         z: 0
     }
     },
