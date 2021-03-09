@@ -24,8 +24,6 @@ gsap.registerPlugin(CSSPlugin);
 
 let LCylinder = (props) => {
     const [index, setIndex] = useState(props.index);
-    const [id, setId] = useState(props.id);
-
     const [tl, setTl ] = useState(gsap.timeline({ paused: true }));
     const ref = useRef(undefined);
 
@@ -87,25 +85,8 @@ let LCylinder = (props) => {
     ];
 
 
-    // const coords = useMemo(() => lcylinder);
     const rotations = useMemo(() => rotationsCoords);
     const colors = useMemo(() => colorCoords);
-
-    function getColors(id){
-        let res;
-        switch(id){
-            case 5:
-                res = colorCoords[id][current]
-                break;
-            case 14:
-                res = colorCoords[id][current]
-                break;              
-            default:
-                break;
-        }
-
-        return res;
-    }
 
     function getScale(id){
         let res;
@@ -132,14 +113,12 @@ let LCylinder = (props) => {
         };
     }, [props.index]);
 
-        // Changer state id quand props.id change
-        useEffect(() => {
-            // if(props.id !== id){
-                setIndex(props.id)
-            // };
-        }, [props.id]);
-
-
+    // Changer state id quand props.id change
+    useEffect(() => {
+        // if(props.id !== id){
+            setIndex(props.id)
+        // };
+    }, [props.id]);
 
     useEffect(() => {
         if(previous !== undefined && (props.id === 5 || props.id === 14)){
@@ -182,10 +161,6 @@ let LCylinder = (props) => {
     useEffect(() => {
         tl && tl.play();
     }, [tl]);   
-    
-    useEffect(() => {
-        previous !== undefined && console.log('Rotations in LCylinder = ', rotations[props.id][current], rotations[props.id][previous])
-    },[props.id, current])
 
     return <Cylinder
         {...props}

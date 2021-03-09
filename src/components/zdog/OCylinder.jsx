@@ -16,13 +16,103 @@ let OCylinder = (props) => {
     const current = props.index;
 	const previous = usePrevious(props.index);
 
-    const theme = useTheme();
-
-    const coords = useMemo(() => ocylinder);
-
-    const [coordinates, setCoordinates] = useState(coords[0]);
-
     const colorCoords = Array(23).fill([]);
+
+    colorCoords[2] = [
+    {   color: '#636',
+        frontFace: '#636',
+        backface: '#ea0',
+    }, {
+        color: 'rgba(238, 170, 0, 1)',
+        frontFace: '#636',
+        backface: '#ea0',
+    },
+    {   
+        color: 'rgba(238, 170, 0, 1)',
+        frontFace: '#636',
+        backface: '#ea0',
+    }];
+
+    colorCoords[9] = [
+        {
+            color: 'rgba(238, 170, 0, 1)',
+            frontFace: 'rgba(204, 34, 85, 1)',
+            backface: 'rgba(238, 102, 34, 1)', 
+            stroke: 1
+        },
+        {             
+            color: "rgb(38, 77, 228)",
+            frontFace: 'rgba(204, 34, 85, 1)',
+            backface: 'rgba(238, 102, 34, 1)', 
+            stroke: 0 
+        },
+        {
+            color: 'rgba(238, 170, 0, 1)',
+            frontFace: 'rgba(204, 34, 85, 1)',
+            backface: 'rgba(238, 102, 34, 1)', 
+            stroke: 10 
+        }
+    ];
+
+    colorCoords[4] = [{
+            color: '#636',
+            frontFace: '#e62',
+            backface: 'white'
+        },
+        {
+            color: '#e36',
+            frontFace: '#e62',
+            backface: 'white'
+        },{
+            color: '#e36',
+            frontFace: '#e62',
+            backface: 'white'
+        }];
+
+        colorCoords[9] = [{
+            color: 'rgba(238, 170, 0, 1)',
+            frontFace: '#C25',
+            backface: '#636'
+        },{
+            color: 'rgba(238, 170, 0, 1)',
+            frontFace: '#C25',
+            backface: '#636'
+        },{
+            color: 'rgba(238, 170, 0, 1)',
+            frontFace: '#C25',
+            backface: '#636'
+        }];
+
+        colorCoords[18] = [{
+            color: '#e62',
+            frontFace: '#e62',
+            backface: 'white'
+        },{
+            color: '#e62',
+            frontFace: '#e62',
+            backface: 'white'
+        },{
+            color: '#e62',
+            frontFace: '#e62',
+            backface: 'white'
+        }];
+
+        colorCoords[11] =[{
+            color: '#C25',
+            frontFace: '#C25',
+            backface: '#636'
+        },{
+            color: '#C25',
+            frontFace: '#C25',
+            backface: '#636'
+        },{
+            color: '#C25',
+            frontFace: '#C25',
+            backface: '#636'
+        }];
+        colorCoords[21] = colorCoords[9];      
+
+    const colors = useMemo(() => colorCoords);
 
     // Changer state index quand props.index change
     useEffect(() => {
@@ -31,45 +121,12 @@ let OCylinder = (props) => {
         }
     }, [props.index]);
 
-    // index = 1, id = 9
-    let cssIconColor = 'rgb(38, 77, 228)';
-
-    function getColors(id){
-        let res;
-        switch(id){
-            case 2:
-                res = {
-                    frontFace: '#636',
-                    backface: '#ea0',
-                }
-                break;
-            case 4:
-                res = {
-                    frontFace: '#e62',
-                    backface: 'white'
-                }
-                break;
-            case 9:
-            case 11:
-            case 21:
-                res = {
-                    frontFace: '#C25',
-                    backface: '#636'
-                }
-                break;
-
-                case 18:
-                    res = {
-                        frontFace: '#e62',
-                        backface: 'white'
-                    }
-                    break;                
-            default:
-                break;
-        }
-
-        return res;
-    }
+    // Changer state id quand props.id change
+    useEffect(() => {
+        // if(props.id !== id){
+        setIndex(props.id)
+        // };
+    }, [props.id]);
 
     function getScale(id){
         let res;
@@ -102,8 +159,15 @@ let OCylinder = (props) => {
     }       
     
     // lancer animation quand index change
-    // useEffect(() => {
-    //     if(previous !== undefined){
+    useEffect(() => {
+        if(previous !== undefined){
+            let colorAnimation = gsap.fromTo(ref.current, {
+                duration: 1,
+                ...colors[props.id][previous],
+            },{
+                ...colors[props.id][current],
+                ease: "power4.out",
+            });
     //         let rotateAnimation = gsap.to([
     //             ref.current.rotate, 
     //         ], {
@@ -132,24 +196,23 @@ let OCylinder = (props) => {
     //             scale: coords[current].scale
     //         });            
             
-    //         setTl(prev => {
-    //             prev && prev
+            setTl(prev => {
+                prev && prev
     //             .add(translateAnimation)
     //             .add(rotateAnimation, '<')
-    //             .add(colorAnimation,'<');
-    //         })
+                .add(colorAnimation,'<');
+            });
 
-    //         return () => tl;
-    //     };
-    // }, [current, previous]);
+            return () => tl;
+        };
+    }, [current, previous, props.id, colors]);
 
-    // useEffect(() => {
-    //     tl && tl.play();
-    // }, [tl]);
+    useEffect(() => {
+        tl && tl.play();
+    }, [tl]);
 
     return <Cylinder
         {...props}
-        {...getColors(props.id)}
         {...getScale(props.id)}
         ref={ref}
 />};
