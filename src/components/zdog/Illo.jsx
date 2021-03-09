@@ -64,6 +64,7 @@ const coordsAr = useMemo( () => coordsar );
 
   return <Illu ref={ ref }><Illustration 
     { ...coordsAr[0] }
+    centered={false}
     className='illustration'>
     <OCylinder index={current} /> 
       <Acone index={current} />

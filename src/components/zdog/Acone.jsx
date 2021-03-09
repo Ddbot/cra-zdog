@@ -4,6 +4,7 @@ import { Cone } from 'react-zdog'
 import usePrevious from '../../hooks/usePrevious';
 import gsap, { CSSPlugin } from 'gsap';
 import { useTheme } from '@material-ui/core/styles';
+import { useZdog } from 'react-zdog';
 
 import { acone } from './coordinates';
 
@@ -22,6 +23,7 @@ let Acone = (props) => {
 
     const [coordinates, setCoordinates] = useState(coords[0]);
 
+    const { illu, scene, size } = useZdog();
     // Changer state index quand props.index change
     useEffect(() => {
         if(props.index !== index){
@@ -67,6 +69,11 @@ let Acone = (props) => {
     useEffect(() => {
         tl && tl.play();
     }, [tl])
+
+    useEffect(() => {
+        console.log('Size: ', size, ' Scene: ', scene, ' IUllu: ', illu);
+        illu.centered = false;
+    })
 
     return <Cone
         {...coordinates }
