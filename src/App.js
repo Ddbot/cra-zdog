@@ -1,6 +1,7 @@
 import { useContext, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import {
 	AppBar,
+	Card,
 	IconButton,
 	List,
 	ListItem,
@@ -303,8 +304,6 @@ function App() {
 				{Object.values(i18n.t('intro')).map((v,i) => {
 					return <Li id={`li${i}`} key={i}>
 						<Text>{v}</Text>
-						{/* { i === 1 && <CTA><h2>ici la liste des technos utilisées</h2></CTA>}
-						{ i === 2 && <CTA><h2>contactez-moi</h2></CTA>} */}
 						<CTA index={currentLi} />
 					</Li>
 				})}

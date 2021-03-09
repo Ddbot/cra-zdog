@@ -12,6 +12,9 @@ import { coordsar } from './coordinates';
 
 import usePrevious from '../../hooks/usePrevious';
 
+const cols = 4, rows = 6;
+
+
 const Illu = styled.div`
   box-sizing: border-box;
 
@@ -62,8 +65,9 @@ const coordsAr = useMemo( () => coordsar );
   return <Illu ref={ ref }><Illustration 
     { ...coordsAr[0] }
     className='illustration'>
+    <OCylinder index={current} /> 
       <Acone index={current} />
-      <OCylinder index={current} /> 
+      {/* <OCylinder index={current} />  */}
       <LCylinder index={current} /> 
       {/* {['b','t','c','b','c','s','b','t','t','c','t','c','b','b','s','b','t','b','c','b','b','c','b','t'].map((el,i) => <g>{renderShape(el,i)}</g>)} */}
   </Illustration></Illu>

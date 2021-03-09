@@ -32,16 +32,16 @@ const SvgBG = (props) => {
         }
     },[props.index]);
 
-    useEffect(() => {
-        if(previous !== undefined){  }
-    },[index, current, previous]);  
+    // useEffect(() => {
+    //     if(previous !== undefined){  }
+    // },[index, current, previous]);  
 
-    useEffect(() => {
-        console.log('Le theme est ', theme.palette.type);
-    })
+    // useEffect(() => {
+    //     console.log('Le theme est ', theme.palette.type);
+    // })
 
     return <Illu ref={ ref }>
-        <rect x="0" y="0" width={width} height={height} stroke="white" fill={theme.palette.type === 'light' ? 'white' : '#15459E'} />
+        <rect x="0" y="0" width={width} height={height} stroke="white" fill={theme.palette.type === 'light' ? 'white' : '#1F115E'} />
     </Illu>
 }
 

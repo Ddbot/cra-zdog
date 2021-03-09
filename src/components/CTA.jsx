@@ -58,29 +58,46 @@ const CTA = (props, children) => {
     }
 
     useEffect(() => {
-        let ps, anim;
-        if(ref.current.querySelectorAll('p')){
-            ps = ref.current.querySelectorAll('p');
-            Array.from(ps).forEach(el => {
-                const height = getComputedStyle(el).width;
-                gsap.set(el, { height: height, borderRadius: '50%' });
-            })
-            anim = gsap.fromTo(Array.from(ps), {
-                x: -20,
-                scale: 0.4,
-                autoAlpha: 0
-            }, {
-                x: 0,                
-                scale: 1,
-                autoAlpha: 1,
-                duration: 0.225,
-                stagger: 0.225,
-                delay: 1.4,
-                ease: "elastic.out(1, 0.75)"
-            });
-        }
+        // let ps, anim;
+        // if(ref.current.querySelectorAll('p')){
+            // ps = ref.current.querySelectorAll('p');
+        //     Array.from(ps).forEach(el => {
+        //         const height = getComputedStyle(el).width;
+        //         gsap.set(el, { height: height, borderRadius: '50%' });
+        //     })
+        //     anim = gsap.fromTo(Array.from(ps), {
+        //         x: -20,
+        //         scale: 0.4,
+        //         autoAlpha: 0
+        //     }, {
+        //         x: 0,                
+        //         scale: 1,
+        //         autoAlpha: 1,
+        //         duration: 0.225,
+        //         stagger: 0.225,
+        //         delay: 1.4,
+        //         ease: "elastic.out(1, 0.75)"
+        //     });
+        // }
 
-        return () => anim;
+        // return () => anim;
+        let chips = ref.current.querySelectorAll('.MuiChip-root');
+
+        gsap.fromTo(Array.from(chips), {
+                    x: -20,
+                    scale: 0.4,
+                    autoAlpha: 0
+                }, {
+                    x: 0,                
+                    scale: 1,
+                    autoAlpha: 1,
+                    duration: 0.225,
+                    stagger: 0.225,
+                    delay: 1.4,
+                    ease: "elastic.out(1, 0.75)"
+                });            
+
+        console.log(chips)
     }, [ref.current]);
 
     return <Div ref={ref}>{renderContent()}</Div>

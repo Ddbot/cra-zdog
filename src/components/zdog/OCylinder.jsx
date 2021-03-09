@@ -4,6 +4,7 @@ import { Cylinder } from 'react-zdog'
 import usePrevious from '../../hooks/usePrevious';
 import gsap,{ CSSPlugin } from 'gsap';
 import { ocylinder } from './coordinates';
+import { useTheme } from '@material-ui/core/styles';
 
 gsap.registerPlugin(CSSPlugin);
 
@@ -14,6 +15,8 @@ let OCylinder = (props) => {
 
     const current = props.index;
 	const previous = usePrevious(props.index);
+
+    const theme = useTheme();
 
     const coords = useMemo(() => ocylinder);
 
@@ -44,11 +47,24 @@ let OCylinder = (props) => {
                 ...coords[current].translate,
                 ease: "elastic.out(1, 0.8)",
             });     
+
+            let colorAnimation = gsap.to(ref.current, {
+                duration: 1,
+                onStart: () => {
+                    gsap.set(ref.current, {
+                        mixBlendMode: 'exclusion'
+                    });
+                },
+                color: coords[current].color,
+                frontFace: coords[current].frontFace,
+                scale: coords[current].scale
+            });            
             
             setTl(prev => {
                 prev && prev
                 .add(translateAnimation)
-                .add(rotateAnimation, '<');
+                .add(rotateAnimation, '<')
+                .add(colorAnimation,'<');
             })
 
             return () => tl;

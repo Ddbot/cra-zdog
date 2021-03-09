@@ -1,12 +1,11 @@
 import { TAU } from 'zdog';
-import { useTheme } from '@material-ui/core/styles';
 
 const acone = [{ 
     diameter: 24,
     length: 20.78,
     translate: {
-        x: 4,
-        y: -20,
+        x: 0,
+        y: 0,
         z: 0
     }, 
     rotate: { 
@@ -16,8 +15,8 @@ const acone = [{
     },
     scale: 1.4,
     stroke: false,
-    // color: '#636',
-    // backface: theme.palette.type === 'light' ?  '#C25' : '#ff9800',
+    color: 'rgba(102, 51, 102, 0.5)',
+    backface: 'rgba(204, 34, 85, 0.5)',
     duration: 4  
 }, {
     rotate: { 
@@ -31,6 +30,8 @@ const acone = [{
         y: 40,
         z: 0
     },
+    color: 'rgba(102, 51, 102, 1)',
+    backface: 'rgba(204, 34, 85, 1)',
     duration: 6
 },
 {
@@ -51,8 +52,8 @@ const lcylinder = [
         diameter: 2,
         length: 48,
         translate: {
-            x: 4,
-            y: -8,
+            x: 0,
+            y: 0,
             z: 0
         },
         // translate: {
@@ -101,9 +102,9 @@ const ocylinder = [{
         diameter: 16.97,
         length: 16.97,
         translate: {
-            x: 3.95,
+            x: 0,
             y: 0,
-            z: 10
+            z: 0
         },
         rotate: { 
             x: 0, 
@@ -118,9 +119,9 @@ const ocylinder = [{
         //     z: -TAU * 120/360
         // },
         stroke: false,
-        color: '#EA0',
-        frontFace: '#c25',
-        backface: '#e62',  
+        color: 'rgba(238, 170, 0, 1)',
+        frontFace: 'rgba(204, 34, 85, 1)',
+        backface: 'rgba(238, 102, 34, 1)',  
     }, {
         translate: {
             x: -20,
@@ -131,7 +132,11 @@ const ocylinder = [{
             x: 0,
             y: 0,
             z: 0
-        }
+        },
+        scale: 1.4,
+        color: 'white',
+        frontFace: 'white',
+        backface: 'white', 
     },
     {
         translate: {
@@ -147,10 +152,12 @@ const ocylinder = [{
 }];
 
 const coordsar = [{
-    zoom: 3,
+    zoom: 1,
     translate: {
-        x: 12.5,
-        y: -12.5,
+        // x: 12.5,
+        x: 0,
+        // y: -12.5, 
+        y: 0,
         z: 0
     }
     }, {

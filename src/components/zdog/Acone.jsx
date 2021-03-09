@@ -35,41 +35,29 @@ let Acone = (props) => {
                 ref.current.rotate, 
             ], {
                 duration: 1,
-                // onUpdate: () => {
-                //     ref.current && streamCoords(ref.current, 1, 30)
-                // },
                 ...coords[current].rotate,
                 ease: "power4.out",
-                // onStart: () => {
-                //     Object.entries(ref.current).forEach(([key, value]) => console.table([['Key',key],['Value',value]]))
-                // }
             });
 
             let translateAnimation = gsap.to([
                 ref.current.translate, 
             ], {
-                duration: 1,
-                // onUpdate: () => {
-                //     ref.current && streamCoords(ref.current, 1, 30)
-                // },
+                duration: 3,
                 ...coords[current].translate,
                 ease: "elastic.out(1, 0.8)",
-                // onStart: () => {
-                //     Object.entries(ref.current).forEach(([key, value]) => console.table([['Key',key],['Value',value]]))
-                // }
             });     
             
-            let backFaceColorAnimation = gsap.to(ref.current, {
+            let colorAnimation = gsap.to(ref.current, {
                 duration: 1,
-                color: theme.palette.type === 'light' ?  '#636' : 'red',         
-                backface: theme.palette.type === 'light' ?  '#C25' : '#ff9800',                
+                color: theme.palette.type === 'light' ?  'rgba(102, 51, 102, 0.5)' : 'rgba(255, 0, 0, 0.5)',         
+                backface: theme.palette.type === 'light' ?  'rgba(204, 34, 85, 0.5)' : 'rgba(255, 152, 0, 0.5)',                
             });
 
             setTl(prev => {
                 prev && prev
                 .add(translateAnimation)
                 .add(rotateAnimation, '<')
-                .add(backFaceColorAnimation, '<')
+                .add(colorAnimation, '<')
             })
 
             return () => tl;
