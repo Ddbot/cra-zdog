@@ -3,6 +3,7 @@ import { Illustration } from 'react-zdog'
 
 import styled from 'styled-components'; 
 import gsap from 'gsap';
+import { TAU } from 'zdog';
 
 // import Acone from './Acone';
 // import OCylinder from './OCylinder';
@@ -15,6 +16,7 @@ import usePrevious from '../../hooks/usePrevious';
 import { renderShape } from '../../functions';
 
 const zoomIndices = [1.2,2,4];
+const rotateIndices = [{x: 0, y: 0, z: 0},{x: 0, y: 0, z: TAU * 42/360},{x: 0, y: 0, z: TAU * 150/360}];
 
 const Illu = styled.div`
   box-sizing: border-box;
@@ -29,6 +31,8 @@ const Illu = styled.div`
   height: 91vh !important;
   width: 100vw !important;
   position: fixed !important;
+
+  clip-path: polygon(90% 0, 100% 70%, 50% 100%, 0 70%, 10% 0);
     
   top: 9vh;
 `;
@@ -71,13 +75,27 @@ coordsar
       // });
       gsap.fromTo(ref.current.children[0],{
         duration: 1,
-        scale: zoomIndices[previous]
+        scale: zoomIndices[previous],
+        onStart: () => {
+          gsap.fromTo(ref.current.rotate,{
+            duration: 1,
+            ...rotateIndices[previous]
+          }, 
+          {
+            ...rotateIndices[current]
+          });
+        }
       }, 
       {
-        scale: zoomIndices[current]
-      });        
+        scale: zoomIndices[current],
+      });  
     }
   },[index, current, previous]);  
+
+  useEffect(() => {
+    // console.log(ref.current.children[0])
+    ref.current.children[0].children[0].style.clipPath = 'polygon(90% 0, 100% 70%, 50% 100%, 0 70%, 10% 0)';    
+  })
 
   return <Illu ref={ ref }><Illustration 
     { ...coordsAr[0] }

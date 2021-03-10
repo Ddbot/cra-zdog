@@ -4,8 +4,7 @@ import { Cylinder } from 'react-zdog'
 import usePrevious from '../../hooks/usePrevious';
 import gsap, { CSSPlugin } from 'gsap';
 import { TAU } from 'zdog';
-import { lcylinder } from './coordinates';
-
+import { useZdog } from 'react-zdog';
 gsap.registerPlugin(CSSPlugin);
 
 // const rotations = Array(23).fill([]).map(el => { return { x: 0, y: 0, z: 0 } });
@@ -32,9 +31,12 @@ let LCylinder = (props) => {
 
     const rotationsCoords = Array(23).fill([]).map(el => { return { x: 0, y: 0, z: 0 } });
 
+    const { scene } = useZdog();
+
     rotationsCoords[5] = [
         { x: TAU * 90/360, y: TAU * 45/360, z: -TAU * 120/360 },
-        { x: TAU * 90/360, y: -TAU * 45/360, z: 0 },
+        // { x: TAU * 45/360, y: -TAU * 45/360, z: 0 },
+        { x: 0, y:-TAU * 90/360, z: 0 },
         { x: 0, y:0, z: 0 }
     ];
 
@@ -87,7 +89,19 @@ let LCylinder = (props) => {
 
     const rotations = useMemo(() => rotationsCoords);
     const colors = useMemo(() => colorCoords);
-
+    const sceneRotations = [{
+        x: 0,
+        y: 0,
+        z: 0
+    },{
+        x: 0,
+        y: 0,
+        z: 0
+    },{
+        x: 0,
+        y: 0,
+        z: TAU * 42/360
+    }];
     function getScale(id){
         let res;
         switch(id){
@@ -115,9 +129,7 @@ let LCylinder = (props) => {
 
     // Changer state id quand props.id change
     useEffect(() => {
-        // if(props.id !== id){
-            setIndex(props.id)
-        // };
+        setIndex(props.id)
     }, [props.id]);
 
     useEffect(() => {
@@ -136,20 +148,10 @@ let LCylinder = (props) => {
             },{
                 ...colors[props.id][current],
                 ease: "power4.out",
-            });
-
-
-    //         let translateAnimation = gsap.to([
-    //             ref.current.translate, 
-    //         ], {
-    //             duration: 1,
-    //             ...coords[current].translate,
-    //             ease: "elastic.out(1, 0.8)",
-    //         });                 
+            });              
 
             setTl(prev => {
                 prev && prev
-    //             .add(translateAnimation)
                 .add(rotateAnimation, '<')
                 .add(colorAnimation, '<');
             })
@@ -159,13 +161,39 @@ let LCylinder = (props) => {
     }, [current, previous, props.id, rotations]);
 
     useEffect(() => {
+        if(previous !== undefined){
+            let sceneRotation = gsap.fromTo(scene.rotate, {
+                duration: 2,
+                ...sceneRotations[previous]
+            },{
+                ...sceneRotations[current]
+            });
+
+            setTl(prev => {
+                prev && prev.add(sceneRotation, '>');
+            })
+
+            return () => tl;
+        }
+    },[current, previous])
+
+    useEffect(() => {
         tl && tl.play();
     }, [tl]);   
+
+    // useEffect(() => {
+    //     gsap.to(scene.rotate, {
+    //         x: 0,
+    //         y: 0,
+    //         z: TAU * 45/360
+    //     });
+    // },[current])
 
     return <Cylinder
         {...props}
         // {...colorCoords[props.id][current]}
         {...getScale(props.id)}
+        id={props.id === 5 ? 'htmlOne' : ''}
         ref={ref}
 />};
 

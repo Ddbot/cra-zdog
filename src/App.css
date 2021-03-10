@@ -11,11 +11,6 @@ justify-content: center;
 
 }
 
-/* @keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* path#thisOne {
+  clip-path: polygon(90% 0, 100% 70%, 50% 100%, 0 70%, 10% 0);
 } */

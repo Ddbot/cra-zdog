@@ -3,9 +3,7 @@ import React, { useMemo, useRef, useEffect, useState } from 'react'
 import { Cylinder } from 'react-zdog'
 import usePrevious from '../../hooks/usePrevious';
 import gsap,{ CSSPlugin } from 'gsap';
-import { ocylinder } from './coordinates';
-import { useTheme } from '@material-ui/core/styles';
-
+import { useRender, useZdog } from 'react-zdog';
 gsap.registerPlugin(CSSPlugin);
 
 let OCylinder = (props) => {
@@ -15,6 +13,12 @@ let OCylinder = (props) => {
 
     const current = props.index;
 	const previous = usePrevious(props.index);
+
+    const { scene, illu } = useZdog();
+
+    // useRender((t) => {
+    //     scene.rotate.y += 0.001;
+    // });
 
     const colorCoords = Array(23).fill([]);
 
@@ -32,7 +36,20 @@ let OCylinder = (props) => {
         frontFace: '#636',
         backface: '#ea0',
     }];
-
+    colorCoords[4] = [{
+        color: '#636',
+        frontFace: '#e62',
+        backface: 'white'
+    },
+    {
+        color: '#e36',
+        frontFace: '#e62',
+        backface: 'white'
+    },{
+        color: '#e36',
+        frontFace: '#e62',
+        backface: 'white'
+    }];
     colorCoords[9] = [
         {
             color: 'rgba(238, 170, 0, 1)',
@@ -41,9 +58,9 @@ let OCylinder = (props) => {
             stroke: 1
         },
         {             
-            color: "rgb(38, 77, 228)",
-            frontFace: 'rgba(204, 34, 85, 1)',
-            backface: 'rgba(238, 102, 34, 1)', 
+            color: "rgb(41, 101, 241)",
+            frontFace: 'rgb(41, 101, 241)',
+            backface: 'rgb(41, 101, 241)', 
             stroke: 0 
         },
         {
@@ -53,37 +70,7 @@ let OCylinder = (props) => {
             stroke: 10 
         }
     ];
-
-    colorCoords[4] = [{
-            color: '#636',
-            frontFace: '#e62',
-            backface: 'white'
-        },
-        {
-            color: '#e36',
-            frontFace: '#e62',
-            backface: 'white'
-        },{
-            color: '#e36',
-            frontFace: '#e62',
-            backface: 'white'
-        }];
-
-        colorCoords[9] = [{
-            color: 'rgba(238, 170, 0, 1)',
-            frontFace: '#C25',
-            backface: '#636'
-        },{
-            color: 'rgba(238, 170, 0, 1)',
-            frontFace: '#C25',
-            backface: '#636'
-        },{
-            color: 'rgba(238, 170, 0, 1)',
-            frontFace: '#C25',
-            backface: '#636'
-        }];
-
-        colorCoords[18] = [{
+    colorCoords[18] = [{
             color: '#e62',
             frontFace: '#e62',
             backface: 'white'
@@ -95,9 +82,8 @@ let OCylinder = (props) => {
             color: '#e62',
             frontFace: '#e62',
             backface: 'white'
-        }];
-
-        colorCoords[11] =[{
+    }];
+    colorCoords[11] =[{
             color: '#C25',
             frontFace: '#C25',
             backface: '#636'
@@ -109,8 +95,8 @@ let OCylinder = (props) => {
             color: '#C25',
             frontFace: '#C25',
             backface: '#636'
-        }];
-        colorCoords[21] = colorCoords[9];      
+    }];
+    colorCoords[21] = colorCoords[9];      
 
     const colors = useMemo(() => colorCoords);
 
@@ -127,6 +113,10 @@ let OCylinder = (props) => {
         setIndex(props.id)
         // };
     }, [props.id]);
+
+    useEffect(() => {
+        console.log(scene.renderOrigin, illu)
+    })
 
     function getScale(id){
         let res;
@@ -214,6 +204,7 @@ let OCylinder = (props) => {
     return <Cylinder
         {...props}
         {...getScale(props.id)}
+        id={props.id === 9 ? 'cssOne' : ''}
         ref={ref}
 />};
 
