@@ -2,6 +2,7 @@ import Acone from './components/zdog/Acone';
 import OCylinder from './components/zdog/OCylinder';
 import LCylinder from './components/zdog/LCylinder';
 import TransparentBox from './components/zdog/TransparentBox';
+import HalfSphere from './components/zdog/HalfSphere';
 
 import gsap from 'gsap';
 import { TAU } from 'zdog';
@@ -73,6 +74,16 @@ const renderShape = (el,i, index) => {
 
         scale={8}
         />
+        case 'half':
+          return <HalfSphere 
+            key={i} id={i}
+            index={index}   
+            rotate={{ 
+              x: TAU * 120/360, 
+              y: 0, 
+              z: 0
+            }}      
+          />
       default:
         break;
     }

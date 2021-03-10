@@ -30,10 +30,7 @@ const Illu = styled.div`
 
   height: 91vh !important;
   width: 100vw !important;
-  position: fixed !important;
-
-  clip-path: polygon(90% 0, 100% 70%, 50% 100%, 0 70%, 10% 0);
-    
+  position: fixed !important;    
   top: 9vh;
 `;
 
