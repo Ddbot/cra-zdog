@@ -22,20 +22,20 @@ let OCylinder = (props) => {
 
     const colorCoords = Array(23).fill([]);
 
-    colorCoords[2] = [
-    {   color: '#636',
-        frontFace: '#636',
-        backface: '#ea0',
-    }, {
-        color: 'rgba(238, 170, 0, 1)',
-        frontFace: '#636',
-        backface: '#ea0',
-    },
-    {   
-        color: 'rgba(238, 170, 0, 1)',
-        frontFace: '#636',
-        backface: '#ea0',
-    }];
+    // colorCoords[2] = [
+    // {   color: '#636',
+    //     frontFace: '#636',
+    //     backface: '#ea0',
+    // }, {
+    //     color: 'rgba(238, 170, 0, 1)',
+    //     frontFace: '#636',
+    //     backface: '#ea0',
+    // },
+    // {   
+    //     color: 'rgba(238, 170, 0, 1)',
+    //     frontFace: '#636',
+    //     backface: '#ea0',
+    // }];
     colorCoords[4] = [{
         color: '#636',
         frontFace: '#e62',
@@ -121,7 +121,7 @@ let OCylinder = (props) => {
     function getScale(id){
         let res;
         switch(id){
-            case 2:
+            // case 2:
             case 9: 
             case 18:
                 res = {

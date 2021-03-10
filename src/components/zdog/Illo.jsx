@@ -32,6 +32,7 @@ const Illu = styled.div`
   width: 100vw !important;
   position: fixed !important;    
   top: 9vh;
+  margin: 1rem 1rem 0;
 `;
 
 /** --- Basic, re-usable shapes -------------------------- */
@@ -100,7 +101,7 @@ coordsar
     centered={false}
     zoom={4}
     index={props.index}>
-      {['transparent-box','acone','ocylinder','transparent-box',
+      {['transparent-box','acone','half','transparent-box',
         'ocylinder','lcylinder','transparent-box','acone',
         'acone','ocylinder','acone','ocylinder',
         'transparent-box','transparent-box','lcylinder','transparent-box',

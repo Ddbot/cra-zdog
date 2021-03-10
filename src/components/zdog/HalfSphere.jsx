@@ -8,11 +8,12 @@ import { TAU } from 'zdog';
 
 gsap.registerPlugin(CSSPlugin);
 
-let rotations = [[],[],[ { x: 0, y: 0, z: 0},{ x: 0, y: TAU * 1/360, z: 0},{ x: TAU * 90/360, y: TAU * 60/360, z: 0 }]];
+let rotations = [[{ x: 0, y: 0, z: 0},{ x: 0, y: 0, z: 0},{ x: 0, y: 0, z: 0}],[{ x: 0, y: 0, z: 0},{ x: 0, y: 0, z: 0},{ x: 0, y: 0, z: 0}],[ { x: TAU/2, y: 0, z: 0},{ x: 0, y: TAU * 1/360, z: 0},{ x: -TAU * 90/360, y: TAU * 7/360, z: 0 }]];
+let durations = [[1,1,5],[1,1,5],[1,1,5]];
 
 let HalfSphere = (props) => {
     const [index, setIndex ] = useState(props.index);
-    const [tl, setTl ] = useState(gsap.timeline({ paused: true }));
+    const [tl, setTl ] = useState(gsap.timeline({ paused: true, duration: 10 }));
     const ref = useRef(undefined);
 
     const current = props.index;
@@ -42,34 +43,22 @@ let HalfSphere = (props) => {
     function getScale(id){
         let res;
         switch(id){
-            case 1:
-            case 10:
-            case 23: 
-            case 16:
+            case 2:
                 res = [{
                     scale: 9
                 },{
                     scale: 9
                 },{
                     scale: 9
-                }]
-                break;
-            case 10:
-                res = [{
-                    scale: 1
-                },{
-                    scale: 1
-                },{
-                    scale: 1
                 }]
                 break;
             default:
                 res = [{
-                    scale: 6
+                    scale: 9
                 },{
-                    scale: 6
+                    scale: 9
                 },{
-                    scale: 6
+                    scale: 9
                 }]
                 break;
         }
@@ -85,14 +74,16 @@ let HalfSphere = (props) => {
     }, [props.index]);
 
     useEffect(() => {
-        if(previous !== undefined && props.id === 2){
-            let rotateAnimation = gsap.fromTo( ref.current.rotate, {
-                duration: 3,
+        if(previous !== undefined){
+            let rotateAnimation = gsap.fromTo( [ref.current.rotate], {
+                duration: 10,
                 ...rotations[props.id][previous],
             },{
                 ...rotations[props.id][current],
                 ease: "power4.out",
             });
+
+            console.log('Rotate anim:', rotateAnimation)
 
             // let colorAnimation = gsap.fromTo(ref.current, {
             //     duration: 1,
@@ -108,7 +99,7 @@ let HalfSphere = (props) => {
                 // .add(colorAnimation, '<');
             })
 
-            return () => tl;
+            return () => { tl };
         };
     }, [current, previous, props.id, rotations]);    
 

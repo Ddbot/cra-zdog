@@ -23,9 +23,12 @@ const renderShape = (el,i, index) => {
       case 'transparent-box':
         return <TransparentBox key={i} id={i}
         index={index}
-        translate={
-          calculateCoords(i)
-        }
+        translate={{
+            x: calculateCoords(i).x,
+            y: calculateCoords(i).y + cellHeight/4,
+            z: gsap.utils.random(0, 500, 5)
+          }}
+          scale={8}
         color='transparent'
         />
       case 'acone':
@@ -33,7 +36,8 @@ const renderShape = (el,i, index) => {
         index={index}
           translate={{
             x: calculateCoords(i).x,
-            y: calculateCoords(i).y + cellHeight/4
+            y: calculateCoords(i).y + cellHeight/4,
+            z: gsap.utils.random(0, 500, 5)
           }}
 
           rotate={{ 
@@ -48,7 +52,8 @@ const renderShape = (el,i, index) => {
         index={index}
         translate={{
           x: calculateCoords(i).x,
-          y: calculateCoords(i).y
+          y: calculateCoords(i).y,
+          z: gsap.utils.random(0, 500, 5)
         }}
         rotate={{ 
             x: TAU * 90/360, 
@@ -64,7 +69,8 @@ const renderShape = (el,i, index) => {
         index={index}
         translate={{
           x: calculateCoords(i).x,
-          y: calculateCoords(i).y
+          y: calculateCoords(i).y,
+          z: gsap.utils.random(0, 500, 5)
         }}
         rotate={{ 
             x: 0, 
@@ -77,12 +83,12 @@ const renderShape = (el,i, index) => {
         case 'half':
           return <HalfSphere 
             key={i} id={i}
-            index={index}   
-            rotate={{ 
-              x: TAU * 120/360, 
-              y: 0, 
-              z: 0
-            }}      
+            index={index}    
+            translate={{
+          x: calculateCoords(i).x,
+          y: calculateCoords(i).y,
+          z: gsap.utils.random(0, 500, 5)
+        }}                
           />
       default:
         break;
