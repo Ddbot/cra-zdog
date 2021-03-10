@@ -14,7 +14,7 @@ let OCylinder = (props) => {
     const current = props.index;
 	const previous = usePrevious(props.index);
 
-    const { scene, illu } = useZdog();
+    const { scene, illu, size } = useZdog();
 
     // useRender((t) => {
     //     scene.rotate.y += 0.001;
@@ -115,7 +115,7 @@ let OCylinder = (props) => {
     }, [props.id]);
 
     useEffect(() => {
-        console.log(scene.renderOrigin, illu)
+        console.log(size)
     })
 
     function getScale(id){
@@ -201,11 +201,17 @@ let OCylinder = (props) => {
         tl && tl.play();
     }, [tl]);
 
+    useEffect(() => {
+        console.log('Ref current: ', ref.current);
+    });
+
     return <Cylinder
         {...props}
-        {...getScale(props.id)}
+        // {...getScale(props.id)}
         id={props.id === 9 ? 'cssOne' : ''}
         ref={ref}
+        diameter={1}
+        length={1}
 />};
 
 export default OCylinder;

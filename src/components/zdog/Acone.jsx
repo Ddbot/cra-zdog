@@ -54,7 +54,6 @@ let Acone = (props) => {
                     backface: '#e62'
                 }]
             case 8:              
-            case 23:
                 res = [{
                     color: '#C25',
                     backface: '#e62'
@@ -65,6 +64,18 @@ let Acone = (props) => {
                     color: '#C25',
                     backface: '#e62'
                 }]
+                break;
+                case 23:
+                    res = [{
+                        color: '#636',
+                        backface: '#e62'
+                    },{
+                        color: '#636',
+                        backface: '#e62'
+                    },{
+                        color: '#636',
+                        backface: '#e62'
+                    }]
                 break;
             default:
                 break;

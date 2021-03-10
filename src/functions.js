@@ -29,7 +29,7 @@ const renderShape = (el,i, index) => {
             z: gsap.utils.random(0, 500, 5)
           }}
         scale={1}
-        color='pink'
+        color='transparent'
         width={8}
         height={8}
         />
@@ -79,7 +79,7 @@ const renderShape = (el,i, index) => {
             z: -TAU * 120/360 
         }}
 
-        scale={8}
+        // scale={8}
         />
         case 'half':
           return <HalfSphere 

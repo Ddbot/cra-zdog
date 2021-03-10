@@ -93,7 +93,7 @@ coordsar
     { ...coordsAr[0] }
     className='illustration'
     centered={false}
-    zoom={4}
+    zoom={1}
     index={props.index}>
       {['transparent-box','acone','half','transparent-box',
         'ocylinder','lcylinder','transparent-box','acone',
