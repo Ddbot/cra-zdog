@@ -25,11 +25,13 @@ const renderShape = (el,i, index) => {
         index={index}
         translate={{
             x: calculateCoords(i).x,
-            y: calculateCoords(i).y + cellHeight/4,
+            y: calculateCoords(i).y,
             z: gsap.utils.random(0, 500, 5)
           }}
-          scale={8}
-        color='transparent'
+        scale={1}
+        color='pink'
+        width={8}
+        height={8}
         />
       case 'acone':
         return <Acone key={i} id={i}
@@ -45,7 +47,6 @@ const renderShape = (el,i, index) => {
             y: 0, 
             z: 0 
           }}
-          scale={8}
         />
       case 'lcylinder':
         return <LCylinder key={i} id={i}

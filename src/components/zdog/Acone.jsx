@@ -12,18 +12,7 @@ gsap.registerPlugin(CSSPlugin);
 
 let Acone = (props) => {
     const [index, setIndex ] = useState(props.index);
-    const [tl, setTl ] = useState(gsap.timeline({ paused: true }));
     const ref = useRef(undefined);
-    const theme = useTheme();
-
-    const current = props.index;
-	const previous = usePrevious(props.index);
-
-    const coords = useMemo(() => acone);
-
-    const [coordinates, setCoordinates] = useState(coords[0]);
-
-    const { illu, scene, size } = useZdog();
 
     function getColors(id){
         let res;
@@ -80,14 +69,20 @@ let Acone = (props) => {
             default:
                 break;
         }
-
         return res;
     }
 
     function getScale(id){
         let res;
         switch(id){
-            case 1:
+            case 2:
+                res = [{
+                    scale: 1
+                },{
+                    scale: 1
+                },{
+                    scale: 1
+                }]
             case 10:
             case 23: 
             case 16:
@@ -122,53 +117,12 @@ let Acone = (props) => {
         return res;
     }
 
-
-
     // Changer state index quand props.index change
     useEffect(() => {
         if(props.index !== index){
             setIndex(props.index);
         }
     }, [props.index]);
-
-    // useEffect(() => {
-    //     if(previous !== undefined){
-    //         let rotateAnimation = gsap.to([
-    //             ref.current.rotate, 
-    //         ], {
-    //             duration: 1,
-    //             ...coords[current].rotate,
-    //             ease: "power4.out",
-    //         });
-
-    //         let translateAnimation = gsap.to([
-    //             ref.current.translate, 
-    //         ], {
-    //             duration: 3,
-    //             ...coords[current].translate,
-    //             ease: "elastic.out(1, 0.8)",
-    //         });     
-            
-    //         let colorAnimation = gsap.to(ref.current, {
-    //             duration: 1,
-    //             color: theme.palette.type === 'light' ?  'rgba(102, 51, 102, 0.5)' : 'rgba(255, 0, 0, 0.5)',         
-    //             backface: theme.palette.type === 'light' ?  'rgba(204, 34, 85, 0.5)' : 'rgba(255, 152, 0, 0.5)',                
-    //         });
-
-    //         setTl(prev => {
-    //             prev && prev
-    //             .add(translateAnimation)
-    //             .add(rotateAnimation, '<')
-    //             .add(colorAnimation, '<')
-    //         })
-
-    //         return () => tl;
-    //     };
-    // }, [current, previous]);
-
-    // useEffect(() => {
-    //     tl && tl.play();
-    // }, [tl])
 
     return <Cone
         {...props}
