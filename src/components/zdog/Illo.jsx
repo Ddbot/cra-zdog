@@ -24,7 +24,7 @@ const Illu = styled.div`
   grid-column: 1 / span 3;
   grid-row: 1 / span 3;
 
-  transition: width linear .125s, height linear .125s;
+  // transition: width linear .125s, height linear .125s;
 
   // z-index: 3;    
 
@@ -32,7 +32,6 @@ const Illu = styled.div`
   width: 100vw !important;
   position: fixed !important;    
   top: 9vh;
-  margin: 1rem 1rem 0;
 `;
 
 /** --- Basic, re-usable shapes -------------------------- */
@@ -89,11 +88,6 @@ coordsar
       });  
     }
   },[index, current, previous]);  
-
-  useEffect(() => {
-    // console.log(ref.current.children[0])
-    ref.current.children[0].children[0].style.clipPath = 'polygon(90% 0, 100% 70%, 50% 100%, 0 70%, 10% 0)';    
-  })
 
   return <Illu ref={ ref }><Illustration 
     { ...coordsAr[0] }
