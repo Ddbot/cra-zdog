@@ -1,5 +1,5 @@
 import React, { useMemo, useRef, useState, useEffect } from 'react'
-import { Illustration } from 'react-zdog'
+import { Anchor, Illustration } from 'react-zdog'
 
 import styled from 'styled-components'; 
 import gsap from 'gsap';
@@ -93,14 +93,16 @@ coordsar
     { ...coordsAr[0] }
     className='illustration'
     centered={false}
-    zoom={1}
+    zoom={4}
     index={props.index}>
-      {['transparent-box','acone','half','transparent-box',
-        'ocylinder','lcylinder','transparent-box','acone',
-        'acone','ocylinder','acone','ocylinder',
-        'transparent-box','transparent-box','lcylinder','transparent-box',
-        'acone','transparent-box','ocylinder','transparent-box',
-        'transparent-box','ocylinder','transparent-box','acone'].map((el,i) => renderShape(el,i, props.index))}
+    {/* <Anchor translate={{ x: 8 }}> */}
+      {['□','🛆','◖','□',
+        '○','◆','□','🛆',
+        '🛆','○','🛆','○',
+        '□','□','◆','□',
+        '🛆','□','○','□',
+        '□','○','□','🛆'].map((el,i) => renderShape(el,i, props.index))}
+    {/* </Anchor> */}
   </Illustration></Illu>
 };
   

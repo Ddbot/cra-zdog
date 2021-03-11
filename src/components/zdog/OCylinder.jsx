@@ -202,12 +202,12 @@ let OCylinder = (props) => {
     }, [tl]);
 
     useEffect(() => {
-        console.log('Ref current: ', ref.current);
+        console.log('Ref current: ', size.width/8);
     });
 
     return <Cylinder
         {...props}
-        // {...getScale(props.id)}
+        {...getScale(props.id)}
         id={props.id === 9 ? 'cssOne' : ''}
         ref={ref}
         diameter={1}

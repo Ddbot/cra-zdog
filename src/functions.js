@@ -20,7 +20,7 @@ let calculateCoords = (index) => {
 const renderShape = (el,i, index) => {
 
     switch(el){
-      case 'transparent-box':
+      case '□':
         return <TransparentBox key={i} id={i}
         index={index}
         translate={{
@@ -33,7 +33,7 @@ const renderShape = (el,i, index) => {
         width={8}
         height={8}
         />
-      case 'acone':
+      case '🛆':
         return <Acone key={i} id={i}
         index={index}
           translate={{
@@ -48,7 +48,7 @@ const renderShape = (el,i, index) => {
             z: 0 
           }}
         />
-      case 'lcylinder':
+      case '◆':
         return <LCylinder key={i} id={i}
         index={index}
         translate={{
@@ -65,7 +65,7 @@ const renderShape = (el,i, index) => {
         scale={8}
 
         />
-      case 'ocylinder':
+      case '○':
         return <OCylinder key={i} id={i}
         index={index}
         translate={{
@@ -81,7 +81,7 @@ const renderShape = (el,i, index) => {
 
         // scale={8}
         />
-        case 'half':
+        case '◖':
           return <HalfSphere 
             key={i} id={i}
             index={index}    
