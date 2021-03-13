@@ -80,29 +80,53 @@ const Ecusson = props => <Shape path={[
             { x: 23.415977961432507, y: 0 }
         ]}
         fill={'#000'}
+        stroke={0}
     />
+
+    const LetterS = props => <Shape 
+    path={[
+        { x: 41.59779614325069, y: 0 },
+        { x: 56.74931129476584, y: 0 },
+        { x: 56.74931129476584, y: 3.90625 },
+        { x: 47.93388429752066, y: 3.90625 },
+        { x: 47.93388429752066, y: 4.6875 },
+        { x: 56.74931129476584, y: 4.6875 },
+        { x: 56.74931129476584, y: 13.671875 },
+        { x: 41.59779614325069, y: 13.671875 },
+        { x: 41.59779614325069, y: 9.5703125 },
+        { x: 50.413223140495866, y: 9.5703125 },
+        { x: 50.413223140495866, y: 8.7890625 },
+        { x: 41.59779614325069, y: 8.7890625 },
+        { x: 41.59779614325069, y: 0 }
+    ]}
+    translate={props.translate}
+    fill={'black'}
+    stroke={0} />
+
 let CSSIcon = (props) => {
-    const ref = useRef(undefined);
+        const ref = useRef(undefined);
 
-    useEffect(() => {
-        // ref.current.path[0].x += ref.current.renderOrigin.x;
-        // ref.current.path[0].y -= ref.current.renderOrigin.y;
+        useEffect(() => {
+            // ref.current.path[0].x += ref.current.renderOrigin.x;
+            // ref.current.path[0].y -= ref.current.renderOrigin.y;
 
-        // ref.current.renderOrigin.x = 0;
-        // ref.current.renderOrigin.y = 0;
-        // ref.current.renderOrigin.z = 0;
+            // ref.current.renderOrigin.x = 0;
+            // ref.current.renderOrigin.y = 0;
+            // ref.current.renderOrigin.z = 0;
 
-        // console.log(ref.current.renderOrigin);
-    });
+            // console.log(ref.current.renderOrigin);
+        });
 
-    return <>
-        <Ecusson />
-        <Droit />
-        <LetterC />
-        <LeftHalfThreeTop ref={ref}/>
-        <LeftHalfThreeMiddle />
-        <LeftHalfThreeBottom />
-    </>
-}
+        return <>
+            <Ecusson />
+            <Droit />
+            <LetterC />
+            <LetterS />
+            <LetterS translate={{ x: 18.181818181818183 }} />
+            <LeftHalfThreeTop ref={ref}/>
+            <LeftHalfThreeMiddle />
+            <LeftHalfThreeBottom />
+        </>
+    }
 
 export default CSSIcon;
