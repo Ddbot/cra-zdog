@@ -4,6 +4,8 @@ import { Cylinder } from 'react-zdog'
 import usePrevious from '../../hooks/usePrevious';
 import gsap,{ CSSPlugin } from 'gsap';
 import { useRender, useZdog } from 'react-zdog';
+import { ocylinder } from './coordinates';
+
 gsap.registerPlugin(CSSPlugin);
 
 let OCylinder = (props) => {
@@ -20,6 +22,7 @@ let OCylinder = (props) => {
     //     scene.rotate.y += 0.001;
     // });
 
+    const coords = useMemo(() => ocylinder);
     const colorCoords = Array(23).fill([]);
 
     // colorCoords[2] = [
@@ -59,6 +62,7 @@ let OCylinder = (props) => {
         },
         {             
             color: "rgb(41, 101, 241)",
+            // color: "transparent",
             frontFace: 'rgb(41, 101, 241)',
             backface: 'rgb(41, 101, 241)', 
             stroke: 0 
@@ -158,13 +162,12 @@ let OCylinder = (props) => {
                 ...colors[props.id][current],
                 ease: "power4.out",
             });
-    //         let rotateAnimation = gsap.to([
-    //             ref.current.rotate, 
-    //         ], {
-    //             duration: 1,
-    //             ...coords[current].rotate,
-    //             ease: "power4.out",
-    //         });
+            let rotateAnimation = gsap.to(
+                ref.current.rotate, {
+                duration: 1,
+                ...coords[current].rotate,
+                ease: "power4.out",
+            });
 
     //         let translateAnimation = gsap.to([
     //             ref.current.translate, 
@@ -189,7 +192,7 @@ let OCylinder = (props) => {
             setTl(prev => {
                 prev && prev
     //             .add(translateAnimation)
-    //             .add(rotateAnimation, '<')
+                .add(rotateAnimation, '<')
                 .add(colorAnimation,'<');
             });
 
@@ -202,7 +205,7 @@ let OCylinder = (props) => {
     }, [tl]);
 
     useEffect(() => {
-        console.log('Ref current: ', size.width/8);
+        // if(props.id === 9) console.log('Ref current: cuila');
     });
 
     return <Cylinder

@@ -4,6 +4,7 @@ import { Anchor, Illustration } from 'react-zdog'
 import styled from 'styled-components'; 
 import gsap from 'gsap';
 import { TAU } from 'zdog';
+import CSSIcon from '../../assets/icons/CSSIcon';
 
 // import Acone from './Acone';
 // import OCylinder from './OCylinder';
@@ -93,16 +94,17 @@ coordsar
     { ...coordsAr[0] }
     className='illustration'
     centered={false}
-    zoom={4}
+    zoom={1}
     index={props.index}>
     {/* <Anchor translate={{ x: 8 }}> */}
-      {['□','🛆','◖','□',
+      {/* {['□','🛆','◖','□',
         '○','◆','□','🛆',
         '🛆','○','🛆','○',
         '□','□','◆','□',
         '🛆','□','○','□',
-        '□','○','□','🛆'].map((el,i) => renderShape(el,i, props.index))}
+        '□','○','□','🛆'].map((el,i) => renderShape(el,i, props.index))} */}
     {/* </Anchor> */}
+        <CSSIcon />
   </Illustration></Illu>
 };
   

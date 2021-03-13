@@ -1,15 +1,111 @@
 import { SvgIcon } from '@material-ui/core';
+import { useEffect, useRef } from 'react';
+import { Shape } from 'react-zdog';
+
+function convert(x, y, width=363, height=512) {
+    return { x: x*100/width, y: y*100/height };
+  }
+  
+
+const Ecusson = props => <Shape path={[
+    { x: 0, y: 0},
+    { x: 100, y: 0 }, // start at top left
+    { x:  90, y: 75 }, // line to top right
+    { x:  50, y: 100 }, // line to top right
+    { x:  10, y: 75 }, // line to top right
+    { x:  0, y: 0 }]} 
+    fill={"#264de4"}
+    color={"#264de4"}
+    />
+
+    const Droit = props => <Shape path={[
+        { x: 50, y: 0 },
+        { x: 100, y: 0 },
+        { x: 90, y: 75 },
+        { x: 50, y: 100},
+        { x: 50, y: 0 },
+    ]}
+    fill={"#2965f1"}
+    color={"#2965f1"} />
+
+    const LeftHalfThreeTop = props => <Shape path={[
+        { x: 20.9366391184573, y: 52.34375 },
+        { x: 22.038567493112946, y: 61.328125 },
+        { x: 49.862258953168045, y: 61.32812},
+        {x: 49.862258953168045, y: 52.34375},
+        { x: 20.9366391184573, y: 52.34375 },
+    ]}
+    color={"#ebebeb"}
+    fill={"#ebebeb"} 
+    stroke={0}/>
+
+    const LeftHalfThreeMiddle = props => <Shape path={[
+        { x: 49.862258953168045, y: 34.375 },
+        { x: 18.457300275482094, y: 34.375 },
+        { x: 19.834710743801654, y: 43.359375 },
+        { x: 49.862258953168045, y: 43.359375 },
+        { x: 49.862258953168045, y: 34.375 },
+    ]}
+    color={"#ebebeb"}
+    fill={"#ebebeb"} 
+    closed={true}
+    stroke={0} />
+
+    const LeftHalfThreeBottom = props => <Shape path={[
+        { x: 49.862258953168045, y: 84.5703125 },
+        { x: 49.862258953168045, y: 75.390625 },
+        { x: 36.08815426997245, y: 72.8515625 },
+        { x: 34.98622589531681, y: 65.625 },
+        { x: 22.58953168044077, y: 65.625 },
+        { x: 24.242424242424242, y: 79.6875 },
+        { x: 49.862258953168045, y: 84.5703125 },
+        { x: 49.862258953168045, y: 84.5703125 }
+    ]} 
+    color={'#ebebeb'}
+    fill={'#ebebeb'}
+    stroke={0}
+    closed={true}
+    />
 
 let CSSIcon = (props) => {
-    return (
-        <SvgIcon {...props} width="386.916" height="546.133" viewBox="0 0 362.734 512">
-            <path fill="#264de4" d="M362.734 100.62l-33.046 370.199L181.145 512 33.011 470.877 0 100.62z"/>
-            <path fill="#2965f1" d="M301.397 447.246l28.24-316.352h-148.27v349.629z"/>
-            <path fill="#ebebeb" d="M75.677 268.217l4.07 45.41h101.62v-45.41zM181.367 176.305H67.499l4.128 45.411h109.74zM181.367 433.399v-47.246l-.199.053-50.574-13.656-3.233-36.217H81.776l6.362 71.301 93.02 25.823z"/>
-            <path d="M85.367 0h55v23h-32v23h32v23h-55zM151.367 0h55v20h-32v4h32v46h-55V49h32v-4h-32zM217.367 0h55v20h-32v4h32v46h-55V49h32v-4h-32z"/>
-            <path fill="#fff" d="M237.128 313.627l-5.271 58.894-50.647 13.67v47.244l93.094-25.801.683-7.672 10.671-119.551 1.108-12.194 8.198-91.912H181.21v45.411h63.988l-4.132 46.501H181.21v45.41z"/>
-        </SvgIcon>
-    );
+    const ref = useRef(undefined);
+
+    useEffect(() => {
+        // ref.current.path[0].x += ref.current.renderOrigin.x;
+        // ref.current.path[0].y -= ref.current.renderOrigin.y;
+
+        // ref.current.renderOrigin.x = 0;
+        // ref.current.renderOrigin.y = 0;
+        // ref.current.renderOrigin.z = 0;
+
+        // console.log(ref.current.renderOrigin);
+    });
+
+    {/* return <Shape ref={ref} path={[
+        { x: 0, y: 0},
+        { x: 100, y: 0 },
+        { x:  90, y: 75 },
+        { x:  50, y: 100 },
+        { x:  10, y: 75 },
+        { x:  0, y: 0 },
+
+        { x: 50, y: 0 },
+        { x: 100, y: 0 },
+        { x: 90, y: 75 },
+        { x: 50, y: 100},
+        { x: 50, y: 0 },
+        ]}
+    closed={false}
+    stroke={2}
+    color={'#636'} /> */}
+
+    return <>
+    <Ecusson />
+    <Droit />
+        <LeftHalfThreeTop ref={ref}/>
+        <LeftHalfThreeMiddle />
+        <LeftHalfThreeBottom />
+    </>
 }
 
 export default CSSIcon;

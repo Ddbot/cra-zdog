@@ -298,7 +298,7 @@ function App() {
 					</Menu>	
 				</MenuBar>
 			</AppBar>
-			<SvgBG index={ currentLi }/>
+			{/* <SvgBG index={ currentLi }/> */}
 			<Illo id='illo' index={currentLi} move={move} />
 			<InstallGrid component="ol" ref={olRef}>
 				{Object.values(i18n.t('intro')).map((v,i) => {

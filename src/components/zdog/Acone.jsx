@@ -1,5 +1,5 @@
 // import ReactDOM from 'react-dom'
-import { useMemo, useRef, useState, useEffect } from 'react'
+import { useMemo, useRef, useState, useEffect, useCallback } from 'react'
 import { Cone } from 'react-zdog'
 import usePrevious from '../../hooks/usePrevious';
 import gsap, { CSSPlugin } from 'gsap';
@@ -14,7 +14,7 @@ let Acone = (props) => {
     const [index, setIndex ] = useState(props.index);
     const ref = useRef(undefined);
 
-    function getColors(id){
+    const getColors = (id) => {
         let res;
         switch(id){
             case 1:
