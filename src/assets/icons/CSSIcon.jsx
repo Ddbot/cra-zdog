@@ -1,6 +1,6 @@
 import { SvgIcon } from '@material-ui/core';
 import { useEffect, useRef } from 'react';
-import { Shape } from 'react-zdog';
+import { Anchor, Shape } from 'react-zdog';
 
 function convert(x, y, width=363, height=512) {
     return { x: x*100/width, y: y*100/height };
@@ -8,22 +8,24 @@ function convert(x, y, width=363, height=512) {
   
 
 const Ecusson = props => <Shape path={[
-    { x: 0, y: 0},
-    { x: 100, y: 0 }, // start at top left
-    { x:  90, y: 75 }, // line to top right
-    { x:  50, y: 100 }, // line to top right
-    { x:  10, y: 75 }, // line to top right
-    { x:  0, y: 0 }]} 
+        { x: 100, y: 19.7265625 },
+        { x: 90.9090909090909, y: 91.9921875 },
+        { x: 49.862258953168045, y: 100 },
+        { x: 9.090909090909092, y: 91.9921875 },
+        { x: 0, y: 19.7265625 },
+        { x: 100, y: 19.7265625 },
+    ]} 
     fill={"#264de4"}
     color={"#264de4"}
     />
 
     const Droit = props => <Shape path={[
-        { x: 50, y: 0 },
-        { x: 100, y: 0 },
-        { x: 90, y: 75 },
-        { x: 50, y: 100},
-        { x: 50, y: 0 },
+        { x: 82.92011019283747, y: 87.3046875 },
+        { x: 90.9090909090909, y: 25.5859375 },
+        { x: 90.9090909090909, y: 25.5859375 },
+        { x: 49.862258953168045, y: 25.5859375 },
+        { x: 49.862258953168045, y: 93.9453125 },
+        { x: 82.92011019283747, y: 87.3046875 },
     ]}
     fill={"#2965f1"}
     color={"#2965f1"} />
@@ -102,7 +104,28 @@ const Ecusson = props => <Shape path={[
     translate={props.translate}
     fill={'black'}
     stroke={0} />
-
+    const RightHalf = props => <Shape path={[
+        { x: 65.2892561983471, y: 61.328125 },
+        { x: 63.91184573002755, y: 72.8515625 },
+        { x: 49.862258953168045, y: 75.390625 },
+        { x: 49.862258953168045, y: 84.5703125 },
+        { x: 75.48209366391184, y: 79.6875 },
+        { x: 75.75757575757575, y: 78.125 },
+        { x: 78.78787878787878, y: 54.6875 },
+        { x: 79.0633608815427, y: 52.34375 },
+        { x: 81.26721763085399, y: 34.375 },
+        { x: 49.862258953168045, y: 34.375 },
+        { x: 49.862258953168045, y: 43.359375 },
+        { x: 67.4931129476584, y: 43.359375 },
+        { x: 66.39118457300276, y: 52.34375 },
+        { x: 49.862258953168045, y: 52.34375 },
+        { x: 49.862258953168045, y: 61.328125 },
+        { x: 65.2892561983471, y: 61.328125 }
+    ]} 
+    fill={"#fff"}
+    color={"#fff"}
+    stroke={0}
+    />
 let CSSIcon = (props) => {
         const ref = useRef(undefined);
 
@@ -117,7 +140,7 @@ let CSSIcon = (props) => {
             // console.log(ref.current.renderOrigin);
         });
 
-        return <>
+        return <Anchor scale={{ x: 0.8, y: 1}}>
             <Ecusson />
             <Droit />
             <LetterC />
@@ -126,7 +149,8 @@ let CSSIcon = (props) => {
             <LeftHalfThreeTop ref={ref}/>
             <LeftHalfThreeMiddle />
             <LeftHalfThreeBottom />
-        </>
+            <RightHalf />
+        </Anchor>
     }
 
 export default CSSIcon;
