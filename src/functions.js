@@ -102,4 +102,8 @@ const interp = (x,y) => {
   return gsap.utils.interpolate(x,y);
 }
 
-export { renderShape, isEqual, interp }
+function convert(x, y, width=363, height=512) {
+  return { x: x*100/width, y: y*100/height };
+}
+
+export { convert, renderShape, isEqual, interp }
