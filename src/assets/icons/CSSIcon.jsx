@@ -67,6 +67,20 @@ const Ecusson = props => <Shape path={[
     closed={true}
     />
 
+    const LetterC = props => <Shape 
+        path={[
+            { x: 23.415977961432507, y: 0 },
+            { x: 38.56749311294766, y: 0 },
+            { x: 38.56749311294766, y: 4.4921875 },
+            { x: 29.75206611570248, y: 4.4921875 },
+            { x: 29.75206611570248, y: 8.984375 },
+            { x: 38.56749311294766, y: 8.984375 },
+            { x: 38.56749311294766, y: 13.4765625 },
+            { x: 23.415977961432507, y: 13.4765625 },
+            { x: 23.415977961432507, y: 0 }
+        ]}
+        fill={'#000'}
+    />
 let CSSIcon = (props) => {
     const ref = useRef(undefined);
 
@@ -81,27 +95,10 @@ let CSSIcon = (props) => {
         // console.log(ref.current.renderOrigin);
     });
 
-    {/* return <Shape ref={ref} path={[
-        { x: 0, y: 0},
-        { x: 100, y: 0 },
-        { x:  90, y: 75 },
-        { x:  50, y: 100 },
-        { x:  10, y: 75 },
-        { x:  0, y: 0 },
-
-        { x: 50, y: 0 },
-        { x: 100, y: 0 },
-        { x: 90, y: 75 },
-        { x: 50, y: 100},
-        { x: 50, y: 0 },
-        ]}
-    closed={false}
-    stroke={2}
-    color={'#636'} /> */}
-
     return <>
-    <Ecusson />
-    <Droit />
+        <Ecusson />
+        <Droit />
+        <LetterC />
         <LeftHalfThreeTop ref={ref}/>
         <LeftHalfThreeMiddle />
         <LeftHalfThreeBottom />
