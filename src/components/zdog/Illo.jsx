@@ -6,6 +6,7 @@ import gsap from 'gsap';
 import { TAU } from 'zdog';
 import CSSIcon from '../../assets/icons/CSSIcon';
 import HTMLIcon from '../../assets/icons/HTMLIcon';
+import JSIcon from '../../assets/icons/JSIcon';
 
 // import Acone from './Acone';
 // import OCylinder from './OCylinder';
@@ -106,7 +107,8 @@ coordsar
         '□','○','□','🛆'].map((el,i) => renderShape(el,i, props.index))} */}
     {/* </Anchor> */}
         {/* <CSSIcon /> */}
-        <HTMLIcon />
+        {/* <HTMLIcon /> */}
+        {/* <JSIcon scale={0.5}/> */}
   </Illustration></Illu>
 };
   
