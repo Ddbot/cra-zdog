@@ -6,6 +6,7 @@ import HalfSphere from './components/zdog/HalfSphere';
 
 import gsap from 'gsap';
 import { TAU } from 'zdog';
+import JSIcon from './assets/icons/JSIcon';
 
 const cols = 4, rows = 6;
 const cellWidth = 100 / cols, cellHeight = 100 / rows;
@@ -61,9 +62,7 @@ const renderShape = (el,i, index) => {
             y: TAU * 45/360, 
             z: -TAU * 120/360
         }}
-
         scale={8}
-
         />
       case '○':
         return <OCylinder key={i} id={i}
@@ -91,6 +90,23 @@ const renderShape = (el,i, index) => {
           z: gsap.utils.random(0, 500, 5)
         }}                
           />
+        case 'js':
+          return <JSIcon 
+            key={i} 
+			id={i}
+            index={index} 
+			rotate={{
+				x: 0,
+				y: 0,
+				z: 0
+			}}
+			translate={{
+				x: 0,
+				y: 0,
+				z: 0
+			}}
+          />
+          
       default:
         break;
     }

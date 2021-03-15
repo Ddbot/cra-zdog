@@ -96,15 +96,15 @@ coordsar
     { ...coordsAr[0] }
     className='illustration'
     centered={false}
-    zoom={1}
+    zoom={4}
     index={props.index}>
     {/* <Anchor translate={{ x: 8 }}> */}
-      {/* {['□','🛆','◖','□',
+      {['□','🛆','◖','□',
         '○','◆','□','🛆',
         '🛆','○','🛆','○',
         '□','□','◆','□',
         '🛆','□','○','□',
-        '□','○','□','🛆'].map((el,i) => renderShape(el,i, props.index))} */}
+        '□','○','□','🛆','js'].map((el,i) => renderShape(el,i, props.index))}
     {/* </Anchor> */}
         {/* <CSSIcon /> */}
         {/* <HTMLIcon /> */}
