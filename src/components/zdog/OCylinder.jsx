@@ -120,6 +120,11 @@ let OCylinder = (props) => {
                     scale: 4
                 }
                 break;
+            case 13:
+                res = {
+                    scale: 6
+                }
+                break;                
             default:
                 res = {
                     scale: 2

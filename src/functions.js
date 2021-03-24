@@ -127,7 +127,10 @@ const renderShape = (el,i, index) => {
 						y: 0, 
 						z: -TAU * 120/360 
 					}}
-					scale={8} />
+					color={'rgba(238, 170, 0, 1)'}
+                    frontFace={'rgba(204, 34, 85, 1)'}
+                    backface={'rgba(238, 102, 34, 1)'}  
+					/>
 			}
         case 'html':
 			return <AnimatePresence>
@@ -145,8 +148,8 @@ const renderShape = (el,i, index) => {
 					y: calculateCoords(i).y,
 					z: gsap.utils.random(0, 500, 5)
 				}}
-				initial={{ opacity: 0 }}
-				animate={{ opacity: 1 }}
+				initial={{ opacity: 1, scale: 0, x: -25, y: 10 }}
+				animate={{ opacity: 1, scale: 1, x: 0, y: 0 }}
 				exit={{ opacity: 0 }}				
 				/>
 			} 
@@ -164,7 +167,11 @@ const renderShape = (el,i, index) => {
                 color={"#e62"}
                 frontFace={'#636'}
                 backface={'#EEAA00'}
-                scale={8} />
+                scale={8} 
+				initial={{ opacity: 1, scale: 0, x: -25, y: 10 }}
+				animate={{ opacity: 1, scale: 1, x: 0, y: 0 }}
+				exit={{ opacity: 0 }}	
+				/>
 			}						
 			</AnimatePresence>
 		case 'js':
