@@ -105,9 +105,9 @@ const renderShape = (el,i, index) => {
 					z: 0
 				}}
 				translate={{
-					x: 22,
-					y: 44,
-					z: 0
+					x: calculateCoords(i).x,
+					y: calculateCoords(i).y,
+					z: gsap.utils.random(0, 500, 5)
 				}}
 				scale={{ x: 0.07, y: .1}}				
 			/>
