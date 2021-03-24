@@ -265,8 +265,9 @@ function App() {
 		return () => {}	
 	},[currentLi]);
 
-	useRef(() => {
-		console.log('illu ', illuRef.current)
+	useEffect(() => {
+		let svg = illuRef.current.querySelector('svg');
+		gsap.set(svg, { attr: { viewBox: '0 0 100 145.5' }});
 	})
 
 	return (
@@ -299,7 +300,7 @@ function App() {
 				</MenuBar>
 			</AppBar>
 			{/* <SvgBG index={ currentLi }/> */}
-			<Illo id='illo' index={currentLi} move={move} />
+			<Illo id='illo' ref={illuRef} index={currentLi} move={move} />
 			<InstallGrid component="ol" ref={olRef}>
 				{Object.values(i18n.t('intro')).map((v,i) => {
 					return <Li id={`li${i}`} key={i}>

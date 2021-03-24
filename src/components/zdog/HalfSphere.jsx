@@ -83,8 +83,6 @@ let HalfSphere = (props) => {
                 ease: "power4.out",
             });
 
-            console.log('Rotate anim:', rotateAnimation)
-
             // let colorAnimation = gsap.fromTo(ref.current, {
             //     duration: 1,
             //     ...colors[props.id][previous],

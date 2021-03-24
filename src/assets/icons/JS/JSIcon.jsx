@@ -122,7 +122,6 @@ const process = (str,path) => {
             break;
         case 'Z':
         case 'z':
-            console.log('Si Z: ', initialPoints, previousPoint)
             path.push(initialPoints);
             previousPoint = initialPoints;
             break;
@@ -145,17 +144,24 @@ const Square = props => <Shape path={[
 ]} fill={"#f7df1e"} 
 color={"#f7df1e"}
 scale={props.scale}
+stroke={0}
 />
 
 const S = props => <Shape path={[...S_path]} closed={true} fill={'black'} stroke={0} scale={props.scale} />
 const J = props => <Shape path={[...J_path]} closed={true} fill={'black'} stroke={0} scale={props.scale} />
 
 let JSIcon = (props) => {
-    return <Group scale={props.scale}>
-    <Square scale={props.scale}/>
-    <J scale={props.scale}/>
-    <S scale={props.scale}/>
-    </Group>
+    const [index, setIndex] = useState(props.index);
+
+    useEffect(() => {
+    setIndex(props.index);
+    },[props.index]);
+
+    return <Anchor { ...props } scale={props.scale} stroke={0}>
+        <Square scale={props.scale} stroke={0}/>
+        <J scale={props.scale}/>
+        <S scale={props.scale}/>
+    </Anchor>
 }
 
 export default JSIcon;

@@ -5,6 +5,7 @@ import { useRender } from 'react-zdog';
 
 let HTMLIcon = (props) => {
     let ref = useRef(undefined);
+    let { id, index } = props;
 
     const HTML = props => <Shape path={[
         { x: 21.171875, y: 0 },
@@ -57,7 +58,7 @@ let HTMLIcon = (props) => {
         { x: 78.96484375, y: 25.5859375 },
         { x: 73.4375, y: 87.3046875 },
     ]} 
-    fill={"#f16529"} color={"#f16529"}/>
+    fill={"#f16529"} color={"#f16529"} stroke={0} />
     const ShieldColor = props => <Shape path={[
         { x: 21.015625, y: 91.9921875 },
         { x: 14.570312499999998, y: 19.648437500000004 },
@@ -65,7 +66,7 @@ let HTMLIcon = (props) => {
         { x: 78.984375, y: 91.953125 },
         { x: 49.94140625, y: 100 },
         { x: 21.015625, y: 91.9921875 },
-    ]} closed={true} fill={"#e44d26"} color={"#e44d26"} />
+    ]} closed={true} fill={"#e44d26"} color={"#e44d26"} stroke={0}/>
     const FiveLeftHalf = props => <Shape path={[
         { x: 27.734375, y: 34.43359375 },
         { x: 50, y: 34.43359375 },
@@ -99,7 +100,7 @@ let HTMLIcon = (props) => {
         { x: 49.9609375, y: 75.42968750000001 },
         { x: 49.9609375, y: 84.6484375 },
         { x: 68.125, y: 79.609375 },
-    ]} fill={"#fff"} color={'#fff'} />
+    ]} fill={"#fff"} color={'#fff'} stroke={0} />
     const Five = props => <Group>
         <FiveLeftHalf />
         <FiveRightHalf />
@@ -109,10 +110,15 @@ let HTMLIcon = (props) => {
         <RightShield />
     </Group>
     
-    return <Anchor ref={ref} viewBox="0 0 512 512">
+    useEffect(() => {
+        if(id === 5 && index === 1){
+            // ref.current.scale = 0.1;
+        }
+    }, [id,index])
+    
+    return <Anchor {...props } ref={ref} viewBox="0 0 512 512">
             <HTML />
             <Shield />
-            <RightShield />
             <Five />
         </Anchor>;
 }

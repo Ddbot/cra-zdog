@@ -1,4 +1,3 @@
-// import ReactDOM from 'react-dom'
 import React, { useMemo, useRef, useEffect, useState } from 'react'
 import { Cylinder } from 'react-zdog'
 import usePrevious from '../../hooks/usePrevious';
@@ -18,27 +17,13 @@ let OCylinder = (props) => {
 
     const { scene, illu, size } = useZdog();
 
-    // useRender((t) => {
-    //     scene.rotate.y += 0.001;
-    // });
-
     const coords = useMemo(() => ocylinder);
     const colorCoords = Array(23).fill([]);
 
-    // colorCoords[2] = [
-    // {   color: '#636',
-    //     frontFace: '#636',
-    //     backface: '#ea0',
-    // }, {
-    //     color: 'rgba(238, 170, 0, 1)',
-    //     frontFace: '#636',
-    //     backface: '#ea0',
-    // },
-    // {   
-    //     color: 'rgba(238, 170, 0, 1)',
-    //     frontFace: '#636',
-    //     backface: '#ea0',
-    // }];
+    useEffect(() => {
+        console.table([['Scene', scene],['Illu', illu], ['Size', size]])
+    })
+
     colorCoords[4] = [{
         color: '#636',
         frontFace: '#e62',
@@ -113,19 +98,12 @@ let OCylinder = (props) => {
 
     // Changer state id quand props.id change
     useEffect(() => {
-        // if(props.id !== id){
         setIndex(props.id)
-        // };
     }, [props.id]);
-
-    useEffect(() => {
-        console.log(size)
-    })
 
     function getScale(id){
         let res;
         switch(id){
-            // case 2:
             case 9: 
             case 18:
                 res = {
@@ -167,31 +145,10 @@ let OCylinder = (props) => {
                 duration: 1,
                 ...coords[current].rotate,
                 ease: "power4.out",
-            });
-
-    //         let translateAnimation = gsap.to([
-    //             ref.current.translate, 
-    //         ], {
-    //             duration: 1,
-    //             ...coords[current].translate,
-    //             ease: "elastic.out(1, 0.8)",
-    //         });     
-
-    //         let colorAnimation = gsap.to(ref.current, {
-    //             duration: 1,
-    //             onStart: () => {
-    //                 gsap.set(ref.current, {
-    //                     mixBlendMode: 'exclusion'
-    //                 });
-    //             },
-    //             color: coords[current].color,
-    //             frontFace: coords[current].frontFace,
-    //             scale: coords[current].scale
-    //         });            
+            });          
             
             setTl(prev => {
                 prev && prev
-    //             .add(translateAnimation)
                 .add(rotateAnimation, '<')
                 .add(colorAnimation,'<');
             });
@@ -204,14 +161,9 @@ let OCylinder = (props) => {
         tl && tl.play();
     }, [tl]);
 
-    useEffect(() => {
-        // if(props.id === 9) console.log('Ref current: cuila');
-    });
-
     return <Cylinder
         {...props}
         {...getScale(props.id)}
-        id={props.id === 9 ? 'cssOne' : ''}
         ref={ref}
         diameter={1}
         length={1}
