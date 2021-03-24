@@ -95,7 +95,8 @@ const renderShape = (el,i, index) => {
 					y: calculateCoords(i).y,
 					z: gsap.utils.random(0, 500, 5) }} />
         case 'css':
-			return <CSSIcon 
+			if(index === 1){
+				return <CSSIcon 
 				key={i} 
 				id={i}
 				index={index}    
@@ -110,7 +111,23 @@ const renderShape = (el,i, index) => {
 					z: gsap.utils.random(0, 500, 5)
 				}}
 				scale={{ x: 0.07, y: .1}}				
-			/>
+			/>} else {
+				return <OCylinder 
+				key={i} 
+				id={i}
+				index={index}
+				translate={{
+					x: calculateCoords(i).x,
+					y: calculateCoords(i).y,
+					z: gsap.utils.random(0, 500, 5)
+				}}
+				rotate={{ 
+					x: 0, 
+					y: 0, 
+					z: -TAU * 120/360 
+				}}
+				scale={8} />
+			}
         case 'html':
             return <HTML5Group
 				key={i} 
