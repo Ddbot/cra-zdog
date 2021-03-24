@@ -1,8 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Anchor, Group, Shape } from 'react-zdog';
 import { TAU } from 'zdog';
-import { useRender } from 'react-zdog';
-import { AnimatePresence, motion } from "framer-motion"
+import { motion } from "framer-motion"
 
 import OCylinder from '../../../components/zdog/OCylinder';
 import { calculateCoords } from '../../../functions';
@@ -10,7 +9,6 @@ import { calculateCoords } from '../../../functions';
 import gsap, { CSSPlugin } from 'gsap';
 
 gsap.registerPlugin(CSSPlugin);
-
 
 const Ecusson = props => <Shape path={[
         { x: 100, y: 19.7265625 },
@@ -113,7 +111,6 @@ const ThreeRightHalf = props => <Shape path={[
     stroke={0}
     closed={true}
     />
-
 const Three = props => <Group>
         <ThreeLeftHalf />
         <ThreeRightHalf />
@@ -144,16 +141,6 @@ let CSSIcon = (props) => {
         const [tl, setTl ] = useState(gsap.timeline({ paused: true, repeat: -1, yoyo: true }));
         const [idx, setIdx] = useState(props.index);
         const [y, setY] = useState(0);
-
-    // useRender((t) => {
-    //     if(props.index === 1){
-    //         if(y > 0 && y < 0.1){
-    //             setY(prev => prev + 0.01)            
-    //         } else {
-    //             setY(prev => prev - 0.01)            
-    //         }
-    //     }
-    // },[y]);
 
     const renderCorrectIcon = index => {
         switch(index){
