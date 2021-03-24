@@ -1,27 +1,16 @@
-import React, { useMemo, useRef, useState, useEffect, forwardRef } from 'react'
+import React, { useMemo, useState, useEffect, forwardRef } from 'react'
 import { Illustration } from 'react-zdog'
 
 import styled from 'styled-components'; 
 import gsap from 'gsap';
 import { TAU } from 'zdog';
-import CSSIcon from '../../assets/icons/CSSIcon';
-import HTMLIcon from '../../assets/icons/HTMLIcon';
-import JSIcon from '../../assets/icons/JSIcon';
-
-// import Acone from './Acone';
-// import OCylinder from './OCylinder';
-// import LCylinder from './LCylinder';
-// import TransparentBox from './TransparentBox';
 
 import { coordsar } from './coordinates';
 
 import usePrevious from '../../hooks/usePrevious';
 import { renderShape } from '../../functions';
 
-import { AnimatePresence, motion } from "framer-motion";
-
 const zoomIndices = [1,2,4];
-// const zoomIndices = [1,1,1];
 
 const rotateIndices = [{x: 0, y: 0, z: 0},{x: 0, y: 0, z: TAU * 42/360},{x: 0, y: 0, z: TAU * 150/360}];
 
@@ -30,10 +19,6 @@ const Illu = styled.div`
 
   grid-column: 1 / span 3;
   grid-row: 1 / span 3;
-
-  // transition: width linear .125s, height linear .125s;
-
-  // z-index: 3;    
 
   height: 91vh !important;
   width: 100vw !important;
@@ -44,20 +29,17 @@ const Illu = styled.div`
 const shapesList = [
 '□','▲','◖','□',
 '●','html','□','▲',
-// '▲','●','▲','●',
 '▲','css','▲','●',
 '□','□','▌','□',
 '▲','□','●','□',
 '□','●','□','▲'];
 
-/** --- Basic, re-usable shapes -------------------------- */
 const Illo = forwardRef((props, ref) => {
   const [ index, setIndex ] = useState(props.index);
   const [list, setList ] = useState(shapesList);
 
   const current = props.index;
 	const previous = usePrevious(index);
-  // const ref = useRef(undefined);
 
 const coordsAr = 
 useMemo( () => 
@@ -98,7 +80,7 @@ useMemo( () =>
     zoom={4}
     scale={1}
     index={ props.index }>
-      { shapesList.map((el,i) => renderShape(el,i, props.index) )}    
+      { list.map((el,i) => renderShape(el,i, props.index) )}    
   </Illustration></Illu>
 });
   
