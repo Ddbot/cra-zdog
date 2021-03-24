@@ -115,15 +115,10 @@ let HTMLIcon = (props) => {
             // ref.current.scale = 0.1;
         }
     }, [id,index])
-
-    // useRender(() => {
-    //     ref.current.rotate.y += 0.01;
-    // })
     
     return <Anchor {...props } ref={ref} viewBox="0 0 512 512">
             <HTML />
             <Shield />
-            {/* <RightShield /> */}
             <Five />
         </Anchor>;
 }
