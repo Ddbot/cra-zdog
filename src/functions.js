@@ -6,9 +6,8 @@ import HalfSphere from './components/zdog/HalfSphere';
 
 import { Group } from 'react-zdog';
 
-import CSSIcon from '../src/assets/icons/CSSIcon';
+import CSSIcon from '../src/assets/icons/CSS/CSSIcon';
 import HTMLIcon from '../src/assets/icons/HTML/HTMLIcon';
-
 import JSIcon from '../src/assets/icons/JS/JSIcon';
 
 import gsap from 'gsap';
