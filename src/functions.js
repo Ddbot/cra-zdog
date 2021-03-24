@@ -4,16 +4,16 @@ import LCylinder from './components/zdog/LCylinder';
 import TransparentBox from './components/zdog/TransparentBox';
 import HalfSphere from './components/zdog/HalfSphere';
 
-import { Group } from 'react-zdog';
 
 import CSSIcon from '../src/assets/icons/CSS/CSSIcon';
-import HTMLIcon from '../src/assets/icons/HTML/HTMLIcon';
 import JSIcon from '../src/assets/icons/JS/JSIcon';
 
 import gsap from 'gsap';
 import { TAU } from 'zdog';
 import { Cylinder } from 'react-zdog';
 import HTML5Group from './components/zdog/HTML5Group';
+
+import { motion, AnimatePresence } from 'framer-motion';
 
 
 const cols = 4, rows = 6;
@@ -130,8 +130,8 @@ const renderShape = (el,i, index) => {
 					scale={8} />
 			}
         case 'html':
-            if(index === 1){
-				return <HTML5Group
+			return <AnimatePresence>
+            { index === 1 && <HTML5Group
 				key={i} 
 				id={i}
 				index={index} 
@@ -145,9 +145,12 @@ const renderShape = (el,i, index) => {
 					y: calculateCoords(i).y,
 					z: gsap.utils.random(0, 500, 5)
 				}}
+				initial={{ opacity: 0 }}
+				animate={{ opacity: 1 }}
+				exit={{ opacity: 0 }}				
 				/>
-			} else {
-				return <Cylinder 
+			} 
+			{ index !== 1 && <Cylinder 
 				translate={{
 					x: calculateCoords(i).x,
 					y: calculateCoords(i).y,
@@ -162,7 +165,8 @@ const renderShape = (el,i, index) => {
                 frontFace={'#636'}
                 backface={'#EEAA00'}
                 scale={8} />
-			}
+			}						
+			</AnimatePresence>
 		case 'js':
 			if(index === 1){
 				return <JSIcon 
