@@ -6,7 +6,7 @@ import gsap from 'gsap';
 import CSSIcon from '../assets/icons/CSSIcon';
 import HTMLIcon from '../assets/icons/HTML/HTMLIcon';
 
-import JSIcon from '../assets/icons/JSIcon';
+import JSIcon from '../assets/icons/JS/JSIcon';
 
 const Div = styled.div`
     grid-column: 1 / span 3;
