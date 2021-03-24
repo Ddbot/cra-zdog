@@ -13,31 +13,6 @@ const HTML5Group = props => {
     const [index, setIndex] = useState(props.index);
     const groupRef = useRef(undefined);
 
-    const renderCorrectIcon = index => {
-        switch(index){
-            case 1:
-                return <HTMLIcon 	
-                    rotate={{
-                        x: 0,
-                        y: 0,
-                        z: 0
-                    }}   
-                    scale={0.1}
-                />
-            default:
-                return <Cylinder 
-                rotate={{ 
-                    x: TAU * 90/360, 
-                    y: TAU * 45/360, 
-                    z: -TAU * 120/360
-                }}
-                color={"#e62"}
-                frontFace={'#636'}
-                backface={'#EEAA00'}
-                scale={8} />
-        }
-    }
-
     useEffect(() => {
         setIndex(props.index);
     }, [props.index]);
@@ -60,8 +35,14 @@ const HTML5Group = props => {
         return () => tl.pause();
     }, [index]);
     
-    return <Anchor {...props} ref={groupRef} id='HTML_icon'>
-            { renderCorrectIcon(index) }
-	    </Anchor>
+    return <Anchor {...props} ref={groupRef}>
+                <HTMLIcon 	
+                    rotate={{
+                        x: 0,
+                        y: 0,
+                        z: 0
+                    }}   
+                    scale={0.1}/>	    
+            </Anchor>
         }
 export default HTML5Group;

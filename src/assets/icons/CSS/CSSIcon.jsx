@@ -140,7 +140,6 @@ let CSSIcon = (props) => {
 
         const [tl, setTl ] = useState(gsap.timeline({ paused: true, repeat: -1, yoyo: true }));
         const [idx, setIdx] = useState(props.index);
-        const [y, setY] = useState(0);
 
     const renderCorrectIcon = index => {
         switch(index){
@@ -168,7 +167,7 @@ let CSSIcon = (props) => {
 
     useEffect(() => {
         props.index !== idx && setIdx(props.index)
-    }, [idx,props.index]);
+    }, [props.index]);
 
     useEffect(() => {
         idx === 1 && setTl(prev => {
@@ -183,7 +182,7 @@ let CSSIcon = (props) => {
         return () => tl;
     }, [idx]);
 
-    return <Anchor { ...props } ref={ref} rotate={{ y: 0 }}>
+    return <Anchor { ...props } ref={ref}>
         <Icon />
     </Anchor>
 }
