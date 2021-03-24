@@ -1,6 +1,7 @@
 // import ReactDOM from 'react-dom'
 import React, { useMemo, useRef, useEffect, useState, useLayoutEffect  } from 'react'
-import HTMLIcon from '../../assets/icons/HTMLIcon';
+import HTMLIcon from '../../assets/icons/HTML/HTMLIcon';
+
 import usePrevious from '../../hooks/usePrevious';
 import gsap, { CSSPlugin } from 'gsap';
 import { TAU } from 'zdog';

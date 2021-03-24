@@ -4,7 +4,8 @@ import { i18n } from '../translations/CTA_dictionary';
 import { Avatar, Button, Chip, Container, Grid, Typography } from '@material-ui/core';
 import gsap from 'gsap';
 import CSSIcon from '../assets/icons/CSSIcon';
-import HTMLIcon from '../assets/icons/HTMLIcon';
+import HTMLIcon from '../assets/icons/HTML/HTMLIcon';
+
 import JSIcon from '../assets/icons/JSIcon';
 
 const Div = styled.div`
