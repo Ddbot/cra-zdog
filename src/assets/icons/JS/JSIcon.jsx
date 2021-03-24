@@ -151,6 +151,12 @@ const S = props => <Shape path={[...S_path]} closed={true} fill={'black'} stroke
 const J = props => <Shape path={[...J_path]} closed={true} fill={'black'} stroke={0} scale={props.scale} />
 
 let JSIcon = (props) => {
+    const [index, setIndex] = useState(props.index);
+
+    useEffect(() => {
+    setIndex(props.index);
+    },[props.index]);
+
     return <Anchor { ...props } scale={props.scale} stroke={0}>
         <Square scale={props.scale} stroke={0}/>
         <J scale={props.scale}/>

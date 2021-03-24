@@ -10,7 +10,6 @@ gsap.registerPlugin(CSSPlugin);
 
 const HTML5Group = props => {
     const [tl, setTl ] = useState(gsap.timeline({ paused: true, yoyo: true, repeat: -1 }));
-    const [y, setY ] = useState(0);
     const [index, setIndex] = useState(props.index);
     const groupRef = useRef(undefined);
 
@@ -23,20 +22,10 @@ const HTML5Group = props => {
                         y: 0,
                         z: 0
                     }}   
-                    translate={{
-                        x: -4.5,
-                        y: 10,
-                        z: 0
-                    }} 
                     scale={0.1}
                 />
             default:
                 return <Cylinder 
-                translate={{
-                    x: 0,
-                    y: 16.67,
-                    z: 0
-                }}
                 rotate={{ 
                     x: TAU * 90/360, 
                     y: TAU * 45/360, 

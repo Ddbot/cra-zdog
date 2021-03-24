@@ -14,7 +14,6 @@ import gsap from 'gsap';
 import { TAU } from 'zdog';
 import HTML5Group from './components/zdog/HTML5Group';
 
-import { AnimatePresence, motion } from "framer-motion"
 
 const cols = 4, rows = 6;
 const cellWidth = 100 / cols, cellHeight = 100 / rows;
@@ -123,11 +122,14 @@ const renderShape = (el,i, index) => {
 					z: 0
 				}}   
 				translate={{
-					x: 25,
-					y: 0,
-					z: 0 }} />
+					x: calculateCoords(i).x,
+					y: calculateCoords(i).y,
+					z: gsap.utils.random(0, 500, 5)
+				}}
+				/>
 		case 'js':
-			return <JSIcon 
+			if(index === 1){
+				return <JSIcon 
 				key={i} 
 				id={i}
 				index={index} 
@@ -137,9 +139,28 @@ const renderShape = (el,i, index) => {
 					z: 0
 				}}   
 				translate={{
-					x: 0,
-					y: 0,
-					z: 0 }} />
+					x: calculateCoords(i).x,
+					y: calculateCoords(i).y,
+					z: gsap.utils.random(0, 500, 5)
+				}}
+					scale={0.1} />
+			} else {
+				return <LCylinder 
+				key={i}
+				id={i}
+				index={index}
+				translate={{
+					x: calculateCoords(i).x,
+					y: calculateCoords(i).y,
+					z: gsap.utils.random(0, 500, 5)
+				}}
+				rotate={{ 
+					x: TAU * 90/360, 
+					y: TAU * 45/360, 
+					z: -TAU * 120/360
+				}}
+				scale={8} />
+			}
         default:
 			break;
     }
