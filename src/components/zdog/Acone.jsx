@@ -5,10 +5,13 @@ import usePrevious from '../../hooks/usePrevious';
 import gsap, { CSSPlugin } from 'gsap';
 import { useTheme } from '@material-ui/core/styles';
 import { useZdog } from 'react-zdog';
+import { motion } from "framer-motion"
 
 import { acone } from './coordinates';
 
 gsap.registerPlugin(CSSPlugin);
+
+let MotionCone = motion(Cone);
 
 let Acone = (props) => {
     const [index, setIndex ] = useState(props.index);
@@ -135,7 +138,46 @@ let Acone = (props) => {
         }
     }, [props.index]);
 
-    return <Cone
+    // useEffect(() => {
+    //     if(previous !== undefined){
+    //         let rotateAnimation = gsap.to([
+    //             ref.current.rotate, 
+    //         ], {
+    //             duration: 1,
+    //             ...coords[current].rotate,
+    //             ease: "power4.out",
+    //         });
+
+    //         let translateAnimation = gsap.to([
+    //             ref.current.translate, 
+    //         ], {
+    //             duration: 3,
+    //             ...coords[current].translate,
+    //             ease: "elastic.out(1, 0.8)",
+    //         });     
+            
+    //         let colorAnimation = gsap.to(ref.current, {
+    //             duration: 1,
+    //             color: theme.palette.type === 'light' ?  'rgba(102, 51, 102, 0.5)' : 'rgba(255, 0, 0, 0.5)',         
+    //             backface: theme.palette.type === 'light' ?  'rgba(204, 34, 85, 0.5)' : 'rgba(255, 152, 0, 0.5)',                
+    //         });
+
+    //         setTl(prev => {
+    //             prev && prev
+    //             .add(translateAnimation)
+    //             .add(rotateAnimation, '<')
+    //             .add(colorAnimation, '<')
+    //         })
+
+    //         return () => tl;
+    //     };
+    // }, [current, previous]);
+
+    // useEffect(() => {
+    //     tl && tl.play();
+    // }, [tl])
+
+    return <MotionCone
         {...props}
         {...getColors(props.id)[props.index]}
         {...getScale(props.id)[props.index]}

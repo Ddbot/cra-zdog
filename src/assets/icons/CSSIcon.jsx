@@ -1,7 +1,16 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Anchor, Group, Shape } from 'react-zdog';
 import { TAU } from 'zdog';
 import { useRender } from 'react-zdog';
+import { AnimatePresence, motion } from "framer-motion"
+
+import OCylinder from '../../components/zdog/OCylinder';
+import { calculateCoords } from '../../functions';
+
+import gsap, { CSSPlugin } from 'gsap';
+
+gsap.registerPlugin(CSSPlugin);
+
 
 const Ecusson = props => <Shape path={[
         { x: 100, y: 19.7265625 },
@@ -121,30 +130,75 @@ const Shield = props => <Group>
         <EcussonDroit />
     </Group>
 
+const IconGroup = props => <Group>
+        <Shield />
+        <CSS />
+        <Three />
+    </Group>;
+
+const Icon = motion(IconGroup);
+
 let CSSIcon = (props) => {
-        const ref = useRef(undefined);
+    const ref = useRef(undefined);
 
-        useEffect(() => {
-            // ref.current.path[0].x += ref.current.renderOrigin.x;
-            // ref.current.path[0].y -= ref.current.renderOrigin.y;
+        const [tl, setTl ] = useState(gsap.timeline({ paused: true, repeat: -1, yoyo: true }));
+        const [idx, setIdx] = useState(props.index);
+        const [y, setY] = useState(0);
 
-            // ref.current.renderOrigin.x = 0;
-            // ref.current.renderOrigin.y = 0;
-            // ref.current.renderOrigin.z = 0;
+    // useRender((t) => {
+    //     if(props.index === 1){
+    //         if(y > 0 && y < 0.1){
+    //             setY(prev => prev + 0.01)            
+    //         } else {
+    //             setY(prev => prev - 0.01)            
+    //         }
+    //     }
+    // },[y]);
 
-            // console.log(ref.current.renderOrigin);
+    const renderCorrectIcon = index => {
+        switch(index){
+            case 1:
+                return <Icon />
+            default:
+                return <OCylinder 
+                    color={'rgba(238, 170, 0, 1)'}
+                    frontFace={'rgba(204, 34, 85, 1)'}
+                    backface={'rgba(238, 102, 34, 1)'}           
+                    translate={{
+                        x: calculateCoords(props.index).x,
+                        y: calculateCoords(props.index).y,
+                        // z: gsap.utils.random(0, 500, 5)
+                        z: 0
+                    }}
+                    rotate={{ 
+                        x: 0, 
+                        y: 0, 
+                        z: -TAU * 120/360 
+                    }}
+                    scale={8} />
+        }
+    }
+
+    useEffect(() => {
+        props.index !== idx && setIdx(props.index)
+    }, [idx,props.index]);
+
+    useEffect(() => {
+        idx === 1 && setTl(prev => {
+            return prev.to(ref.current.translate, {
+            duration: 0.5,
+            y: '-=1.25',
+            ease: "slow(0.7, 0.7, false)",
         });
+    });
+        tl.play();
 
-        // useRender((t) => {
-        //     // ref.current.rotate.y -= 0.01;
-        //     console.log(ref.current);
-        // },[])
+        return () => tl;
+    }, [idx]);
 
-        return <Anchor ref={ref} scale={{ x: 0.7, y: 1}} rotate={{ y: 0 }}>
-            <Shield />
-            <CSS />
-            <Three />
-        </Anchor>
+    return <Anchor { ...props } ref={ref} rotate={{ y: 0 }}>
+        { renderCorrectIcon(props.index) }
+    </Anchor>
 }
 
 export default CSSIcon;

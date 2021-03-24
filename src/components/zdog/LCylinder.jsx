@@ -193,7 +193,6 @@ let LCylinder = (props) => {
         {...props}
         // {...colorCoords[props.id][current]}
         {...getScale(props.id)}
-        id={props.id === 5 ? 'htmlOne' : ''}
         ref={ref}
 />};
 

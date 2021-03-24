@@ -41,12 +41,6 @@ const CTA = (props, children) => {
                         direction="row"
                         justify="space-around"
                         alignItems="center">
-                        {/* <Chip icon={<HTMLIcon />}
-                        label="HTML" onClick={handleClick} />
-                        <Chip icon={<CSSIcon />}
-                        label="CSS" onClick={handleClick} />
-                        <Chip icon={<JSIcon />}
-                        label="Javascript" onClick={handleClick} /> */}
                     </Grid>
                     {/* {i18n.t('text.technos')} */}
                     </Container>

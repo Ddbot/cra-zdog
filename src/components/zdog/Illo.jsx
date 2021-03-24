@@ -1,5 +1,5 @@
-import React, { useMemo, useRef, useState, useEffect } from 'react'
-import { Anchor, Illustration } from 'react-zdog'
+import React, { useMemo, useRef, useState, useEffect, forwardRef } from 'react'
+import { Illustration } from 'react-zdog'
 
 import styled from 'styled-components'; 
 import gsap from 'gsap';
@@ -18,7 +18,11 @@ import { coordsar } from './coordinates';
 import usePrevious from '../../hooks/usePrevious';
 import { renderShape } from '../../functions';
 
-const zoomIndices = [1.2,2,4];
+import { AnimatePresence, motion } from "framer-motion";
+
+const zoomIndices = [1,2,4];
+// const zoomIndices = [1,1,1];
+
 const rotateIndices = [{x: 0, y: 0, z: 0},{x: 0, y: 0, z: TAU * 42/360},{x: 0, y: 0, z: TAU * 150/360}];
 
 const Illu = styled.div`
@@ -37,17 +41,27 @@ const Illu = styled.div`
   top: 9vh;
 `;
 
+const shapesList = [
+'□','▲','◖','□',
+'●','html','□','▲',
+// '▲','●','▲','●',
+'▲','css','▲','●',
+'□','□','▌','□',
+'▲','□','●','□',
+'□','●','□','▲'];
+
 /** --- Basic, re-usable shapes -------------------------- */
-const Illo = (props) => {
+const Illo = forwardRef((props, ref) => {
   const [ index, setIndex ] = useState(props.index);
+  const [list, setList ] = useState(shapesList);
 
   const current = props.index;
 	const previous = usePrevious(index);
-  const ref = useRef(undefined);
+  // const ref = useRef(undefined);
 
 const coordsAr = 
 useMemo( () => 
-coordsar 
+  coordsar 
 );
 
   useEffect(() => {
@@ -58,21 +72,7 @@ coordsar
 
   useEffect(() => {
     if(previous !== undefined){ 
-      // gsap.fromTo(ref.current.children[0],{
-      //   duration: 1,
-      //   xPercent: coordsAr[previous].translate.x,
-      //   yPercent: coordsAr[previous].translate.y,
-      // }, 
-      // {
-      //   xPercent: coordsAr[current].translate.x,
-      //   yPercent: coordsAr[current].translate.y,
-      // });  
-      // gsap.fromTo(ref.current.children[0],{
-      //   duration: 2,
-      //   zoom: zoomIndices[previous]
-      // }, {
-      //   zoom: zoomIndices[current]
-      // });
+
       gsap.fromTo(ref.current.children[0],{
         duration: 1,
         scale: zoomIndices[previous],
@@ -90,26 +90,16 @@ coordsar
         scale: zoomIndices[current],
       });  
     }
-  },[index, current, previous]);  
+  },[index, current, previous]); 
 
   return <Illu ref={ ref }><Illustration 
     { ...coordsAr[0] }
-    className='illustration'
     centered={false}
     zoom={4}
-    index={props.index}>
-    {/* <Anchor translate={{ x: 8 }}> */}
-      {['□','🛆','◖','□',
-        '○','◆','□','🛆',
-        '🛆','○','🛆','○',
-        '□','□','◆','□',
-        '🛆','□','○','□',
-        '□','○','□','🛆','js'].map((el,i) => renderShape(el,i, props.index))}
-    {/* </Anchor> */}
-        {/* <CSSIcon /> */}
-        {/* <HTMLIcon /> */}
-        {/* <JSIcon scale={0.5}/> */}
+    scale={1}
+    index={ props.index }>
+      { shapesList.map((el,i) => renderShape(el,i, props.index) )}    
   </Illustration></Illu>
-};
+});
   
 export default Illo;
