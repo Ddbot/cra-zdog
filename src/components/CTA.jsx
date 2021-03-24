@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { i18n } from '../translations/CTA_dictionary';
 import { Avatar, Button, Chip, Container, Grid, Typography } from '@material-ui/core';
 import gsap from 'gsap';
-import CSSIcon from '../assets/icons/CSSIcon';
+import CSSIcon from '../assets/icons/CSS/CSSIcon';
 import HTMLIcon from '../assets/icons/HTML/HTMLIcon';
 
 import JSIcon from '../assets/icons/JS/JSIcon';

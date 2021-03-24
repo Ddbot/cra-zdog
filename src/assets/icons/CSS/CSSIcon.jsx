@@ -4,8 +4,8 @@ import { TAU } from 'zdog';
 import { useRender } from 'react-zdog';
 import { AnimatePresence, motion } from "framer-motion"
 
-import OCylinder from '../../components/zdog/OCylinder';
-import { calculateCoords } from '../../functions';
+import OCylinder from '../../../components/zdog/OCylinder';
+import { calculateCoords } from '../../../functions';
 
 import gsap, { CSSPlugin } from 'gsap';
 
