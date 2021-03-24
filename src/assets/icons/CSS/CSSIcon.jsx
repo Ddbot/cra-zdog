@@ -184,7 +184,7 @@ let CSSIcon = (props) => {
     }, [idx]);
 
     return <Anchor { ...props } ref={ref} rotate={{ y: 0 }}>
-        { renderCorrectIcon(props.index) }
+        <Icon />
     </Anchor>
 }
 
