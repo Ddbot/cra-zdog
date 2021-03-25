@@ -1,7 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
 import { Anchor, Group, Shape } from 'react-zdog';
-import { TAU } from 'zdog';
-import { useRender } from 'react-zdog';
 
 let J_commands = [
     'M 214.07,497.32',
@@ -151,12 +148,6 @@ const S = props => <Shape path={[...S_path]} closed={true} fill={'black'} stroke
 const J = props => <Shape path={[...J_path]} closed={true} fill={'black'} stroke={0} scale={props.scale} />
 
 let JSIcon = (props) => {
-    const [index, setIndex] = useState(props.index);
-
-    useEffect(() => {
-    setIndex(props.index);
-    },[props.index]);
-
     return <Anchor { ...props } scale={props.scale} stroke={0}>
         <Square scale={props.scale} stroke={0}/>
         <J scale={props.scale}/>
