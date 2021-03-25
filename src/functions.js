@@ -19,6 +19,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 const cols = 4, rows = 6;
 const cellWidth = 100 / cols, cellHeight = 100 / rows;
 
+const MotionCylinder = motion(Cylinder);
+
 let calculateCoords = (index) => {
 	return {
 		x: (index % cols) * cellWidth,
@@ -96,42 +98,48 @@ const renderShape = (el,i, index) => {
 					y: calculateCoords(i).y,
 					z: gsap.utils.random(0, 500, 5) }} />
         case 'css':
-			if(index === 1){
-				return <CSSIcon 
-					key={i} 
-					id={i}
-					index={index}    
-					rotate={{
-						x: 0,
-						y: 0,
-						z: 0
-					}}
-					translate={{
-						x: calculateCoords(i).x,
-						y: calculateCoords(i).y,
-						z: gsap.utils.random(0, 500, 5)
-					}}
-					scale={{ x: 0.07, y: .1}} />
-			} else {
-				return <OCylinder 
-					key={i} 
-					id={i}
-					index={index}
-					translate={{
-						x: calculateCoords(i).x,
-						y: calculateCoords(i).y,
-						z: gsap.utils.random(0, 500, 5)
-					}}
-					rotate={{ 
-						x: 0, 
-						y: 0, 
-						z: -TAU * 120/360 
-					}}
-					color={'rgba(238, 170, 0, 1)'}
-                    frontFace={'rgba(204, 34, 85, 1)'}
-                    backface={'rgba(238, 102, 34, 1)'}  
-					/>
+			return <AnimatePresence>
+			{ index === 1 && <CSSIcon 
+				key={i} 
+				id={i}
+				index={index}    
+				rotate={{
+					x: 0,
+					y: 0,
+					z: 0
+				}}
+				translate={{
+					x: calculateCoords(i).x,
+					y: calculateCoords(i).y,
+					z: gsap.utils.random(0, 500, 5)
+				}}
+				scale={{ x: 0.07, y: .1}} 
+				initial={{ opacity: 0, scale: 0, }}
+				animate={{ opacity: 1, scale: 1 }}
+				exit={{ opacity: 0 }} />
+			} 
+			{ index !== 1 && <MotionCylinder 
+				key={i} 
+				id={i}
+				index={index}
+				translate={{
+					x: calculateCoords(i).x,
+					y: calculateCoords(i).y,
+					z: gsap.utils.random(0, 500, 5)
+				}}
+				rotate={{ 
+					x: 0, 
+					y: 0, 
+					z: -TAU * 120/360 
+				}}
+				color={'rgba(238, 170, 0, 1)'}
+                frontFace={'rgba(204, 34, 85, 1)'}
+                backface={'rgba(238, 102, 34, 1)'}  
+				initial={{ opacity: 0, scale: 0, }}
+				animate={{ opacity: 1, scale: 1 }}
+				exit={{ opacity: 0 }} />
 			}
+			</AnimatePresence>
         case 'html':
 			return <AnimatePresence>
             { index === 1 && <HTML5Group
@@ -148,12 +156,15 @@ const renderShape = (el,i, index) => {
 					y: calculateCoords(i).y,
 					z: gsap.utils.random(0, 500, 5)
 				}}
-				initial={{ opacity: 1, scale: 0, x: -25, y: 10 }}
-				animate={{ opacity: 1, scale: 1, x: 0, y: 0 }}
+				initial={{ opacity: 0, scale: 0, }}
+				animate={{ opacity: 1, scale: 1 }}
 				exit={{ opacity: 0 }}				
 				/>
 			} 
-			{ index !== 1 && <Cylinder 
+			{ index !== 1 && <MotionCylinder 
+				key={i} 
+				id={i}
+				index={index} 
 				translate={{
 					x: calculateCoords(i).x,
 					y: calculateCoords(i).y,
@@ -168,9 +179,9 @@ const renderShape = (el,i, index) => {
                 frontFace={'#636'}
                 backface={'#EEAA00'}
                 scale={8} 
-				initial={{ opacity: 1, scale: 0, x: -25, y: 10 }}
-				animate={{ opacity: 1, scale: 1, x: 0, y: 0 }}
-				exit={{ opacity: 0 }}	
+				initial={{ opacity: 1, scale: 0 }}
+				animate={{ opacity: 1, scale: 1 }}
+				exit={{ opacity: 0, scale: 0 }}	
 				/>
 			}						
 			</AnimatePresence>
