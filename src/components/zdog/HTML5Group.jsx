@@ -5,20 +5,16 @@ import HTMLIcon from '../../assets/icons/HTML/HTMLIcon';
 import usePrevious from '../../hooks/usePrevious';
 import gsap, { CSSPlugin } from 'gsap';
 import { TAU } from 'zdog';
-import { Anchor, Cylinder, Group, useRender, useZdog } from 'react-zdog';
+import { Anchor } from 'react-zdog';
 gsap.registerPlugin(CSSPlugin);
+
 
 const HTML5Group = props => {
     const [tl, setTl ] = useState(gsap.timeline({ paused: true, yoyo: true, repeat: -1 }));
-    const [index, setIndex] = useState(props.index);
     const groupRef = useRef(undefined);
 
     useEffect(() => {
-        setIndex(props.index);
-    }, [props.index]);
-
-    useEffect(() => {
-        index === 1 && setTl(prev => {
+        setTl(prev => {
             return prev.to(groupRef.current.rotate, {
             duration: 3,
             y: TAU * -42/360,
@@ -33,7 +29,7 @@ const HTML5Group = props => {
         tl.play();
 
         return () => tl.pause();
-    }, [index]);
+    });
     
     return <Anchor {...props} ref={groupRef}>
                 <HTMLIcon 	
