@@ -186,8 +186,8 @@ const renderShape = (el,i, index) => {
 			}						
 			</AnimatePresence>
 		case 'js':
-			if(index === 1){
-				return <JSIcon 
+			return <AnimatePresence>
+			{ index === 1 && <JSIcon 
 				key={i} 
 				id={i}
 				index={index} 
@@ -202,8 +202,8 @@ const renderShape = (el,i, index) => {
 					z: gsap.utils.random(0, 500, 5)
 				}}
 					scale={0.1} />
-			} else {
-				return <LCylinder 
+			} 
+			{ index !== 1 && <MotionCylinder 
 				key={i}
 				id={i}
 				index={index}
@@ -219,6 +219,7 @@ const renderShape = (el,i, index) => {
 				}}
 				scale={8} />
 			}
+			</AnimatePresence>
         default:
 			break;
     }
