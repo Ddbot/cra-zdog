@@ -201,7 +201,10 @@ const renderShape = (el,i, index) => {
 					y: calculateCoords(i).y,
 					z: gsap.utils.random(0, 500, 5)
 				}}
-					scale={0.1} />
+				initial={{ opacity: 0, scale: 0, }}
+				animate={{ opacity: 1, scale: 1 }}
+				exit={{ opacity: 0 }}					
+				scale={0.1} />
 			} 
 			{ index !== 1 && <MotionCylinder 
 				key={i}
@@ -217,6 +220,10 @@ const renderShape = (el,i, index) => {
 					y: TAU * 45/360, 
 					z: -TAU * 120/360
 				}}
+				color={'#EEAA00'}
+				initial={{ opacity: 0, scale: 0, }}
+				animate={{ opacity: 1, scale: 1 }}
+				exit={{ opacity: 0, color: '#f7df1e', rotate: 45 }}					
 				scale={8} />
 			}
 			</AnimatePresence>
