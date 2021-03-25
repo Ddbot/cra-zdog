@@ -190,7 +190,6 @@ const renderShape = (el,i, index) => {
 			{ index === 1 && <JSIcon 
 				key={i} 
 				id={i}
-				index={index} 
 				rotate={{
 					x: 0,
 					y: 0,
@@ -209,7 +208,6 @@ const renderShape = (el,i, index) => {
 			{ index !== 1 && <MotionCylinder 
 				key={i}
 				id={i}
-				index={index}
 				translate={{
 					x: calculateCoords(i).x,
 					y: calculateCoords(i).y,

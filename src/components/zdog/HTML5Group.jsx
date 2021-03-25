@@ -33,6 +33,7 @@ const HTML5Group = props => {
     
     return <Anchor {...props} ref={groupRef}>
                 <HTMLIcon 	
+                // translate={{ x: -props.translate.x/4 }}
                     rotate={{
                         x: 0,
                         y: 0,
