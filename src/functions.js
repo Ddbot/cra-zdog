@@ -43,7 +43,9 @@ const renderShape = (el,i, index) => {
 			scale={8}
 			color='transparent' />
 		case '▲':
-			return <Acone key={i} id={i}
+			return <Acone 
+				key={i} 
+				id={i}
 				index={index}
 				translate={{
 					x: calculateCoords(i).x,
@@ -73,7 +75,7 @@ const renderShape = (el,i, index) => {
 				}}
 				scale={8} />
 		case '●':
-			return <OCylinder 
+				return <OCylinder 
 				key={i} 
 				id={i}
 				index={index}
@@ -86,8 +88,7 @@ const renderShape = (el,i, index) => {
 					x: 0, 
 					y: 0, 
 					z: -TAU * 120/360 
-				}}
-				scale={8} />
+				}} />		
         case '◖':
 			return <HalfSphere 
 				key={i} 
@@ -218,14 +219,31 @@ const renderShape = (el,i, index) => {
 					y: TAU * 45/360, 
 					z: -TAU * 120/360
 				}}
-				color={'#EEAA00'}
+				color={'#f7df1e'}
 				initial={{ opacity: 0, scale: 0, }}
 				animate={{ opacity: 1, scale: 1 }}
-				exit={{ opacity: 0, color: '#f7df1e', rotate: 45 }}					
-				scale={8} />
+				exit={{ opacity: 0, rotate: 45 }}					
+				scale={7} />
 			}
 			</AnimatePresence>
-        default:
+        case '■':
+			return <MotionCylinder 
+			key={i} 
+			id={i}
+			index={index}
+			translate={{
+				x: calculateCoords(i).x,
+				y: calculateCoords(i).y,
+				z: gsap.utils.random(0, 500, 5)
+			}}
+			rotate={{ 
+				x: 0, 
+				y: TAU/4, 
+				z: -TAU * 120/360 
+			}}
+			color={'#636'}
+			scale={6.18}  />
+		default:
 			break;
     }
 }

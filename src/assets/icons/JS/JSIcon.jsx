@@ -1,4 +1,4 @@
-import { Anchor, Group, Shape } from 'react-zdog';
+import { Anchor, Shape } from 'react-zdog';
 
 let J_commands = [
     'M 214.07,497.32',
@@ -34,9 +34,7 @@ let square_commands = [
 
 ];
 
-let width=630, 
-    height=630,
-    S_path = [], 
+let S_path = [], 
     J_path = [],
     square_path = [],
     previousPoint = { x: 0, y: 0 },
