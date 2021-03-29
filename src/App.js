@@ -122,6 +122,7 @@ function App() {
 	const [anchorEl, setAnchorEl] = useState(null);
 	const [langAnchorEl, setLangAnchorEl] = useState(null);
 	const [currentLi, setCurrentLi] = useState(0);
+	const [tl, setTl] = useState(gsap.timeline({ paused: true, }))
 
 	const [state, setState] = useState({
 		checkedTheme: false,
@@ -184,7 +185,6 @@ function App() {
 	}
 
 	const handleChange = (event) => {
-		// setState({ ...state, [event.target.name]: event.target.checkedTheme });
 		setState(prev => { 
 			return { ...state, checkedTheme: !prev.checkedTheme }
 		});
@@ -223,13 +223,14 @@ function App() {
 
 	// TO DO timeline
 	useEffect(() => {
+		let spans = Array.from(olRef.current.querySelectorAll('span.MuiTypography-displayBlock'));
 		let tl = gsap.timeline({
 			// yes, we can add it to an entire timeline!
 			scrollTrigger: {
-				trigger: ".container",
+				trigger: spans[0],
 				pin: true,   // pin the trigger element while active
 				start: "top top", // when the top of the trigger hits the top of the viewport
-				end: "+=500", // end after scrolling 500px beyond the start
+				end: "+=100", // end after scrolling 500px beyond the start
 				scrub: 1, // smooth scrubbing, takes 1 second to "catch up" to the scrollbar
 				snap: {
 					snapTo: "labels", // snap to the closest label in the timeline
@@ -242,11 +243,11 @@ function App() {
 		
 		// add animations and labels to the timeline
 		tl.addLabel("start")
-			.from(".box p", {scale: 0.3, rotation:45, autoAlpha: 0})
+			// .from(spans[0], {scale: 0.3, autoAlpha: 0})
 			.addLabel("color")
-			.from(".box", {backgroundColor: "#28a92b"})
+			.from(spans[1], {scale: 0.3, autoAlpha: 0})
 			.addLabel("spin")
-			.to(".box", {rotation: 360})
+			.to(spans[2], {rotation: 360, autoAlpha: 1})
 			.addLabel("end");
 
 		tl.play();
@@ -269,7 +270,11 @@ function App() {
 		let svg = illuRef.current.querySelector('svg');
 		console.log('ILluref = ', illuRef.current)
 		gsap.set(svg, { attr: { viewBox: '0 0 100 145.5' }});
-	})
+	});
+
+	// useEffect(() => {
+	// 	let spans = olRef.current.querySelectorAll('span.MuiTypography-displayBlock');		
+	// })
 
 	return (
 		<ThemeProvider theme={state.checkedTheme ? darkTheme : lightTheme}>
