@@ -1,4 +1,6 @@
+import { useEffect, useRef, useState } from 'react';
 import { Anchor, Shape } from 'react-zdog';
+import gsap from 'gsap';
 
 let J_commands = [
     'M 214.07,497.32',
@@ -146,7 +148,23 @@ const S = props => <Shape path={[...S_path]} closed={true} fill={'black'} stroke
 const J = props => <Shape path={[...J_path]} closed={true} fill={'black'} stroke={0} scale={props.scale} />
 
 let JSIcon = (props) => {
-    return <Anchor { ...props } scale={props.scale} stroke={0}>
+    const [tl, setTl ] = useState(gsap.timeline({ paused: true, yoyo: true, repeat: -1 }));
+    let ref = useRef(undefined);
+
+    useEffect(() => {
+        setTl(prev => {
+            return prev.to(ref.current, {
+            duration: 2,
+            scale: 0.125,
+            ease: "sine.inOut"        
+        },'<')
+    });
+        tl.play();
+
+        return () => tl.pause();
+    });
+
+    return <Anchor { ...props } ref={ref} scale={props.scale} stroke={0}>
         <Square scale={props.scale} stroke={0}/>
         <J scale={props.scale}/>
         <S scale={props.scale}/>
