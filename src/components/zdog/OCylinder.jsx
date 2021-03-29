@@ -93,7 +93,26 @@ let OCylinder = (props) => {
             frontFace: '#C25',
             backface: '#636'
     }];
-    colorCoords[21] = colorCoords[9];      
+    colorCoords[21] = [
+        {
+            color: '#e62',
+            frontFace: '#e62',
+            backface: '#e62', 
+            stroke: 1
+        },
+        {             
+            color: "#e62",
+            frontFace: '#e62',
+            backface: '#e62', 
+            stroke: 0 
+        },
+        {
+            color: '#e62',
+            frontFace: '#e62',
+            backface: '#e62', 
+            stroke: 10 
+        }
+    ];
 
     const colors = useMemo(() => colorCoords);
 

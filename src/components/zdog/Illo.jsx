@@ -34,7 +34,8 @@ const shapesList = [
 '□','css','js','□',
 //'▲','□','●','□',
 '■','□','●','□',
-'□','●','□','▲'];
+// '□','●','□','▲'];
+ '□','■','□','▲'];
 
 const Illo = forwardRef((props, ref) => {
   const [ index, setIndex ] = useState(props.index);

@@ -241,7 +241,7 @@ const renderShape = (el,i, index) => {
 				y: TAU/4, 
 				z: -TAU * 120/360 
 			}}
-			color={'#636'}
+			color={ i !== 21 ? '#636' : '#c25'}
 			scale={6.18}  />
 		default:
 			break;

@@ -19,7 +19,6 @@ let Acone = (props) => {
         let res;
         switch(id){
             case 1:
-            case 7: 
                 res = [{
                     color: '#f7df1e',
                     backface: '#C25',
@@ -31,6 +30,18 @@ let Acone = (props) => {
                     backface: '#C25',
                 }]
                 break;
+                case 7: 
+                res = [{
+                    color: '#e62',
+                    backface: '#C25',
+                }, {
+                    color: '#e62',
+                    backface: '#C25',
+                }, {
+                    color: '#e62',
+                    backface: '#C25',
+                }]
+                break;                
             case 10:
                 res = [{
                     color: 'transparent',
