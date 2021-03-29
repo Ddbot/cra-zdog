@@ -20,10 +20,6 @@ let OCylinder = (props) => {
     const coords = useMemo(() => ocylinder);
     const colorCoords = Array(23).fill([]);
 
-    useEffect(() => {
-        console.table([['Scene', scene],['Illu', illu], ['Size', size]])
-    })
-
     colorCoords[4] = [{
         color: '#636',
         frontFace: '#e62',
@@ -40,25 +36,37 @@ let OCylinder = (props) => {
     }];
     colorCoords[9] = [
         {
-            color: 'rgba(238, 170, 0, 1)',
+            color: '#f7df1e',
             frontFace: 'rgba(204, 34, 85, 1)',
             backface: 'rgba(238, 102, 34, 1)', 
             stroke: 1
         },
         {             
-            color: "rgb(41, 101, 241)",
-            // color: "transparent",
+            color: "#f7df1e",
             frontFace: 'rgb(41, 101, 241)',
             backface: 'rgb(41, 101, 241)', 
             stroke: 0 
         },
         {
-            color: 'rgba(238, 170, 0, 1)',
+            color: '#f7df1e',
             frontFace: 'rgba(204, 34, 85, 1)',
             backface: 'rgba(238, 102, 34, 1)', 
             stroke: 10 
         }
     ];
+    colorCoords[16] = [{
+        color: '#e62',
+        frontFace: '#e62',
+        backface: 'white'
+    },{
+        color: '#e62',
+        frontFace: '#e62',
+        backface: 'white'
+    },{
+        color: '#e62',
+        frontFace: '#e62',
+        backface: 'white'
+}];
     colorCoords[18] = [{
             color: '#e62',
             frontFace: '#e62',
@@ -105,6 +113,7 @@ let OCylinder = (props) => {
         let res;
         switch(id){
             case 9: 
+            case 16:
             case 18:
                 res = {
                     scale: 9
@@ -120,6 +129,11 @@ let OCylinder = (props) => {
                     scale: 4
                 }
                 break;
+            case 13:
+                res = {
+                    scale: 6
+                }
+                break;                
             default:
                 res = {
                     scale: 2

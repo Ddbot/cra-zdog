@@ -110,13 +110,7 @@ let HTMLIcon = (props) => {
         <RightShield />
     </Group>
     
-    useEffect(() => {
-        if(id === 5 && index === 1){
-            // ref.current.scale = 0.1;
-        }
-    }, [id,index])
-    
-    return <Anchor {...props } ref={ref} viewBox="0 0 512 512">
+    return <Anchor {...props } translate={{ x: -5 }} ref={ref} viewBox="0 0 512 512">
             <HTML />
             <Shield />
             <Five />

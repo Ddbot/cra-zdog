@@ -20,6 +20,7 @@ const Ecusson = props => <Shape path={[
     ]} 
     fill={"#264de4"}
     color={"#264de4"}
+    stroke={0}
     />
 const EcussonDroit = props => <Shape path={[
         { x: 82.92011019283747, y: 87.3046875 },
@@ -137,40 +138,10 @@ const Icon = motion(IconGroup);
 
 let CSSIcon = (props) => {
     const ref = useRef(undefined);
-
-        const [tl, setTl ] = useState(gsap.timeline({ paused: true, repeat: -1, yoyo: true }));
-        const [idx, setIdx] = useState(props.index);
-
-    const renderCorrectIcon = index => {
-        switch(index){
-            case 1:
-                return <Icon />
-            default:
-                return <OCylinder 
-                    color={'rgba(238, 170, 0, 1)'}
-                    frontFace={'rgba(204, 34, 85, 1)'}
-                    backface={'rgba(238, 102, 34, 1)'}           
-                    translate={{
-                        x: calculateCoords(props.index).x,
-                        y: calculateCoords(props.index).y,
-                        // z: gsap.utils.random(0, 500, 5)
-                        z: 0
-                    }}
-                    rotate={{ 
-                        x: 0, 
-                        y: 0, 
-                        z: -TAU * 120/360 
-                    }}
-                    scale={8} />
-        }
-    }
+    const [tl, setTl ] = useState(gsap.timeline({ paused: true, repeat: -1, yoyo: true }));
 
     useEffect(() => {
-        props.index !== idx && setIdx(props.index)
-    }, [props.index]);
-
-    useEffect(() => {
-        idx === 1 && setTl(prev => {
+        setTl(prev => {
             return prev.to(ref.current.translate, {
             duration: 0.5,
             y: '-=1.25',
@@ -180,7 +151,7 @@ let CSSIcon = (props) => {
         tl.play();
 
         return () => tl;
-    }, [idx]);
+    });
 
     return <Anchor { ...props } ref={ref}>
         <Icon />
