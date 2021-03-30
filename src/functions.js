@@ -188,9 +188,11 @@ const renderShape = (el,i, index) => {
 			</AnimatePresence>
 		case 'js':
 			return <AnimatePresence>
-			{ index === 1 && <JSIcon 
+			{/* { index === 1 &&  */}
+			<JSIcon 
 				key={i} 
 				id={i}
+				index={index}
 				rotate={{
 					x: 0,
 					y: 0,
@@ -205,8 +207,8 @@ const renderShape = (el,i, index) => {
 				animate={{ opacity: 1, scale: 1 }}
 				exit={{ opacity: 0 }}					
 				scale={0.1} />
-			} 
-			{ index !== 1 && <MotionCylinder 
+			{/* }  */}
+			{/* { index !== 1 && <MotionCylinder 
 				key={i}
 				id={i}
 				translate={{
@@ -224,7 +226,7 @@ const renderShape = (el,i, index) => {
 				animate={{ opacity: 1, scale: 1 }}
 				exit={{ opacity: 0, rotate: 45 }}					
 				scale={7} />
-			}
+			} */}
 			</AnimatePresence>
         case '■':
 			return <MotionCylinder 

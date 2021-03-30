@@ -10,7 +10,3 @@ justify-content: center;
 /* @media (prefers-reduced-motion: no-preference) {
 
 } */
-
-.illustration > svg > path {
-  /* filter: drop-shadow(0px 0px 10px rgba(0,0,0,.5)); */
-}

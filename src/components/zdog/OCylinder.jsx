@@ -81,7 +81,7 @@ let OCylinder = (props) => {
             backface: 'white'
     }];
     colorCoords[11] =[{
-            color: '#C25',
+            color: 'transparent',
             frontFace: '#C25',
             backface: '#636'
         },{

@@ -56,7 +56,7 @@ let Acone = (props) => {
                 break;
             case 8:              
                 res = [{
-                    color: '#C25',
+                    color: 'transparent',
                     backface: '#e62'
                 },{
                     color: '#C25',

@@ -2,6 +2,7 @@ import { useContext, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import {
 	AppBar,
 	Card,
+	CardMedia,
 	IconButton,
 	List,
 	ListItem,
@@ -44,9 +45,18 @@ import DirectionalButtons from './components/DirectionalButtons';
 
 
 import img from './assets/tabbied.png';
+import Marseille from './assets/Marseille';
 
 // set default language
 i18n.locale('fr');
+
+const IFrame = styled.iframe`
+	z-index: 1000;
+`;
+
+const NotreDameDeLaGardeSketchup = (props) => {	
+	return <IFrame src="https://3dwarehouse.sketchup.com/embed/uabf9279b-9672-4e20-93b5-7a96ab82944b" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" width="580" height="326" allowfullscreen />
+}
 
 const TAU = Math.PI * 2;
 
@@ -122,6 +132,7 @@ function App() {
 	const [anchorEl, setAnchorEl] = useState(null);
 	const [langAnchorEl, setLangAnchorEl] = useState(null);
 	const [currentLi, setCurrentLi] = useState(0);
+	const [tl, setTl] = useState(gsap.timeline({ paused: true, }))
 
 	const [state, setState] = useState({
 		checkedTheme: false,
@@ -184,7 +195,6 @@ function App() {
 	}
 
 	const handleChange = (event) => {
-		// setState({ ...state, [event.target.name]: event.target.checkedTheme });
 		setState(prev => { 
 			return { ...state, checkedTheme: !prev.checkedTheme }
 		});
@@ -221,38 +231,26 @@ function App() {
 		setMove(payload);
 	};
 
-	// TO DO timeline
+	// ScrollTrigger
 	useEffect(() => {
-		let tl = gsap.timeline({
-			// yes, we can add it to an entire timeline!
-			scrollTrigger: {
-				trigger: ".container",
-				pin: true,   // pin the trigger element while active
-				start: "top top", // when the top of the trigger hits the top of the viewport
-				end: "+=500", // end after scrolling 500px beyond the start
-				scrub: 1, // smooth scrubbing, takes 1 second to "catch up" to the scrollbar
-				snap: {
-					snapTo: "labels", // snap to the closest label in the timeline
-					duration: {min: 0.2, max: 3}, // the snap animation should be at least 0.2 seconds, but no more than 3 seconds (determined by velocity)
-					delay: 0.2, // wait 0.2 seconds from the last scroll event before doing the snapping
-					ease: "power1.inOut" // the ease of the snap animation ("power3" by default)
-				}
-			}
-		});
-		
-		// add animations and labels to the timeline
-		tl.addLabel("start")
-			.from(".box p", {scale: 0.3, rotation:45, autoAlpha: 0})
-			.addLabel("color")
-			.from(".box", {backgroundColor: "#28a92b"})
-			.addLabel("spin")
-			.to(".box", {rotation: 360})
-			.addLabel("end");
+		const { body } = document;
+		let lis = Array.from(olRef.current.querySelectorAll('li'));
+		if(lis) gsap.set(lis, { autoAlpha: 0 });
 
+		lis.forEach(li => {
+			setTl(prev => {
+				return prev.to(li, {
+					scrollTrigger: li,
+					autoAlpha: .5,
+					duration: 2 
+				});
+			});
+		});
 		tl.play();
+		if(olRef.current) console.log(olRef.current.scrollHeight, window.scrollY);
 	}, []);
 
-	// Rotate Arrow button upwards if arrived at last slide
+	// // Rotate Arrow button upwards if arrived at last slide
 	useEffect(() => {
 		let nbOfLis = olRef.current.querySelectorAll('li').length;
 		if (currentLi === nbOfLis-1) {
@@ -266,9 +264,14 @@ function App() {
 	},[currentLi]);
 
 	useEffect(() => {
-		let svg = illuRef.current.querySelector('svg');
-		gsap.set(svg, { attr: { viewBox: '0 0 100 145.5' }});
-	})
+		let svg = illuRef.current.querySelector('svg');		
+		gsap.set(svg, { 
+			attr: { 
+				viewBox: '0 0 100 145.5' 
+			},
+			display: 'none'
+		});
+	});
 
 	return (
 		<ThemeProvider theme={state.checkedTheme ? darkTheme : lightTheme}>
@@ -301,6 +304,8 @@ function App() {
 			</AppBar>
 			{/* <SvgBG index={ currentLi }/> */}
 			<Illo id='illo' ref={illuRef} index={currentLi} move={move} />
+			<Marseille />
+			{/* <NotreDameDeLaGardeSketchup /> */}
 			<InstallGrid component="ol" ref={olRef}>
 				{Object.values(i18n.t('intro')).map((v,i) => {
 					return <Li id={`li${i}`} key={i}>
