@@ -263,8 +263,13 @@ function App() {
 	},[currentLi]);
 
 	useEffect(() => {
-		let svg = illuRef.current.querySelector('svg');
-		gsap.set(svg, { attr: { viewBox: '0 0 100 145.5' }});
+		let svg = illuRef.current.querySelector('svg');		
+		gsap.set(svg, { 
+			attr: { 
+				viewBox: '0 0 100 145.5' 
+			},
+			display: 'none'
+		});
 	});
 
 	return (
