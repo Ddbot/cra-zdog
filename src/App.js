@@ -45,6 +45,7 @@ import DirectionalButtons from './components/DirectionalButtons';
 
 
 import img from './assets/tabbied.png';
+import Marseille from './assets/Marseille';
 
 // set default language
 i18n.locale('fr');
@@ -303,6 +304,7 @@ function App() {
 			</AppBar>
 			{/* <SvgBG index={ currentLi }/> */}
 			<Illo id='illo' ref={illuRef} index={currentLi} move={move} />
+			<Marseille />
 			{/* <NotreDameDeLaGardeSketchup /> */}
 			<InstallGrid component="ol" ref={olRef}>
 				{Object.values(i18n.t('intro')).map((v,i) => {
