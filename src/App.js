@@ -224,19 +224,20 @@ function App() {
 	// ScrollTrigger
 	useEffect(() => {
 		const { body } = document;
-		let spans = Array.from(olRef.current.querySelectorAll('span.MuiTypography-displayBlock'));
-		// if(spans){
-		// 	gsap.set(spans, { autoAlpha: 0});
-		// }
+		let lis = Array.from(olRef.current.querySelectorAll('li'));
+		// if(lis) gsap.set(lis, { autoAlpha: 0 });
 
-		setTl(prev => {
-			prev.to(spans[0], {
-				scrollTrigger: spans[0],
-				autoAlpha: 1,
-				duration: 2 
-			});
-		});
-		tl.play();
+		// lis.forEach(li => {
+		// 	setTl(prev => {
+		// 		return prev.to(li, {
+		// 			scrollTrigger: li,
+		// 			autoAlpha: .5,
+		// 			duration: 2 
+		// 		});
+		// 	});
+		// });
+		// tl.play();
+		if(olRef.current) console.log(olRef.current.scrollHeight, window.scrollY);
 	}, []);
 
 	// Rotate Arrow button upwards if arrived at last slide
@@ -256,10 +257,6 @@ function App() {
 		let svg = illuRef.current.querySelector('svg');
 		gsap.set(svg, { attr: { viewBox: '0 0 100 145.5' }});
 	});
-
-	// useEffect(() => {
-	// 	if(Array.from(olRef.current.querySelectorAll('span.MuiTypography-displayBlock')).length === 3) console.log('fezefeafz');
-	// })
 
 	return (
 		<ThemeProvider theme={state.checkedTheme ? darkTheme : lightTheme}>

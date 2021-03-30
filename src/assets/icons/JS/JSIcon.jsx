@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
-import { Anchor, Shape } from 'react-zdog';
+import { Anchor, Group, Shape } from 'react-zdog';
 import gsap from 'gsap';
+import { AnimatePresence, motion } from 'framer-motion';
+import { TAU } from 'zdog';
 
 let J_commands = [
     'M 214.07,497.32',
@@ -143,31 +145,56 @@ color={"#f7df1e"}
 scale={props.scale}
 stroke={0}
 />
+const MotionShape = motion(Shape);
 
-const S = props => <Shape path={[...S_path]} closed={true} fill={'black'} stroke={0} scale={props.scale} />
-const J = props => <Shape path={[...J_path]} closed={true} fill={'black'} stroke={0} scale={props.scale} />
+const S = props => <MotionShape path={[...S_path]} closed={true} fill={'black'} stroke={0} scale={props.scale} />
+const J = props => <MotionShape path={[...J_path]} closed={true} fill={'black'} stroke={0} scale={props.scale} />
 
 let JSIcon = (props) => {
+    const { index } = props;
     const [tl, setTl ] = useState(gsap.timeline({ paused: true, yoyo: true, repeat: -1 }));
     let ref = useRef(undefined);
 
     useEffect(() => {
-        setTl(prev => {
-            return prev.to(ref.current, {
-            duration: 2,
-            scale: 0.125,
-            ease: "sine.inOut"        
-        },'<')
+        if(index !== 1 && ref.current){
+            gsap.set(ref.current.children[0].rotate, {
+                z: TAU * 42/360
+            })
+        }
     });
+
+    useEffect(() => {
+        if(index === 1) gsap.to(ref.current.children[0].rotate, {
+            z: 0
+        });
+    }, [index])
+
+    useEffect(() => {
+        if(index === 1){
+            setTl(prev => {
+                return prev.to(ref.current, {
+                    duration: 2,
+                    scale: 0.125,
+                    ease: "sine.inOut"        
+                },'<');
+            }, [index]);
+        }
         tl.play();
 
         return () => tl.pause();
     });
 
     return <Anchor { ...props } ref={ref} scale={props.scale} stroke={0}>
-        <Square scale={props.scale} stroke={0}/>
-        <J scale={props.scale}/>
-        <S scale={props.scale}/>
+        <Square scale={props.scale}  stroke={0}/>
+        <AnimatePresence>
+            { index === 1 && <Group 
+                initial={{ opacity: 0, scale: 0.5 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.5 }}>
+                <J scale={props.scale}/>
+                <S scale={props.scale}/>
+            </Group>}
+        </AnimatePresence>
     </Anchor>
 }
 

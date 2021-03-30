@@ -18,12 +18,12 @@ const HTML5Group = props => {
             return prev.to(groupRef.current.rotate, {
             duration: 3,
             y: TAU * -42/360,
-            // ease: "power2.out"        
+            ease: "back.inOut(1.7)"        
         },'<')
         .to(groupRef.current.rotate, {
             duration: 3,
             y: TAU * 42/360,
-            // ease: "power2.out"        
+            ease: "back.inOut(1.7)"        
         },'>');
     });
         tl.play();
