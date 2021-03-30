@@ -2,6 +2,7 @@ import { useContext, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import {
 	AppBar,
 	Card,
+	CardMedia,
 	IconButton,
 	List,
 	ListItem,
@@ -47,6 +48,14 @@ import img from './assets/tabbied.png';
 
 // set default language
 i18n.locale('fr');
+
+const IFrame = styled.iframe`
+	z-index: 1000;
+`;
+
+const NotreDameDeLaGardeSketchup = (props) => {	
+	return <IFrame src="https://3dwarehouse.sketchup.com/embed/uabf9279b-9672-4e20-93b5-7a96ab82944b" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" width="580" height="326" allowfullscreen />
+}
 
 const TAU = Math.PI * 2;
 
@@ -240,23 +249,23 @@ function App() {
 		if(olRef.current) console.log(olRef.current.scrollHeight, window.scrollY);
 	}, []);
 
-	// Rotate Arrow button upwards if arrived at last slide
-	useEffect(() => {
-		let nbOfLis = olRef.current.querySelectorAll('li').length;
-		if (currentLi === nbOfLis-1) {
-				gsap.to(arrowRef.current, {
-					rotate: '180deg',
-					duration: 1,
-					ease: "elastic.out(1, 0.75)"			
-				});
-			}	
-		return () => {}	
-	},[currentLi]);
+	// // Rotate Arrow button upwards if arrived at last slide
+	// useEffect(() => {
+	// 	let nbOfLis = olRef.current.querySelectorAll('li').length;
+	// 	if (currentLi === nbOfLis-1) {
+	// 			gsap.to(arrowRef.current, {
+	// 				rotate: '180deg',
+	// 				duration: 1,
+	// 				ease: "elastic.out(1, 0.75)"			
+	// 			});
+	// 		}	
+	// 	return () => {}	
+	// },[currentLi]);
 
-	useEffect(() => {
-		let svg = illuRef.current.querySelector('svg');
-		gsap.set(svg, { attr: { viewBox: '0 0 100 145.5' }});
-	});
+	// useEffect(() => {
+	// 	let svg = illuRef.current.querySelector('svg');
+	// 	gsap.set(svg, { attr: { viewBox: '0 0 100 145.5' }});
+	// });
 
 	return (
 		<ThemeProvider theme={state.checkedTheme ? darkTheme : lightTheme}>
@@ -288,7 +297,8 @@ function App() {
 				</MenuBar>
 			</AppBar>
 			{/* <SvgBG index={ currentLi }/> */}
-			<Illo id='illo' ref={illuRef} index={currentLi} move={move} />
+			{/* <Illo id='illo' ref={illuRef} index={currentLi} move={move} /> */}
+			{/* <NotreDameDeLaGardeSketchup /> */}
 			<InstallGrid component="ol" ref={olRef}>
 				{Object.values(i18n.t('intro')).map((v,i) => {
 					return <Li id={`li${i}`} key={i}>
