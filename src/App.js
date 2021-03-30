@@ -234,38 +234,38 @@ function App() {
 	useEffect(() => {
 		const { body } = document;
 		let lis = Array.from(olRef.current.querySelectorAll('li'));
-		// if(lis) gsap.set(lis, { autoAlpha: 0 });
+		if(lis) gsap.set(lis, { autoAlpha: 0 });
 
-		// lis.forEach(li => {
-		// 	setTl(prev => {
-		// 		return prev.to(li, {
-		// 			scrollTrigger: li,
-		// 			autoAlpha: .5,
-		// 			duration: 2 
-		// 		});
-		// 	});
-		// });
-		// tl.play();
+		lis.forEach(li => {
+			setTl(prev => {
+				return prev.to(li, {
+					scrollTrigger: li,
+					autoAlpha: .5,
+					duration: 2 
+				});
+			});
+		});
+		tl.play();
 		if(olRef.current) console.log(olRef.current.scrollHeight, window.scrollY);
 	}, []);
 
 	// // Rotate Arrow button upwards if arrived at last slide
-	// useEffect(() => {
-	// 	let nbOfLis = olRef.current.querySelectorAll('li').length;
-	// 	if (currentLi === nbOfLis-1) {
-	// 			gsap.to(arrowRef.current, {
-	// 				rotate: '180deg',
-	// 				duration: 1,
-	// 				ease: "elastic.out(1, 0.75)"			
-	// 			});
-	// 		}	
-	// 	return () => {}	
-	// },[currentLi]);
+	useEffect(() => {
+		let nbOfLis = olRef.current.querySelectorAll('li').length;
+		if (currentLi === nbOfLis-1) {
+				gsap.to(arrowRef.current, {
+					rotate: '180deg',
+					duration: 1,
+					ease: "elastic.out(1, 0.75)"			
+				});
+			}	
+		return () => {}	
+	},[currentLi]);
 
-	// useEffect(() => {
-	// 	let svg = illuRef.current.querySelector('svg');
-	// 	gsap.set(svg, { attr: { viewBox: '0 0 100 145.5' }});
-	// });
+	useEffect(() => {
+		let svg = illuRef.current.querySelector('svg');
+		gsap.set(svg, { attr: { viewBox: '0 0 100 145.5' }});
+	});
 
 	return (
 		<ThemeProvider theme={state.checkedTheme ? darkTheme : lightTheme}>
@@ -297,7 +297,7 @@ function App() {
 				</MenuBar>
 			</AppBar>
 			{/* <SvgBG index={ currentLi }/> */}
-			{/* <Illo id='illo' ref={illuRef} index={currentLi} move={move} /> */}
+			<Illo id='illo' ref={illuRef} index={currentLi} move={move} />
 			{/* <NotreDameDeLaGardeSketchup /> */}
 			<InstallGrid component="ol" ref={olRef}>
 				{Object.values(i18n.t('intro')).map((v,i) => {
